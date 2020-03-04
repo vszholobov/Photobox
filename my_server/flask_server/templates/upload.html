@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='upload.css', v=1) }}" xmlns:tag>
+{% endblock head %}
+{% block content %}
+    <div class="center wrapper_content">
+        <aside>
+            <hr class="hr">
+            <h1 class="aside_title">Загрузка фотографий</h1>
+            <form action="" method="POST" class="form" id="upload_form">
+                {{ form.hidden_tag() }}
+                {{ form.picture_file() }}
+            </form>
+            {{ form.submit(form="upload_form", class="form_button") }}
+        </aside>
+        <aside>
+            <hr class="hr">
+            <h1 class="aside_title">Теги</h1>
+            {{ form.title(form="upload_form", placeholder="Title") }}
+            {% for tag in current_user.user_tag_list %}
+                <div>
+                    <input type="checkbox" name="check" value="{{ tag }}" form="upload_form">
+                    <label> {{ tag }} </label>
+                </div>
+            {% endfor %}
+            {{ form.description(form="upload_form") }}
+        </aside>
+    </div>
+{% endblock content %}

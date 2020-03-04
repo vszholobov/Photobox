@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global_settings.css', v=1) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='nav_styles.css', v=1) }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icon.ico') }}">
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title>Flask page</title>
+    {% endif %}
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div id="wrapper">
+        <div id="nav_wrapper">
+            <nav class="center">
+                <div id="nav_left">
+                    <a href="{{ url_for('home') }}"><img class="link_photo" src="{{ url_for('static', filename='logo.png') }}">Фотобокс</a>
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('upload') }}">Загрузить</a>
+                        <a href="{{ url_for('search') }}">Искать</a>
+                    {% endif %}
+                </div>
+                <div id="nav_right">
+                    {% if current_user.is_authenticated %}
+                        <a id="user_photo_link" href="{{ url_for('account') }}"><img class="link_photo" src="{{ current_user.set_user_photo() }}">Аккаунт</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}">Авторизация</a>
+                        <a href="{{ url_for('register') }}">Регистрация</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

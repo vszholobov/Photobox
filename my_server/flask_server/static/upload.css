@@ -1,0 +1,25 @@
+.wrapper_content aside {
+    width: 32.3%;
+
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px #ccc;
+}
+    .wrapper_content aside:first-child {
+        width: 65%;
+    }
+
+.wrapper_content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    height: 90%;
+    margin-bottom: 20px;
+}
+
+.aside_title {
+    font-family: Arial;
+    text-align: center;
+    font-weight: normal;
+}

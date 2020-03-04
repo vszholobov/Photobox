@@ -1,0 +1,49 @@
+#nav_wrapper{
+	background-color: #3d9480;
+	margin-bottom: 20px;
+
+	height: 5.5%;
+    min-height: 50px;
+    max-height: 100px;
+}
+nav {
+	display: flex;
+	justify-content: space-between;
+
+	height: 100%;
+}
+nav a:link, nav a:visited {
+	display: flex;
+	align-items: center;
+	padding: 0px 25px;
+	height: 100%;
+
+	color: white;
+	font-family: Arial;
+	font-size: 17px;
+	text-decoration: none;
+}
+nav a:hover{
+	background-color: #418777;
+}
+#nav_left {
+    display: flex;
+    flex-direction: row;
+}
+#nav_right {
+	display: flex;
+	justify-content: flex-end;
+	flex-direction: row;
+}
+
+.link_photo {
+    margin-right: 10px;
+    border-radius: 20px;
+    border: 1px solid black;
+    min-width: 35px;
+    height: 35px;
+}
+
+#user_photo_link {
+    max-width: 100px;
+}

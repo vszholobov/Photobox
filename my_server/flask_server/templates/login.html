@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css', v=1) }}">
+{% endblock head %}
+{% block content %}
+    <main class="main center">
+        <form action="" method="POST" class="form">
+            {{ form.hidden_tag() }}
+            <h1 class="form_title">Авторизация</h1>
+
+            <div class="form_group center">
+                {{ form.username(class="form_input", placeholder=" ") }}
+                {{ form.username.label(class="form_label") }}
+            </div>
+
+            <div class="form_group center">
+                {{ form.password(class="form_input", placeholder=" ") }}
+                {{ form.password.label(class="form_label") }}
+            </div>
+
+            <div class="form_group center">
+                {{ form.submit(class="form_button") }}
+                <a href="{{ url_for('register') }}"><button class="no_account_button" form="">Регистрация</button></a>
+            </div>
+        </form>
+    </main>
+{% endblock content %}
