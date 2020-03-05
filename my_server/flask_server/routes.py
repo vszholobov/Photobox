@@ -84,8 +84,6 @@ def search():
 def upload():
     form = PostForm()
     if form.validate_on_submit():
-        if form.picture_file:
-            print(1)
         print(form.data)
         print(request.form.getlist('check'))
     return render_template("upload.html", title="Upload", form=form)
