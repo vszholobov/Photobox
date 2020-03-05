@@ -4,6 +4,7 @@ from flask_server import app, db, bcrypt
 from flask_server.models import User
 from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm
 from flask_server.server_functions import save_picture
+from os import mkdir, chdir, getcwd 
 
 
 @app.route("/")
@@ -21,7 +22,9 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
-
+        chdir(getcwd() + r"\flask_server\static\users")
+        mkdir(str(User.query.filter_by(username=form.username.data).first().id))
+        chdir(getcwd())
         print(User.query.all())
         flash("Your account has been created! You are now able to log in")
         return redirect(url_for("login"))
