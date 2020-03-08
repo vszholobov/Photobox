@@ -3,7 +3,21 @@
 
 {% endblock head %}
 {% block content %}
+{% set path = "users/" + current_user.id|string + "/scaled_images/" %}
     <main class="center main">
+        {% for photo in user_photos %}
+          <img src="{{ url_for('static', filename=path + photo) }}", style="width: 250px; height: 250px; border-radius: 10px; border: 1px solid black">
+        {% endfor %}
+        {{ form.tags }}
+        {{ form.submit }}
+        {% for tag in current_user.user_tag_list %}
+                    <div class="aside_center checkbox_div">
+                        <label>
+                            <input type="checkbox" class="upload_checkbox" name="check" value="{{ tag }}" form="upload_form">
+                            <span>{{ tag }}</span>
+                        </label>
+                    </div>
+        {% endfor %}
 
     </main>
 {% endblock content %}

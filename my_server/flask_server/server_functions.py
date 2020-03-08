@@ -21,7 +21,7 @@ def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
     picture_path_1 = os.path.join(app.root_path, path + "images/", picture_fn)
     picture_path_2 = os.path.join(app.root_path, path + "scaled_images/", picture_fn)
 
-    output_size = (250, 250)
+    output_size = (500, 500)
 
     scaled_image = Image.open(form_picture)
     scaled_image.thumbnail(output_size)

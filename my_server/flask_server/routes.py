@@ -4,7 +4,7 @@ from flask_server import app, db, bcrypt
 from flask_server.models import User, Post
 from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, AddTagForm
 from flask_server.server_functions import save_picture, code_picture, tags
-from os import mkdir, getcwd
+from os import mkdir, getcwd, listdir
 
 
 @app.route("/")
@@ -91,7 +91,11 @@ def account():
 @app.route("/search")
 @login_required
 def search():
-    return render_template("search.html", title="Search")
+    form = AddTagForm()
+    user_photos = listdir(getcwd() + "/flask_server/static/users/" + str(current_user.id) + "/scaled_images")
+    print(user_photos)
+
+    return render_template("search.html", title="Search", form=form, user_photos=user_photos)
 
 
 @app.route("/upload", methods=["POST", "GET"])
