@@ -4,7 +4,7 @@ from flask_server import app, db, bcrypt
 from flask_server.models import User, Post
 from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, AddTagForm
 from flask_server.server_functions import save_picture, code_picture, tags
-from os import mkdir, chdir, getcwd 
+from os import mkdir, getcwd
 
 
 @app.route("/")
@@ -26,6 +26,12 @@ def register():
 
         mkdir(getcwd() + "/flask_server/static/users" + "/" +
               str(User.query.filter_by(username=form.username.data).first().id))
+
+        mkdir(getcwd() + "/flask_server/static/users" + "/" +
+              str(User.query.filter_by(username=form.username.data).first().id) + "/images/")
+
+        mkdir(getcwd() + "/flask_server/static/users" + "/" +
+              str(User.query.filter_by(username=form.username.data).first().id) + "/scaled_images/")
 
         print(User.query.all())
         flash("Your account has been created! You are now able to log in")

@@ -10,7 +10,7 @@
         width: 65%;
     }
     .wrapper_aside:last-child {
-        height: 61%;
+        height: 60%;
         display: flex;
         flex-direction: column;
     }

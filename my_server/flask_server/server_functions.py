@@ -18,13 +18,18 @@ def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
 
     Возвращает имя фотографии.
     """
-    picture_path = os.path.join(app.root_path, path, picture_fn)
+    picture_path_1 = os.path.join(app.root_path, path + "images/", picture_fn)
+    picture_path_2 = os.path.join(app.root_path, path + "scaled_images/", picture_fn)
 
     output_size = (250, 250)
+
     scaled_image = Image.open(form_picture)
     scaled_image.thumbnail(output_size)
 
-    scaled_image.save(picture_path)
+    image = Image.open(form_picture)
+
+    image.save(picture_path_1)
+    scaled_image.save(picture_path_2)
 
     return picture_fn
 
