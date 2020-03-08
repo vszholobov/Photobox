@@ -4,30 +4,53 @@
 {% endblock head %}
 {% block content %}
     <div class="center wrapper_content">
-        <aside>
-            <div class="left_aside_div">
+        <aside class="wrapper_aside">
+            <div class="aside_div_content">
                 <hr class="hr">
-                <h1 class="aside_title">Загрузка фотографий</h1>
-                <div class="Big"></div>
-                <form action="" method="POST" enctype="multipart/form-data" class="form" id="upload_form">
-                    {{ form.hidden_tag() }}
-                    {{ form.picture_file() }}
-                </form>
-                {{ form.submit(form="upload_form", class="form_button") }}
+                <h1 class="aside_title">Фото</h1>
+                <div class="form_photo_field_div">
+                    <div class="drag_zone_wrapper">
+                        <div class="aside_center drag_zone">
+
+                        </div>
+                    </div>
+                    <div class="form_photo_buttons">
+                        <form action="" method="POST" enctype="multipart/form-data" class="form" id="upload_form">
+                            {{ form.hidden_tag() }}
+                            <div class="aside_center form_photo_buttons_center">
+                                {{ form.picture_file(form="upload_form", class="form_picture_file_button") }}
+                                {{ form.submit(form="upload_form", class="form_submit_button") }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="form_description_field_div">
+                    <h1 class="aside_title">Описание</h1>
+                    <hr class="hr_top">
+                    {{ form.description(form="upload_form", class="aside_center form_description_field") }}
+                </div>
             </div>
         </aside>
-        <aside>
+        <aside class="wrapper_aside">
             <hr class="hr">
             <h1 class="aside_title">Теги</h1>
-            {% for tag in current_user.user_tag_list %}
-                <div>
-                    <label>
-                        <input type="checkbox" class="upload_checkbox" name="check" value="{{ tag }}" form="upload_form">
-                        <span>{{ tag }}</span>
-                    </label>
-                </div>
-            {% endfor %}
-            {{ form.description(form="upload_form") }}
+            <div class="checkbox_container">
+                {% for tag in current_user.user_tag_list %}
+                    <div class="aside_center checkbox_div">
+                        <label>
+                            <input type="checkbox" class="upload_checkbox" name="check" value="{{ tag }}" form="upload_form">
+                            <span>{{ tag }}</span>
+                        </label>
+                    </div>
+                {% endfor %}
+                <form action="" method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="aside_center add_tags_div">
+                        {{ form1.tags(placeholder="Добавить теги") }}
+                        {{ form1.submit() }}
+                    </div>
+                </form>
+            </div>
         </aside>
     </div>
 {% endblock content %}

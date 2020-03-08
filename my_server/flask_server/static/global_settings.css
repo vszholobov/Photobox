@@ -9,6 +9,10 @@ body {
     width: 60%;
     margin: 0px auto;
 }
+.aside_center {
+    width: 90%;
+    margin: auto auto;
+}
 .main {
     background-color: white;
     border-radius: 10px;
@@ -18,7 +22,8 @@ body {
     min-height: 500px;
 }
 #wrapper {
-    min-width: 800px;
+    min-width: 1100px;
+    min-height: 600px;
     display: flex;
     flex-flow: column nowrap;
     height: 100vh;
@@ -29,3 +34,8 @@ body {
     border: 1px solid #3d9480;
     background-color: #3d9480;
 }
+.hr_top {
+    border: 1px solid #3d9480;
+    background-color: #3d9480;
+}
+

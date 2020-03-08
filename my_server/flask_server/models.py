@@ -15,11 +15,12 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(), nullable=False, default="default.jpg")
     password = db.Column(db.String(60), nullable=False)
-    user_tag_list = db.Column(db.PickleType, default=["#Kot", "#Sobaka", "#Hashtag"])
+    user_tag_list = db.Column(db.PickleType, default=["#Kot", "#Sobaka", "#Hashtag", "#1", "#2", "#3", "#4", "#5", "#6",
+                                                      "#7", "#8", "#9", "#10", "#11", "#12", "#13", "#14", "#15", "#16"])
     posts = db.relationship("Post", backref="author", lazy=True)
 
     def __repr__(self):
-        return f"User('{self.id}', {self.username}', '{self.email}'"
+        return f"User('{self.id}', {self.username}', '{self.email}')"
 
     def set_user_photo(self):
         """
@@ -38,6 +39,8 @@ class Post(db.Model):
     image_file = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     tag_list = db.Column(db.PickleType, default=[])
+    description = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
-        return f"Post '{self.title}', User: '{self.user_id}'"
+        return f"Post: '{self.id}', User: '{self.user_id}'"
+

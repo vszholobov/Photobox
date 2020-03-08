@@ -58,4 +58,9 @@ class UpdateAccountForm(FlaskForm):
 class PostForm(FlaskForm):
     picture_file = FileField("Picture", validators=[DataRequired(), FileAllowed(["jpg", "png"])])
     description = TextAreaField("Description")
-    submit = SubmitField("Post")
+    submit = SubmitField("Отправить")
+
+
+class AddTagForm(FlaskForm):
+    tags = StringField("Добавить теги", validators=[DataRequired()])
+    submit = SubmitField("Добавить")

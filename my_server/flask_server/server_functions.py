@@ -4,24 +4,27 @@ from PIL import Image
 from flask_server import app
 
 
-def save_picture(form_picture):
+def code_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    return picture_fn
+
+
+def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
     """
     Сохраняет фотографии под случайным 16-значным именем в static/profile_pictures. Будет добавлена возможность
     сохранения фотографии в личную папку пользователя.
 
     Возвращает имя фотографии.
     """
-
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, "static/profile_pictures", picture_fn)
+    picture_path = os.path.join(app.root_path, path, picture_fn)
 
     output_size = (250, 250)
     scaled_image = Image.open(form_picture)
     scaled_image.thumbnail(output_size)
 
-    scaled_image.convert('RGB').save(picture_path)
+    scaled_image.save(picture_path)
 
     return picture_fn
 
@@ -34,13 +37,15 @@ def tags(string, tags=None):
     check_string = string.replace(" ", "")
     for i in range(1, len(check_string)):
         if check_string[i] == check_string[i - 1] == "#":
-            return print("Ошибка2")
+            # Ошибка 1
+            return tags
 
     string = string.strip(" ").rstrip("#")
     cnt = string.count("#")
 
     if not cnt:
-        return print("Ошибка. Нет #")
+        # Ошибка 2
+        return tags
 
     # Обработка строки
     for i in range(cnt):
