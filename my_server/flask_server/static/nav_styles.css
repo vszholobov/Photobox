@@ -1,9 +1,12 @@
 #nav_wrapper{
+    position: sticky;
+    top: 0;
+
 	background-color: #3d9480;
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 
 	height: 5.5%;
-    min-height: 50px;
+    min-height: 52px;
     max-height: 100px;
 }
 nav {

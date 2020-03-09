@@ -1,4 +1,4 @@
-body, h1, h2, h3, h4, h5, h6, p, hr {
+* {
     margin: 0px;
     padding: 0px;
 }
@@ -27,6 +27,8 @@ body {
     display: flex;
     flex-flow: column nowrap;
     height: 100vh;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 .hr {
     position: relative;
@@ -38,4 +40,3 @@ body {
     border: 1px solid #3d9480;
     background-color: #3d9480;
 }
-

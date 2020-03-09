@@ -1,23 +1,20 @@
 {% extends "layout.html" %}
 {% block head %}
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='search.css', v=1) }}">
 {% endblock head %}
 {% block content %}
-{% set path = "users/" + current_user.id|string + "/scaled_images/" %}
-    <main class="center main">
-        {% for photo in user_photos %}
-          <img src="{{ url_for('static', filename=path + photo) }}", style="width: 250px; height: 250px; border-radius: 10px; border: 1px solid black">
-        {% endfor %}
-        {{ form.tags }}
-        {{ form.submit }}
-        {% for tag in current_user.user_tag_list %}
-                    <div class="aside_center checkbox_div">
-                        <label>
-                            <input type="checkbox" class="upload_checkbox" name="check" value="{{ tag }}" form="upload_form">
-                            <span>{{ tag }}</span>
-                        </label>
+    {% set path = "users/" + current_user.id|string + "/scaled_images/" %}
+    <div>
+        <div class="center">
+            {% for photo in user_photos %}
+                {% if not ((loop.index - 1) % 3) %}
+                    <div style="display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 20px;">
+                {% endif %}
+                <img src="{{ url_for('static', filename=path + photo) }}", style="width: 32%; border-radius: 10px; border: 1px solid black; box-shadow: 5px 5px 3px #5d5c5c;">
+                {% if (loop.index - 1) % 3 == 2 %}
                     </div>
-        {% endfor %}
-
-    </main>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock content %}
