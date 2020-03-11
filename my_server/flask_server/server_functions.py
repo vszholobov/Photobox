@@ -1,5 +1,6 @@
 import os
 import secrets
+import copy
 from PIL import Image
 from flask_server import app
 
@@ -85,3 +86,103 @@ def join_templates(tags, description):
     description.extend(tags)
     description = list(set(description))
     return description
+
+
+def sort_pictures_by_tag(list_of_pictures, list_of_tags):
+    """
+    Сортирует фотографии по тегам, выбраным пользователем.
+
+    Возвращает отсортированный по количеству совпадений список фотографий
+    """
+
+    count_of_coincidence = 0
+    dict_of_pictures = {}
+    sorted_list_of_pictures = []
+
+    for picture in list_of_pictures:
+
+        list_of_tags_of_picture = picture.tag_list
+
+        for tag in list_of_tags_of_picture:
+            if tag in list_of_tags:
+                count_of_coincidence += 1
+
+        if count_of_coincidence > 0:
+            dict_of_pictures[picture.id] = count_of_coincidence
+
+        count_of_coincidence = 0
+
+    for coincidences in sorted(dict_of_pictures.items(), key=lambda item: item[1]):
+        sorted_list_of_pictures.append(coincidences[0])
+
+    return sorted_list_of_pictures
+
+
+def sorting_tags_by_alphabet(tag_list):
+    """
+    Сортирует теги по алфавиту.
+
+    Возвращает отсортированный по алфавиту список тегов.
+    """
+
+    # Ё = 1025
+    # А = 1040   Я = 1071
+    # ё = 1105
+    # а = 1072   я = 1103
+
+    # A = 65 Z = 90
+    # a = 97 z = 122
+
+    tag_list = copy.deepcopy(tag_list)
+    working_dict = {}
+    count_of_e = 0
+    dict_of_rus_alphabet = {}
+    dict_of_eng_alphabet = {}
+    dict_of_symbols = {}
+    sorted_tag_list = []
+
+    for tag in tag_list:
+        if (tag.count("Ё") + tag.count("ё") + tag.count("Е") + tag.count("е")) >= count_of_e:
+            count_of_e = tag.count("Ё") + tag.count("ё") + tag.count("Е") + tag.count("е")
+
+    for tag in tag_list:
+
+        if ("Е" in tag or
+            "е" in tag or
+            "Ё" in tag or
+                "ё" in tag):
+            tag_changed = tag.replace("е", "е0").replace("Е", "Е0")
+            tag_changed = tag_changed.replace("ё", "е1").replace("Ё", "Е1")
+            working_dict[tag] = tag_changed
+
+        else:
+            tag_changed = tag + count_of_e * " "
+            working_dict[tag] = tag_changed
+
+    for tag in working_dict.items():
+
+        if (1040 <= ord(tag[1][1]) <= 1103 or
+                ord(tag[1][1]) == 1105 or
+                ord(tag[1][1]) == 1025):
+            dict_of_rus_alphabet[tag[0]] = tag[1]
+
+        elif (65 <= ord(tag[1][1]) <= 90 or
+              97 <= ord(tag[1][1]) <= 122):
+            dict_of_eng_alphabet[tag[0]] = tag[1]
+
+        else:
+            dict_of_symbols[tag[0]] = tag[1]
+
+    dict_of_eng_alphabet = dict(sorted(dict_of_eng_alphabet.items(), key=lambda item: item[1]))
+    for tag in dict_of_eng_alphabet:
+        sorted_tag_list.append(tag)
+
+    dict_of_rus_alphabet = dict(sorted(dict_of_rus_alphabet.items(), key=lambda item: item[1]))
+    for tag in dict_of_rus_alphabet:
+        sorted_tag_list.append(tag)
+
+    dict_of_symbols = dict(sorted(dict_of_symbols.items(), key=lambda item: item[1]))
+    for tag in dict_of_symbols:
+        sorted_tag_list.append(tag)
+
+    return sorted_tag_list
