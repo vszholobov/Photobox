@@ -6,7 +6,7 @@ body {
     background-color: #f0f0f0;
 }
 .center {
-    width: 60%;
+    width: 70%;
     margin: 0px auto;
 }
 .aside_center {
@@ -18,17 +18,23 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 16px #ccc;
 
-    height: 90%;
-    min-height: 500px;
+    height: 100%;
 }
 #wrapper {
     min-width: 1100px;
     min-height: 600px;
+    height: 100vh;
+
     display: flex;
     flex-flow: column nowrap;
-    height: 100vh;
-    overflow: scroll;
-    overflow-x: hidden;
+
+    overflow: visible;
+}
+#content_wrapper {
+    width: 100%;
+    flex-grow: 1;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .hr {
     position: relative;

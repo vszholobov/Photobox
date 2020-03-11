@@ -1,13 +1,11 @@
 #nav_wrapper{
     position: sticky;
     top: 0;
+    z-index: 100;
 
 	background-color: #3d9480;
-    margin-bottom: 20px;
 
-	height: 5.5%;
-    min-height: 52px;
-    max-height: 100px;
+    height: 52px;
 }
 nav {
 	display: flex;

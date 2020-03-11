@@ -1,29 +1,39 @@
+.upload_wrapper_content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    height: 100%;
+    min-height: 400px;
+    margin-bottom: 20px;
+}
+
 .wrapper_aside {
-    width: 32.3%;
     position: relative;
+
+    height: 60%;
+    width: 30%;
 
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 16px #ccc;
 }
     .wrapper_aside:first-child {
-        width: 65%;
+        width: 20%;
     }
-    .wrapper_aside:last-child {
-        height: 60%;
+    .middle_aside {
+        height: 100%;
+        margin: 0px 15px;
+
+        flex-grow: 1;
         display: flex;
         flex-direction: column;
     }
-
-.wrapper_content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    height: 90%;
-    min-height: 400px;
-    margin-bottom: 20px;
-}
+    .wrapper_aside:last-child {
+        width: 20%;
+        display: flex;
+        flex-direction: column;
+    }
 
 .aside_title {
     font-family: Arial;
@@ -31,48 +41,45 @@
     font-weight: normal;
     font-size: 25px;
 }
+.drag_zone {
+    width: 65%;
+    border: 1px dashed black;
+}
 
-.upload_checkbox, label {
-    cursor: pointer;
+.form_description_field {
+    display: block;
+    height: 100%;
+    width: 100%;
+
+    resize: none;
+    border-radius: 10px;
+
+
     font-family: Arial;
     font-size: 20px;
-}
 
-.upload_checkbox:checked ~ span{
-    color: #ff6347;
-}
+    background: url(description.png) center center no-repeat;
+    background-color: #f0f0f0;
 
-.aside_div_content {
+    transition: 0.5s;
+}
+    .form_description_field:focus, .form_description_field:not(:placeholder-shown)  {
+        background: none;
+
+        background-color: #f0f0f0;
+        border: 1px solid #3d9480;
+        border-radius: 10px;
+        outline: none;
+    }
+
+.form_wrapper {
+    flex-grow: 0.5;
+    width: 100%;
+
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
-
-.form_photo_field_div {
-    flex-grow: 4;
-
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-    .drag_zone_wrapper {
-        height: 90%;
-        display: flex;
-        flex-direction: row;
-    }
-        .drag_zone {
-            background: white;
-            outline: 1px dashed black;
-            height: 95%;
-        }
-
-    .form_photo_buttons {
-        height: 10%;
-        position: absolute;
-        bottom: 0px;
-        width: 100%;
-    }
-    .form_photo_buttons_center {
+    .form_buttons {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -94,31 +101,6 @@
     }
     .form_picture_file_button {
         height: 50%;
-    }
-
-.form_description_field_div {
-    flex-grow: 2;
-    font-family: Arial;
-    display: flex;
-    flex-direction: column;
-}
-    .form_description_field {
-        display: block;
-        height: 80%;
-
-        margin: auto auto;
-
-        resize: none;
-        border-radius: 10px;
-
-        font-family: Arial;
-        font-size: 20px;
-    }
-    .form_description_field:focus {
-        background-color: #f0f0f0;
-        border: 1px solid #3d9480;
-        border-radius: 10px;
-        outline: none;
     }
 
 .checkbox_container {
@@ -147,3 +129,13 @@
     .add_tags_div input:last-child {
         width: 40%;
     }
+
+.upload_checkbox, label {
+    cursor: pointer;
+    font-family: Arial;
+    font-size: 20px;
+}
+
+.upload_checkbox:checked ~ span{
+    color: #ff6347;
+}
