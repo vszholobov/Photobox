@@ -78,3 +78,10 @@ def tags(string, tags=None):
             tags.append(tag)
         string = string[pos2::1]
     return tags
+
+
+def join_templates(tags, description):
+    description = description.split()
+    description.extend(tags)
+    description = list(set(description))
+    return description
