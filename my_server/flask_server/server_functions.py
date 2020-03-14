@@ -1,7 +1,7 @@
 import os
 import secrets
 import copy
-from PIL import Image
+from PIL import Image, ImageFilter
 from flask_server import app
 
 
@@ -12,6 +12,35 @@ def code_picture(form_picture):
     return picture_fn
 
 
+def size_t_analise(image):
+    size = image.size
+    if (size[0] / size[1]) >= 1.2:
+        shape = (300, 150)
+    elif (size[0] / size[1]) <= 0.8:
+        shape = (150, 300)
+    else:
+        shape = (150, 150)
+    return shape
+
+
+def size_analise(image):
+    """
+    size[0] - длина(горизонт)
+    """
+    size = image.size
+
+    width = size[0]
+    height = size[1]
+
+    if size[0] > size[1]:
+        distance = (size[0] - size[1])/2
+        image = image.crop((distance, 0, size[0] - distance, size[1])) # im.crop((left, top, right, bottom))
+    elif size[0] < size[1]:
+        distance = (size[1] - size[0]) / 2
+        image = image.crop((0, distance, size[0], size[1] - distance))
+    return image
+
+
 def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
     """
     Сохраняет фотографии под случайным 16-значным именем в static/profile_pictures. Будет добавлена возможность
@@ -19,13 +48,12 @@ def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
 
     Возвращает имя фотографии.
     """
+
     picture_path_1 = os.path.join(app.root_path, path + "images/", picture_fn)
     picture_path_2 = os.path.join(app.root_path, path + "scaled_images/", picture_fn)
 
-    output_size = (500, 500)
-
     scaled_image = Image.open(form_picture)
-    scaled_image.thumbnail(output_size)
+    scaled_image = size_analise(scaled_image)
 
     image = Image.open(form_picture)
 
@@ -186,3 +214,28 @@ def sorting_tags_by_alphabet(tag_list):
         sorted_tag_list.append(tag)
 
     return sorted_tag_list
+
+
+def function(name_of_image, filter_name="contour"):
+    name_of_image = getcwd() + "/" + name_of_image
+    image = Image.open(name_of_image)
+    if filter_name == "contour":
+        image = image.filter(ImageFilter.CONTOUR)
+    elif filter_name == "detail":
+        image = image.filter(ImageFilter.DETAIL)
+    elif filter_name == "find_edges":
+        image = image.filter(ImageFilter.FIND_EDGES)
+    elif filter_name == "edge_enhance_more":
+        image = image.filter(ImageFilter.EDGE_ENHANCE_MORE)
+    elif filter_name == "edge_enhance":
+        image = image.filter(ImageFilter.EDGE_ENHANCE)
+    elif filter_name == "blur":
+        image= image.filter(ImageFilter.BLUR)
+    elif filter_name == "emboss":
+        image = image.filter(ImageFilter.EMBOSS)
+    elif filter_name == "sharpen":
+        image = image.filter(ImageFilter.SHARPEN)
+    elif filter_name == "smooth":
+        image = image.filter(ImageFilter.SMOOTH)
+    elif filter_name == "smooth_more":
+        image = image.filter(ImageFilter.SMOOTH_MORE)
