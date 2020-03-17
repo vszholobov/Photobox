@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from flask_server import app, db, bcrypt
 from flask_server.models import User, Post
 from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, AddTagForm
-from flask_server.server_functions import save_picture, code_picture, tags
+from flask_server.server_functions import save_picture, code_picture, tags, sort_pictures_by_tag
 from os import mkdir, getcwd, listdir
 
 
@@ -92,9 +92,11 @@ def account():
 @login_required
 def search():
     form = AddTagForm()
-    user_photos = listdir(getcwd() + "/flask_server/static/users/" + str(current_user.id) + "/scaled_images")
-    print(user_photos)
-
+    print(Post.query.all())
+    # user_photos = listdir(getcwd() + "/flask_server/static/users/" + str(current_user.id) + "/scaled_images")
+    user_photos = sort_pictures_by_tag(Post.query.all(), ["#Kot", "#1", "#2"])
+    print(sort_pictures_by_tag(Post.query.all(), ["#Kot", "#1", "#2"]))
+    # user_photos = [i.image_file for i in user_photos]
     return render_template("search.html", title="Search", form=form, user_photos=user_photos)
 
 
