@@ -64,3 +64,7 @@ class PostForm(FlaskForm):
 class AddTagForm(FlaskForm):
     tags = StringField("Добавить теги", validators=[DataRequired()])
     submit = SubmitField("Добавить")
+
+
+class SearchForm(FlaskForm):
+    submit = SubmitField("Искать")

@@ -2,7 +2,7 @@
 {% block head %}
 {% endblock head %}
 {% block content %}
-    <main class="center main">
+    <main class="main">
         <h1>{{ current_user.username }}</h1>
         <h2>{{ current_user.email }}</h2>
         <img src="{{ current_user.set_user_photo() }}">

@@ -43,7 +43,12 @@
             </nav>
         </div>
         <div id="content_wrapper">
-            {% block content %}{% endblock %}
+            <div class="center center_content_wrapper">
+                <div class="main menu"></div>
+                <div id="content_wrapper2">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
         </div>
     </div>
 </body>

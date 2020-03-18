@@ -4,17 +4,62 @@
 {% endblock head %}
 {% block content %}
     {% set path = "users/" + current_user.id|string + "/scaled_images/" %}
-    <div>
-        <div class="center">
+    <div class="table_container">
+        <table border="0" cellspacing="0" class="center table">
             {% for photo in user_photos %}
-                {% if not ((loop.index - 1) % 3) %}
-                    <div class="search_image_row">
+                {% if not ((loop.index - 1) % 4) %}
+                    <tr class="search_image_row">
                 {% endif %}
-                        <img src="{{ url_for('static', filename=path + photo) }}", class="search_image">
-                {% if (loop.index - 1) % 3 == 2 %}
-                    </div>
+                        <td class="img_container">
+                            <img src="{{ url_for('static', filename=path + photo) }}", class="img">
+                            <span class="close"></span>
+                        </td>
+                {% if (loop.index - 1) % 4 == 3%}
+                    </tr>
                 {% endif %}
             {% endfor %}
-        </div>
+        </table>
     </div>
+    <aside class="wrapper_aside">
+        <hr class="hr">
+        <h1 class="aside_title">Теги</h1>
+        <div class="checkbox_container">
+            {% for tag in current_user.user_tag_list %}
+                <div class="aside_center checkbox_div">
+                    <label>
+                        <input type="checkbox" class="upload_checkbox" name="check" value="{{ tag }}" form="search_form">
+                        <span>{{ tag }}</span>
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+        <form action="" method="POST" id="search_form">
+            {{ form.hidden_tag() }}
+            {{ form.submit() }}
+        </form>
+    </aside>
+    <script>
+		const blocks = document.getElementsByClassName("img");
+		const close_buttons = document.querySelectorAll(".img_container .close");
+		let current_active_element;
+
+		[].forEach.call(blocks, function(item) {
+			item.addEventListener('click', () => {
+				if(current_active_element) {
+					current_active_element.parentNode.classList.remove('active_container');
+				}
+		    	item.parentNode.classList.add('active_container');
+		    	current_active_element = item;
+			});
+		});
+		[].forEach.call(close_buttons, function(item) {
+			item.addEventListener('click', () => {
+				document.querySelector(".active_container").classList.remove("active_container");
+			});
+		});
+
+		//document.querySelectorAll(".active_container > .close").addEventListener('click', () => {
+    	//	current_active_element.parentNode.classList.remove("active_container");
+    	//});
+	</script>
 {% endblock content %}

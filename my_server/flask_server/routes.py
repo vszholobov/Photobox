@@ -2,7 +2,7 @@ from flask import render_template, url_for, redirect, flash, request
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_server import app, db, bcrypt
 from flask_server.models import User, Post
-from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, AddTagForm
+from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, AddTagForm, SearchForm
 from flask_server.server_functions import save_picture, code_picture, tags, sort_pictures_by_tag
 from os import mkdir, getcwd, listdir
 
@@ -88,13 +88,13 @@ def account():
     return render_template("account.html", form=form, image_file=image_file, title="Account")
 
 
-@app.route("/search")
+@app.route("/search", methods=["POST", "GET"])
 @login_required
 def search():
-    form = AddTagForm()
-    print(Post.query.all())
+    form = SearchForm()
+    print(Post.query.filter_by(user_id=current_user.id))
     # user_photos = listdir(getcwd() + "/flask_server/static/users/" + str(current_user.id) + "/scaled_images")
-    user_photos = sort_pictures_by_tag(Post.query.all(), ["#Kot", "#1", "#2"])
+    user_photos = sort_pictures_by_tag(Post.query.filter_by(user_id=current_user.id), ["#Kot", "#1", "#2"])
     print(sort_pictures_by_tag(Post.query.all(), ["#Kot", "#1", "#2"]))
     # user_photos = [i.image_file for i in user_photos]
     return render_template("search.html", title="Search", form=form, user_photos=user_photos)

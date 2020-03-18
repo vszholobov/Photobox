@@ -1,22 +1,117 @@
-.search_image_row {
+#content_wrapper2 {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-
-    margin-bottom: 20px;
 }
-
-.search_image {
-    width: 32%;
+.wrapper_aside {
     position: relative;
 
-    border-radius: 10px;
-    border: 1px solid black;
+    height: 60%;
 
-    transition-property: bottom, box-shadow;
-    transition-duration: 0.3s;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px #ccc;
+
+    width: 20%;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+
+    margin-left: 15px;
 }
-    .search_image:hover {
-        bottom: 7px;
-        box-shadow: 7px 7px 3px #5d5c5c;
-    }
+.checkbox_container {
+    flex-grow: 1;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+.aside_title {
+    font-family: Arial;
+    text-align: center;
+    font-weight: normal;
+    font-size: 25px;
+	color: #067259;
+}
+.upload_checkbox, label {
+    cursor: pointer;
+    font-family: Arial;
+    font-size: 20px;
+}
+
+.upload_checkbox:checked ~ span{
+    color: #ff6347;
+}
+.table_container {
+    flex-grow: 1;
+}
+.table {
+    position: relative;
+
+	margin: 0px auto;
+	width: 100%;
+
+	border-spacing: 15px 0px;
+}
+.img {
+	cursor: pointer;
+	transition: 0s;
+	width: 100%;
+}
+.active_container .img {
+    transition: 0s;
+}
+.active_container .img {
+    width: 168px;
+}
+.img_container {
+	transition: 0s;
+	width: 25%;
+}
+.active_container {
+	position: absolute;
+	left: 0px;
+	z-index: 1;
+
+	width: 100%;
+	height: 392px;
+
+	background: gray;
+	border-radius: 10px;
+
+	box-shadow: 7px 7px 3px #333333;
+}
+.active_container, .active_container img {
+	transition: width 0.7s ease, box-shadow 1s ease;
+}
+.active_container img {
+	margin-left: 15px;
+}
+.active_container span {
+	display: block;
+}
+.close {
+	display: none;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 32px;
+	height: 32px;
+	opacity: 0.5;
+	border: 1px solid black;
+	border-radius: 0px 10px 0px 0px;
+}
+.close:hover {
+	opacity: 1;
+}
+.close:before, .close:after {
+	position: absolute;
+	left: 15px;
+	content: ' ';
+	height: 33px;
+	width: 2px;
+	background-color: #f0f0f0;
+}
+.close:before {
+	transform: rotate(45deg);
+}
+.close:after {
+	transform: rotate(-45deg);
+}
