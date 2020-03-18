@@ -3,6 +3,15 @@
 {% block content %}
     <h1>Файл не найден</h1>
     <p><a href="{{ url_for('home') }}">Назад</a></p>
-    <img src="{{ url_for('static', filename='404.jpg') }}">
+    <img src="{{ url_for('static', filename='404.jpg') }}" id="shrek" style="transform: rotate(60deg); width: 400px;">
+    <script>
+        const shrek = document.getElementById("shrek");
+        x = 0;
+        let timerId = setInterval(function() {
+            x++;
+            new_rotate = "rotate(" + x + "deg)"
+            shrek.style.transform = new_rotate;
+        }, 25);
+    </script>
 {% endblock %}
 
