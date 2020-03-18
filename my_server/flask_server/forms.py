@@ -67,4 +67,5 @@ class AddTagForm(FlaskForm):
 
 
 class SearchForm(FlaskForm):
+    tags = StringField("Добавить теги", validators=[DataRequired()])
     submit = SubmitField("Искать")

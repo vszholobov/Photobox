@@ -3,8 +3,8 @@ from flask_login import login_user, logout_user, current_user, login_required
 from flask_server import app, db, bcrypt
 from flask_server.models import User, Post
 from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, AddTagForm, SearchForm
-from flask_server.server_functions import save_picture, code_picture, tags, sort_pictures_by_tag
-from os import mkdir, getcwd, listdir
+from flask_server.server_functions import save_picture, code_picture, tags, sort_pictures_by_tag, creation_date
+from os import mkdir, getcwd, remove, path
 
 
 @app.route("/")
@@ -70,7 +70,11 @@ def account():
     if form.validate_on_submit():
 
         if form.picture.data:
-            picture_file = save_picture(form.picture.data)
+            # path = "static/profile_pictures"
+            # path_file = path.join(app.root_path, path, current_user.image_file)
+            # remove(path_file)
+            new_name = code_picture(form.picture.data)
+            picture_file = save_picture(form.picture.data, new_name)
             current_user.image_file = picture_file
 
         current_user.username = form.username.data
@@ -92,10 +96,14 @@ def account():
 @login_required
 def search():
     form = SearchForm()
-    print(Post.query.filter_by(user_id=current_user.id))
+    # print(Post.query.filter_by(user_id=current_user.id))
     # user_photos = listdir(getcwd() + "/flask_server/static/users/" + str(current_user.id) + "/scaled_images")
-    user_photos = sort_pictures_by_tag(Post.query.filter_by(user_id=current_user.id), ["#Kot", "#1", "#2"])
-    print(sort_pictures_by_tag(Post.query.all(), ["#Kot", "#1", "#2"]))
+    if form.validate_on_submit and request.method == "POST":
+        user_photos = sort_pictures_by_tag(Post.query.filter_by(user_id=current_user.id),
+                                           request.form.getlist('check'))
+    else:
+        user_photos = [i.image_file for i in current_user.posts]
+    #print(sort_pictures_by_tag(Post.query.filter_by(user_id=current_user.id), request.form.getlist('check')))
     # user_photos = [i.image_file for i in user_photos]
     return render_template("search.html", title="Search", form=form, user_photos=user_photos)
 
@@ -111,7 +119,8 @@ def upload():
         save_picture(form.picture_file.data, new_name, getcwd() + "/flask_server/static/users/" + str(id) + "/")
 
         post = Post(image_file=new_name, description=form.description.data,
-                    tag_list=request.form.getlist('check'), user_id=current_user.id)
+                    tag_list=request.form.getlist('check'), user_id=current_user.id,
+                    creation_date=creation_date())
         db.session.add(post)
         db.session.commit()
 

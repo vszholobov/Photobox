@@ -3,6 +3,21 @@ import secrets
 import copy
 from PIL import Image, ImageFilter
 from flask_server import app
+from datetime import datetime
+
+
+def creation_date(date=datetime.now()):
+
+    month = {1: "января", 2: "февраля",
+             3: "марта", 4: "апреля",
+             5: "мая", 6: "июня",
+             7: "июля", 8: "августа",
+             9: "сентября", 10: "октября",
+             11: "ноября", 12: "декабря"}
+
+    date = date.strftime(f"%d {month[int(date.strftime('%m'))]} 20%y").split()
+
+    return date[0] + " " + date[1].capitalize() + " " + date[2]
 
 
 def code_picture(form_picture):
@@ -48,6 +63,15 @@ def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
 
     Возвращает имя фотографии.
     """
+    if path == "static/profile_pictures":
+
+        picture_path_3 = os.path.join(app.root_path, path, picture_fn)
+
+        scaled_image = Image.open(form_picture)
+        scaled_image = size_analise(scaled_image)
+        scaled_image.save(picture_path_3)
+
+        return picture_fn
 
     picture_path_1 = os.path.join(app.root_path, path + "images/", picture_fn)
     picture_path_2 = os.path.join(app.root_path, path + "scaled_images/", picture_fn)
@@ -60,7 +84,7 @@ def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
     image.save(picture_path_1)
     scaled_image.save(picture_path_2)
 
-    return picture_fn
+    return
 
 
 def tags(string, tags=None):

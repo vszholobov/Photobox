@@ -2,6 +2,7 @@ from flask import url_for
 from flask_server import db, login_manager
 from flask_login import UserMixin
 from hashlib import md5
+from datetime import datetime
 
 
 @login_manager.user_loader
@@ -40,6 +41,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     tag_list = db.Column(db.PickleType, default=[])
     description = db.Column(db.Text, nullable=False)
+    creation_date = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
         return f"Post: '{self.id}', User: '{self.user_id}'"
