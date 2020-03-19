@@ -35,6 +35,11 @@
         display: flex;
         flex-direction: column;
         min-width: 200px;
+
+        position: sticky;
+        top: 72px;
+        height: 60vh;
+        min-height: 300px;
     }
 
 .aside_title {
@@ -57,21 +62,19 @@
     resize: none;
     border-radius: 10px;
 
-
     font-family: Arial;
     font-size: 20px;
 
-    background: url(description.png) center center no-repeat;
+    background: url("../description.png") center center no-repeat;
     background-color: #f0f0f0;
 
     transition: 0.5s;
 }
+
     .form_description_field:focus, .form_description_field:not(:placeholder-shown)  {
         background: none;
-
         background-color: #f0f0f0;
         border: 1px solid #3d9480;
-        border-radius: 10px;
         outline: none;
     }
 
@@ -141,4 +144,22 @@
 
 .upload_checkbox:checked ~ span{
     color: #ff6347;
+}
+
+.main_content {
+    height: 54%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.album_zone {
+    margin-left: 10px;
+    flex-grow: 1;
+    border: 1px solid black;
+}
+.description_zone {
+    height: 30%;
+}
+.description_zone > div {
+    height: 100%;
 }

@@ -2,7 +2,6 @@ from flask import url_for
 from flask_server import db, login_manager
 from flask_login import UserMixin
 from hashlib import md5
-from datetime import datetime
 
 
 @login_manager.user_loader

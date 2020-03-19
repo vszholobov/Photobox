@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='search.css', v=1) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/search.css', v=1) }}">
 {% endblock head %}
 {% block content %}
     {% set path = "users/" + current_user.id|string + "/scaled_images/" %}
@@ -11,7 +11,7 @@
                     <tr class="search_image_row">
                 {% endif %}
                         <td class="img_container">
-                            <img src="{{ url_for('static', filename=path + photo) }}", class="img">
+                            <img src="{{ url_for('static', filename=path + photo) }}" class="img">
                             <span class="close"></span>
                         </td>
                 {% if (loop.index - 1) % 4 == 3%}
@@ -38,28 +38,5 @@
             {{ form.submit() }}
         </form>
     </aside>
-    <script>
-		const blocks = document.getElementsByClassName("img");
-		const close_buttons = document.querySelectorAll(".img_container .close");
-		let current_active_element;
-
-		[].forEach.call(blocks, function(item) {
-			item.addEventListener('click', () => {
-				if(current_active_element) {
-					current_active_element.parentNode.classList.remove('active_container');
-				}
-		    	item.parentNode.classList.add('active_container');
-		    	current_active_element = item;
-			});
-		});
-		[].forEach.call(close_buttons, function(item) {
-			item.addEventListener('click', () => {
-				document.querySelector(".active_container").classList.remove("active_container");
-			});
-		});
-
-		//document.querySelectorAll(".active_container > .close").addEventListener('click', () => {
-    	//	current_active_element.parentNode.classList.remove("active_container");
-    	//});
-	</script>
+    <script src="{{ url_for('static', filename='scripts/search.js', v=1) }}"></script>
 {% endblock content %}
