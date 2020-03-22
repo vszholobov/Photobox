@@ -263,3 +263,8 @@ def function(name_of_image, filter_name="contour"):
         image = image.filter(ImageFilter.SMOOTH)
     elif filter_name == "smooth_more":
         image = image.filter(ImageFilter.SMOOTH_MORE)
+
+
+def creating_routes(list_of_images):
+    for image in list_of_images:
+        image.route = '/users/' + str(image.user_id) + '/scaled_images/' + str(image.image_file)
