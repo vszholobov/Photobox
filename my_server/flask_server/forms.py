@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, SubmitField, PasswordField, TextAreaField
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField, MultipleFileField
 from wtforms.validators import DataRequired, Email, ValidationError, EqualTo, Length
 from flask_server.models import User
 
@@ -56,7 +56,7 @@ class UpdateAccountForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    picture_file = FileField("Picture", validators=[DataRequired(), FileAllowed(["jpg", "png"])])
+    picture_file = MultipleFileField("Picture", validators=[DataRequired(), FileAllowed(["jpg", "png"])])
     description = TextAreaField("Description")
     submit = SubmitField("Отправить")
 

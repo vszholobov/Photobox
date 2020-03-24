@@ -24,6 +24,7 @@
     }
     .middle_aside {
         height: 100%;
+        min-width: 500px;
         margin-right: 15px;
 
         flex-grow: 1;
@@ -88,7 +89,7 @@
     .form_buttons {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: flex-end;
     }
     .form_submit_button {
         font-size: 16px;
@@ -104,9 +105,6 @@
     .form_submit_button:focus,
     .form_submit_button:hover {
         background-color: #418777;
-    }
-    .form_picture_file_button {
-        height: 50%;
     }
 
 .checkbox_container {
@@ -162,4 +160,66 @@
 }
 .description_zone > div {
     height: 100%;
+}
+
+.drag_zone {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 25px;
+  border: 1px dashed black;
+  border-radius: 10px;
+  transition: 0.2s;
+  background: #f0f0f0;
+}
+
+.fake-btn {
+  font-family: Arial;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #423ff1;
+  outline: none;
+  transition: 0.3s;
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+}
+    .drag_zone:hover > .fake-btn {
+        background: #2a28d5;
+    }
+
+#file-name {
+    color: #3d9480;
+	position: absolute;
+	bottom: 0px;
+	line-height: 47px;
+	height: 47px;
+	left: 160px;
+	width: 350px;
+	overflow: hidden;
+    text-overflow: clip;
+}
+
+#file-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  opacity: 0;
+}
+#box-image {
+	margin: 0px auto;
+	width: 100px;
+	height: 100px;
+}
+
+.highlight {
+	background: #414141;
+}
+.json {
+    display: none;
 }

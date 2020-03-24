@@ -9,7 +9,12 @@
             <h1 class="aside_title">Фото</h1>
             <div class="aside_center main_content">
                 <div class="drag_zone">
-
+                    <span class="fake-btn">Выбрать файл</span>
+                    <span id="file-name"></span>
+                    <img id="box-image" src="{{ url_for('static', filename='uploadImages/404.jpg', v=1) }}">
+                    <img src="{{ url_for('static', filename='uploadImages/json.jpg', v=1) }}" class="json">
+                    <!--<input id="file-input" form="upload_form" type="file" accept="image/jpeg,image/png,image/jpg" multiple>-->
+                    {{ form.picture_file(form="upload_form", id="file-input") }}
                 </div>
                 <div class="album_zone">
 
@@ -24,7 +29,7 @@
                 <form action="" method="POST" enctype="multipart/form-data" class="aside_center form" id="upload_form">
                     {{ form.hidden_tag() }}
                     <div class="form_buttons">
-                        {{ form.picture_file(form="upload_form", class="form_picture_file_button") }}
+                        <!--{{ form.picture_file(form="upload_form", class="form_picture_file_button") }}-->
                         {{ form.submit(form="upload_form", class="form_submit_button") }}
                     </div>
                 </form>
@@ -52,4 +57,5 @@
             </div>
         </aside>
     </div>
+    <script src="{{ url_for('static', filename='scripts/upload.js', v=1) }}"></script>
 {% endblock content %}

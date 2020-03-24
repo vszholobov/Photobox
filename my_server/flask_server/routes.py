@@ -96,15 +96,11 @@ def account():
 @login_required
 def search():
     form = SearchForm()
-    # print(Post.query.filter_by(user_id=current_user.id))
-    # user_photos = listdir(getcwd() + "/flask_server/static/users/" + str(current_user.id) + "/scaled_images")
     if form.validate_on_submit and request.method == "POST":
         user_photos = sort_pictures_by_tag(Post.query.filter_by(user_id=current_user.id),
                                            request.form.getlist('check'))
     else:
         user_photos = [i.image_file for i in current_user.posts]
-    #print(sort_pictures_by_tag(Post.query.filter_by(user_id=current_user.id), request.form.getlist('check')))
-    # user_photos = [i.image_file for i in user_photos]
     return render_template("search.html", title="Search", form=form, user_photos=user_photos)
 
 

@@ -11,8 +11,16 @@
                     <tr class="search_image_row">
                 {% endif %}
                         <td class="img_container">
-                            <img src="{{ url_for('static', filename=path + photo) }}" class="img">
-                            <span class="close"></span>
+                            <div style="height: 100%; width: 90%; margin: 0px auto;">
+                                <div style="width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: space-between;">
+                                    <div class="left_side_img_container">
+                                        <img src="{{ url_for('static', filename=path + photo) }}" class="img">
+                                        <div class="hidden left_side_img_container_buttons">dakwdoka</div>
+                                    </div>
+                                    <div class="hidden right_side_img_container"></div>
+                                    <span class="hidden close"></span>
+                                </div>
+                            </div>
                         </td>
                 {% if (loop.index - 1) % 4 == 3%}
                     </tr>

@@ -5,9 +5,9 @@ let current_active_element;
 [].forEach.call(blocks, function(item) {
     item.addEventListener('click', () => {
         if(current_active_element) {
-            current_active_element.parentNode.classList.remove('active_container');
+            current_active_element.closest(".img_container").classList.remove('active_container');
         }
-        item.parentNode.classList.add('active_container');
+        item.closest(".img_container").classList.add('active_container');
         current_active_element = item;
     });
 });
