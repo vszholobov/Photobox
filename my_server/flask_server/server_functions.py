@@ -240,31 +240,8 @@ def sorting_tags_by_alphabet(tag_list):
     return sorted_tag_list
 
 
-def function(name_of_image, filter_name="contour"):
-    name_of_image = getcwd() + "/" + name_of_image
-    image = Image.open(name_of_image)
-    if filter_name == "contour":
-        image = image.filter(ImageFilter.CONTOUR)
-    elif filter_name == "detail":
-        image = image.filter(ImageFilter.DETAIL)
-    elif filter_name == "find_edges":
-        image = image.filter(ImageFilter.FIND_EDGES)
-    elif filter_name == "edge_enhance_more":
-        image = image.filter(ImageFilter.EDGE_ENHANCE_MORE)
-    elif filter_name == "edge_enhance":
-        image = image.filter(ImageFilter.EDGE_ENHANCE)
-    elif filter_name == "blur":
-        image= image.filter(ImageFilter.BLUR)
-    elif filter_name == "emboss":
-        image = image.filter(ImageFilter.EMBOSS)
-    elif filter_name == "sharpen":
-        image = image.filter(ImageFilter.SHARPEN)
-    elif filter_name == "smooth":
-        image = image.filter(ImageFilter.SMOOTH)
-    elif filter_name == "smooth_more":
-        image = image.filter(ImageFilter.SMOOTH_MORE)
-
-
 def creating_routes(list_of_images):
     for image in list_of_images:
         image.route = '/users/' + str(image.user_id) + '/scaled_images/' + str(image.image_file)
+
+
