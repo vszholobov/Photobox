@@ -39,10 +39,12 @@ nav a:hover{
 
 .link_photo {
     margin-right: 10px;
-    border-radius: 20px;
+    border-radius: 50%;
+    width: 35px;
+}
+#user_photo_link .link_photo {
     border: 1px solid black;
-    min-width: 35px;
-    height: 35px;
+    width: 30px;
 }
 
 #user_photo_link {

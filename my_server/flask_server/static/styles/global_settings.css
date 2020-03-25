@@ -4,6 +4,15 @@
 }
 body {
     background-color: #f0f0f0;
+    overflow-y: scroll;
+    overflow-x: auto;
+}
+.aside_title {
+    font-family: Arial;
+    text-align: center;
+    font-weight: normal;
+    font-size: 25px;
+	color: #067259;
 }
 .center {
     width: 70%;
@@ -35,14 +44,12 @@ body {
     top: 72px;
 }
 #wrapper {
-    min-width: 1100px;
+    min-width: 1200px;
     min-height: 600px;
     height: 100vh;
 
     display: flex;
     flex-flow: column nowrap;
-
-    overflow: visible;
 }
 #content_wrapper {
     width: 100%;

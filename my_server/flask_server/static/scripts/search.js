@@ -14,5 +14,6 @@ let current_active_element;
 [].forEach.call(close_buttons, function(item) {
     item.addEventListener('click', () => {
         document.querySelector(".active_container").classList.remove("active_container");
+        current_active_element = null;
     });
 });

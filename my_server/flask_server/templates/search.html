@@ -11,8 +11,8 @@
                     <tr class="search_image_row">
                 {% endif %}
                         <td class="img_container">
-                            <div style="height: 100%; width: 90%; margin: 0px auto;">
-                                <div style="width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: space-between;">
+                            <div class="img_wrapper">
+                                <div class="img_wrapper2">
                                     <div class="left_side_img_container">
                                         <img src="{{ url_for('static', filename=path + photo) }}" class="img">
                                         <div class="hidden left_side_img_container_buttons">dakwdoka</div>
@@ -33,10 +33,10 @@
         <h1 class="aside_title">Теги</h1>
         <div class="checkbox_container">
             {% for tag in current_user.user_tag_list %}
-                <div class="aside_center checkbox_div">
+                <div class="aside_center checkbox_div" title="{{ tag }}">
                     <label>
                         <input type="checkbox" class="upload_checkbox" name="check" value="{{ tag }}" form="search_form">
-                        <span>{{ tag }}</span>
+                        <span class="checkbox_span">{{ tag }}</span>
                     </label>
                 </div>
             {% endfor %}

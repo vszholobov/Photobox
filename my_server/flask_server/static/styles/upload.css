@@ -24,7 +24,7 @@
     }
     .middle_aside {
         height: 100%;
-        min-width: 500px;
+
         margin-right: 15px;
 
         flex-grow: 1;
@@ -43,17 +43,19 @@
         min-height: 300px;
     }
 
-.aside_title {
-    font-family: Arial;
-    text-align: center;
-    font-weight: normal;
-    font-size: 25px;
-	color: #067259;
-}
+
 .drag_zone {
     width: 65%;
     border: 1px dashed black;
 }
+    .drag_zone_bottom {
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        height: 40px;
+    }
 
 .form_description_field {
     display: block;
@@ -114,34 +116,81 @@
 }
     .checkbox_div {
         margin-top: 1px;
+        background-color: #3d9480;
+        padding-left: 5px;
+        border-radius: 5px;
+        color: white;
+        line-height: 25px;
+        transition: 0.3s;
     }
     .checkbox_div:first-child {
         margin-top: 4px;
+    }
+    .checkbox_div:hover {
+        background: #418777;
+    }
+    .checkbox_span {
+        display: block;
+        white-space: nowrap;
     }
 
 .add_tags_div {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
 
     margin-bottom: 10px;
-    margin-top: 2px;
+    margin-top: 1px;
+
+    padding-left: 5px;
+    height: 25px;
+    border-radius: 5px;
+    background-color: #3d9480;
 }
     .add_tags_div input:first-child {
-        width: 55%;
+        width: 60%;
+        margin-left: -5px;
+        border: 1px solid #418777;
+        border-radius: 5px 0px 0px 5px;
+
+    }
+    .add_tags_div input::placeholder {
+        font-size: 13px;
+        text-align: center;
+    }
+    .add_tags_div input:focus {
+        outline: none;
+    }
+    .add_tags_div input:focus::placeholder {
+        opacity: 0;
+        transition: 0.3s;
     }
     .add_tags_div input:last-child {
-        width: 40%;
+        margin-left: -1px;
+        border-radius: 0px 5px 5px 0px;
+        outline: none;
+        border: 1px solid #418777;
+        flex-grow: 1;
+        color: white;
+        font-family: Arial;
+        background: #3d9480;
+        transition: 0.3s;
+        font-size: 13px;
     }
-
+    .add_tags_div input:last-child:hover {
+        background: #418777;
+    }
+.upload_checkbox {
+    margin-top: 7px;
+    margin-right: 3px;
+    float: left;
+}
 .upload_checkbox, label {
     cursor: pointer;
     font-family: Arial;
     font-size: 20px;
 }
-
-.upload_checkbox:checked ~ span{
-    color: #ff6347;
+.upload_checkbox:checked ~ span {
+    color: #fff80f;
 }
 
 .main_content {
@@ -166,40 +215,40 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 25px;
   border: 1px dashed black;
   border-radius: 10px;
   transition: 0.2s;
   background: #f0f0f0;
+  width: 75%;
 }
 
 .fake-btn {
   font-family: Arial;
   padding: 10px 20px;
+  width: 110px;
+  min-width: 110px;
+  margin-bottom: 4px;
+  margin-left: 4px;
   border: none;
   border-radius: 5px;
   color: white;
-  background-color: #423ff1;
+  background-color: #3d9480;
   outline: none;
   transition: 0.3s;
-  position: absolute;
-  left: 5px;
-  bottom: 5px;
 }
-    .drag_zone:hover > .fake-btn {
-        background: #2a28d5;
+    .drag_zone:hover .fake-btn {
+        background: #418777;
     }
 
 #file-name {
     color: #3d9480;
-	position: absolute;
-	bottom: 0px;
-	line-height: 47px;
-	height: 47px;
-	left: 160px;
-	width: 350px;
+	white-space: nowrap;
 	overflow: hidden;
-    text-overflow: clip;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    line-height: 38px;
+    margin-bottom: 2px;
+    margin-left: 4px;
 }
 
 #file-input {
