@@ -5,7 +5,7 @@ const fileName = document.getElementById("file-name");
 const boxImage = document.getElementById("box-image");
 const imagesRoute = "/static/uploadImages/";
 const json = document.getElementsByClassName("json")[0];
-const imageList = ["404.jpg", "boxFilled1.png", "boxFilled2.png", "boxFilled3.png", "boxFilled4.png"];
+const imageList = ["boxFilled0.png", "boxFilled1.png", "boxFilled2.png", "boxFilled3.png", "boxFilled4.png"];
 const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
 
 ['dragenter', 'dragover'].forEach(eventName => {
