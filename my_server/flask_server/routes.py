@@ -1,10 +1,15 @@
-from flask import render_template, url_for, redirect, flash, request
+from flask import render_template, url_for, redirect, flash, request, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_server import app, db, bcrypt
 from flask_server.models import User, Post
 from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, AddTagForm, SearchForm
 from flask_server.server_functions import save_picture, code_picture, tags, sort_pictures_by_tag, creation_date
 from os import mkdir, getcwd, remove, path
+
+
+@app.route("/ajax", methods=['GET', 'POST'])
+def check():
+    return jsonify([i.as_dict() for i in Post.query.all()])
 
 
 @app.route("/")
@@ -29,9 +34,6 @@ def register():
 
         mkdir(getcwd() + "/flask_server/static/users" + "/" +
               str(User.query.filter_by(username=form.username.data).first().id) + "/images/")
-
-        mkdir(getcwd() + "/flask_server/static/users" + "/" +
-              str(User.query.filter_by(username=form.username.data).first().id) + "/scaled_images/")
 
         print(User.query.all())
         flash("Your account has been created! You are now able to log in")
@@ -113,11 +115,11 @@ def upload():
         id = int(current_user.id)
         for photo in form.picture_file.data:
             new_name = code_picture(photo)
-            save_picture(photo, new_name, getcwd() + "/flask_server/static/users/" + str(id) + "/")
+            height = save_picture(photo, new_name, getcwd() + "/flask_server/static/users/" + str(id) + "/")
 
             post = Post(image_file=new_name, description=form.description.data,
                         tag_list=request.form.getlist('check'), user_id=current_user.id,
-                        creation_date=creation_date())
+                        creation_date=creation_date(), height=height)
             db.session.add(post)
             db.session.commit()
 

@@ -38,12 +38,12 @@ class Post(db.Model):
     image_file = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     tag_list = db.Column(db.PickleType, default=[])
-    comment_list = db.Column(db.PickleType, default=[])
+    height = db.Column(db.Integer, nullable=False)
     description = db.Column(db.Text, nullable=False)
     creation_date = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
         return f"Post: '{self.id}', User: '{self.user_id}'"
 
-    def add_comment(self, author, comment):
-        self.comment_list.append({author: comment})
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}

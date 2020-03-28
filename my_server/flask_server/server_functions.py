@@ -44,8 +44,8 @@ def size_analise(image):
     """
     size = image.size
 
-    width = size[0]
-    height = size[1]
+    # width = size[0]
+    # height = size[1]
 
     if size[0] > size[1]:
         distance = (size[0] - size[1])/2
@@ -74,17 +74,12 @@ def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
         return picture_fn
 
     picture_path_1 = os.path.join(app.root_path, path + "images/", picture_fn)
-    picture_path_2 = os.path.join(app.root_path, path + "scaled_images/", picture_fn)
-
-    scaled_image = Image.open(form_picture)
-    scaled_image = size_analise(scaled_image)
 
     image = Image.open(form_picture)
-
+    height = image.size[1]
     image.save(picture_path_1)
-    scaled_image.save(picture_path_2)
 
-    return
+    return height
 
 
 def tags(string, tags=None):

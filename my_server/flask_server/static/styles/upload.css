@@ -199,11 +199,6 @@
     flex-direction: row;
     justify-content: space-between;
 }
-.album_zone {
-    margin-left: 10px;
-    flex-grow: 1;
-    border: 1px solid black;
-}
 .description_zone {
     height: 30%;
 }
@@ -219,7 +214,7 @@
   border-radius: 10px;
   transition: 0.2s;
   background: #f0f0f0;
-  width: 75%;
+  width: 100%;
 }
 
 .fake-btn {
