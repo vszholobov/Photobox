@@ -115,11 +115,11 @@ def upload():
         id = int(current_user.id)
         for photo in form.picture_file.data:
             new_name = code_picture(photo)
-            height = save_picture(photo, new_name, getcwd() + "/flask_server/static/users/" + str(id) + "/")
+            htwRatio = save_picture(photo, new_name, getcwd() + "/flask_server/static/users/" + str(id) + "/")
 
             post = Post(image_file=new_name, description=form.description.data,
                         tag_list=request.form.getlist('check'), user_id=current_user.id,
-                        creation_date=creation_date(), height=height)
+                        creation_date=creation_date(), htwRatio=htwRatio)
             db.session.add(post)
             db.session.commit()
 

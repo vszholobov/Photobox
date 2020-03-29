@@ -38,7 +38,7 @@ class Post(db.Model):
     image_file = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     tag_list = db.Column(db.PickleType, default=[])
-    height = db.Column(db.Integer, nullable=False)
+    htwRatio = db.Column(db.Integer, nullable=False)
     description = db.Column(db.Text, nullable=False)
     creation_date = db.Column(db.Text, nullable=False)
 

@@ -76,10 +76,10 @@ def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
     picture_path_1 = os.path.join(app.root_path, path + "images/", picture_fn)
 
     image = Image.open(form_picture)
-    height = image.size[1]
+    htwRatio = image.size[1] / image.size[0]
     image.save(picture_path_1)
 
-    return height
+    return htwRatio
 
 
 def tags(string, tags=None):

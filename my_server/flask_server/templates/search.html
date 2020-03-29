@@ -4,28 +4,13 @@
 {% endblock head %}
 {% block content %}
     {% set path = "users/" + current_user.id|string + "/images/" %}
-    <div class="table_container">
-        <table border="0" cellspacing="0" class="center table">
-            {% for photo in user_photos %}
-                {% if not ((loop.index - 1) % 4) %}
-                    <tr class="search_image_row">
-                {% endif %}
-                        <td class="img_container">
-                            <div class="img_wrapper">
-                                <div class="img_wrapper2">
-                                    <div class="left_side_img_container">
-                                        <img src="{{ url_for('static', filename=path + photo) }}" class="img">
-                                    </div>
-                                    <div class="hidden right_side_img_container"></div>
-                                    <span class="hidden close"></span>
-                                </div>
-                            </div>
-                        </td>
-                {% if (loop.index - 1) % 4 == 3%}
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        </table>
+    <div class="wrapper_middle">
+        <div id="img_column1" class="img_column"></div>
+        <div id="img_column2" class="img_column"></div>
+        <div id="img_column3" class="img_column"></div>
+        <div id="img_column4" class="img_column"></div>
+
+        <!--<span class="hidden close"></span>-->
     </div>
     <aside class="wrapper_aside">
         <hr class="hr">
@@ -40,10 +25,6 @@
                 </div>
             {% endfor %}
         </div>
-        <form action="" method="POST" id="search_form">
-            {{ form.hidden_tag() }}
-            {{ form.submit() }}
-        </form>
     </aside>
     <script src="{{ url_for('static', filename='scripts/search.js', v=1) }}"></script>
 {% endblock content %}

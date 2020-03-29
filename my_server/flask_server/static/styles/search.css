@@ -65,83 +65,32 @@
     font-family: Arial;
     font-size: 20px;
 }
-
 .upload_checkbox:checked ~ span {
     color: #fff80f;
 }
-.table_container {
+
+
+.wrapper_middle{
     flex-grow: 1;
-}
-.table {
-    position: relative;
 
-	margin: 0px auto;
-	width: 100%;
-
-	border-spacing: 15px 0px;
-	background: rgba(122, 102, 255, 1);
-	border-radius: 10px;
-}
-.img {
-	cursor: pointer;
-	transition: 0s;
-	max-width: 100%;
-	border-radius: 10px;
-	box-shadow: 0 4px 16px #4e4e4e;
-	margin: 10px 0px;
-}
-.img:hover {
-    box-shadow: 0 4px 16px black;
-}
-.img_container {
-	transition: 0s;
-	width: 25%;
-	position: relative;
-	vertical-align: top;
-}
-
-.active_container {
-	position: absolute;
-	left: 0px;
-	z-index: 1;
-
-	width: 100%;
-	height: 392px;
-
-	background: #43a28c;
-	border-radius: 10px;
-
-	box-shadow: 7px 7px 3px #333333;
-	padding: 33px 0px;
-}
-.active_container, .active_container img {
-	transition: width 0.7s ease, box-shadow 1s ease;
-}
-.active_container .hidden {
-	display: block;
-}
-.active_container .left_side_img_container {
-    width: 70%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-around;
 }
-.active_container .right_side_img_container {
-    width: 29%;
-    height: 100%;
-    background: #f0f0f0;
-    border-radius: 10px;
-}
-.active_container .img {
-    max-width: 100%;
-    max-height: 100%;
-    margin: auto auto;
-    transition: 0s;
-    border-radius: 10px;
-    cursor: auto;
-}
-.active_container .img:hover {
-    box-shadow: 0 4px 16px #4e4e4e;
-}
+    .img_column {
+        width: 23%;
+        height: 100%;
+    }
+        .img {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px #4e4e4e;
+        }
+        .img:hover {
+            box-shadow: 0px 0px 3px 3px #4e4e4e;
+        }
 
 .close {
 	position: absolute;
@@ -169,18 +118,6 @@
 }
 .close:after {
 	transform: rotate(-45deg);
-}
-.img_container .img_wrapper {
-    height: 100%;
-    width: 90%;
-    margin: 0px auto;
-}
-.img_wrapper2 {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 }
 
 .hidden {
