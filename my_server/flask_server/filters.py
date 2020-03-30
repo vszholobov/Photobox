@@ -1,6 +1,6 @@
-import PIL
 from os import getcwd
 from PIL import Image,ImageFilter
+
 
 def bright(source_name, brightness):
     result = Image.new('RGB', source_name.size)
@@ -24,6 +24,7 @@ def negative(source_name):
             r, g, b = source_name.getpixel((x, y))
             result.putpixel((x, y), (255 - r, 255 - g, 255 - b))
     return result
+
 
 def white_black(source_name, brightness=1.2):
     result = Image.new('RGB', source_name.size)
@@ -69,7 +70,6 @@ def contrast(source_name, coefficient):
             r, g, b = source_name.getpixel((x, y))
             avg += r * 0.299 + g * 0.587 + b * 0.114
     avg /= source_name.size[0] * source_name.size[1]
-
     palette = []
     for i in range(256):
         temp = int(avg + coefficient * (i - avg))
@@ -78,12 +78,10 @@ def contrast(source_name, coefficient):
         elif temp > 255:
             temp = 255
         palette.append(temp)
-
     for x in range(source_name.size[0]):
         for y in range(source_name.size[1]):
             r, g, b = source_name.getpixel((x, y))
             result.putpixel((x, y), (palette[r], palette[g], palette[b]))
-
     return result
 
 
@@ -117,4 +115,3 @@ def photo_filter(name_of_image, filter_name="contour"):
     elif filter_name == "white_black":
         image = white_black(image)
     return image
-
