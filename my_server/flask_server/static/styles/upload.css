@@ -132,6 +132,8 @@
     .checkbox_span {
         display: block;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
     }
 
 .add_tags_div {

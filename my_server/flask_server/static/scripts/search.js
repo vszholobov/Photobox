@@ -29,7 +29,15 @@ class Column {
     }
 
     addImage(image) {
-        this.self.append(image);
+        let mainDiv = document.createElement("div");
+        let divImageContainer = document.createElement("div");
+
+        mainDiv.classList.add("img_container");
+        divImageContainer.classList.add("left_side_img_container");
+        divImageContainer.append(image);
+        mainDiv.append(divImageContainer);
+
+        this.self.append(mainDiv);
     }
 }
 
@@ -56,41 +64,39 @@ class Image {
     }
 }
 
-function initializePage(imageList, columns, images, searchTagList=null) {
+function initializePage(imageList, columns, images) {
     const columnWidth = columns[0].self.offsetWidth;
-    columns.forEach(column => column.height = 0)
-    if(!searchTagList) {
-        for(let i = 0; i < imageList.length; i++) {
-            let minHeight = 10000;
-            let currentColumn = null;
-            columns.forEach(column => (column.height < minHeight)? [minHeight, currentColumn] = [column.height, column]: null);
+    for(let i = 0; i < imageList.length; i++) {
+        let minHeight = 10000;
+        let currentColumn = null;
+        columns.forEach(column => (column.height < minHeight)? [minHeight, currentColumn] = [column.height, column]: null);
 
-            images.push(new Image(imageList[i], imageList[i]));
-            currentColumn.addImage(images[i].node);
+        images.push(new Image(imageList[i], imageList[i]));
+        currentColumn.addImage(images[i].node);
 
-            currentColumn.changeHeight(imageList[i].htwRatio * columnWidth);
+        currentColumn.changeHeight(imageList[i].htwRatio * columnWidth);
+    }
+}
+
+function searchImages(columns, images, searchTagList) {
+    const columnWidth = columns[0].self.offsetWidth;
+
+    // Обнуление колонки перед поиском
+    columns.forEach(function(column) {
+        column.height = 0;
+        column.divNumber = 0;
+        for(let i = 0; i < column.self.childElementCount; i++) {
+            column.self.children[i].remove();
+            i--;
         }
-    } else {
-        if(searchTagList.length) {
-            images.forEach(image => image.node.remove())
-            for(let i = 0; i < images.length; i++) {
-                image = images[i];
-                let MatchingTags = image.tagList.filter(tag => searchTagList.includes(tag)? true: false);
+    });
+    if(searchTagList.length) {
+        //images.forEach(image => image.node.remove())
+        for(let i = 0; i < images.length; i++) {
+            image = images[i];
+            let MatchingTags = image.tagList.filter(tag => searchTagList.includes(tag)? true: false);
 
-                if(MatchingTags.length && image.tagList.length) {
-                    let minHeight = 10000;
-                    let currentColumn = null;
-                    columns.forEach(column => (column.height < minHeight)? [minHeight, currentColumn] = [column.height, column]: null);
-
-                    currentColumn.addImage(images[i].node);
-
-                    currentColumn.changeHeight(images[i].htwRatio * columnWidth);
-                }
-            }
-        } else {
-            for(let i = 0; i < images.length; i++) {
-                image = images[i];
-
+            if(MatchingTags.length && image.tagList.length) {
                 let minHeight = 10000;
                 let currentColumn = null;
                 columns.forEach(column => (column.height < minHeight)? [minHeight, currentColumn] = [column.height, column]: null);
@@ -100,8 +106,38 @@ function initializePage(imageList, columns, images, searchTagList=null) {
                 currentColumn.changeHeight(images[i].htwRatio * columnWidth);
             }
         }
+    } else {
+        for(let i = 0; i < images.length; i++) {
+            image = images[i];
+
+            let minHeight = 10000;
+            let currentColumn = null;
+            columns.forEach(column => (column.height < minHeight)? [minHeight, currentColumn] = [column.height, column]: null);
+
+            currentColumn.addImage(images[i].node);
+
+            currentColumn.changeHeight(images[i].htwRatio * columnWidth);
+        }
     }
 }
+
+// Список столбцов, куда будут добавляться фотографии
+let columns = [new Column("img_column1"),
+               new Column("img_column2"),
+               new Column("img_column3"),
+               new Column("img_column4")];
+
+// Список объектов класса Image. Используется при поиске.
+let images = [];
+
+// Список питоновских объектов фотографий. Используется при инициализации страницы.
+let imageList = [];
+
+// Хранит в себе объект текущего открытого div'a с изображением.
+let current_active_element = null;
+
+// Список объектов чекбоксов. Используются при поиске.
+const checkboxes = document.getElementsByClassName("upload_checkbox");
 
 let promise = new Promise(function(resolve, reject) {
     $.ajax({
@@ -115,29 +151,57 @@ let promise = new Promise(function(resolve, reject) {
             reject(new Error("Произошла ошибка( Попробуйте перезагрузить страницу."));
         }
     })
-})
-promise.catch(error => alert(error));
-promise.then(
-    result => initializePage(imageList, columns, images)
-);
+});
+promise.then(function(result) {
+    initializePage(imageList, columns, images);
+    const imagesNodeList = document.getElementsByClassName("img");
 
-let columns = [new Column("img_column1"),
-               new Column("img_column2"),
-               new Column("img_column3"),
-               new Column("img_column4")];
-let images = [];
-const checkboxes = document.getElementsByClassName("upload_checkbox");
-const searchButton = document.getElementById("search_button");
+    // Навешиваем обработчик кликов на фотографии. При клике появляется широкая область с описанием фотографии.
+    [].forEach.call(imagesNodeList, function(imageNode) {
+        imageNode.addEventListener('click', function() {
+            if(current_active_element) {
+                document.querySelector(".description_zone").remove();
+                document.querySelector(".close").remove();
+                current_active_element.classList.remove("active_container");
+            }
+
+            current_active_element = imageNode.closest(".img_container");
+            current_active_element.classList.add("active_container");
+
+            let div = document.createElement("div");
+            div.classList.add("description_zone");
+            current_active_element.append(div);
+
+            let closeButton = document.createElement("span");
+            closeButton.classList.add("close");
+            current_active_element.append(closeButton);
+
+            closeButton.addEventListener("click", function(self) {
+                document.querySelector(".description_zone").remove();
+                document.querySelector(".close").remove();
+                current_active_element.classList.remove("active_container");
+
+                current_active_element = null;
+            });
+        });
+    });
+
+});
+promise.catch(error => alert(error));
 
 [].forEach.call(checkboxes, function(checkbox) {
     checkbox.addEventListener('click', () => {
+        // Обнуляется в случае, если фото в данный момент открыто и пользователь нажал на checkbox.
+        current_active_element = null;
+
         if(checkbox.classList.contains("active_checkbox")) checkbox.classList.remove("active_checkbox")
         else checkbox.classList.add("active_checkbox");
+
         let searchTagList = [];
         let activeCheckboxes = document.querySelectorAll(".active_checkbox");
         for(let checkbox of activeCheckboxes) {
             searchTagList.push(checkbox.value);
         }
-        initializePage(imageList, columns, images, searchTagList);
+        searchImages(columns, images, searchTagList);
     });
 });

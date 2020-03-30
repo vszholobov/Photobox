@@ -2,7 +2,7 @@ from flask import render_template, url_for, redirect, flash, request, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_server import app, db, bcrypt
 from flask_server.models import User, Post
-from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, AddTagForm, SearchForm
+from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, AddTagForm
 from flask_server.server_functions import save_picture, code_picture, tags, sort_pictures_by_tag, creation_date
 from os import mkdir, getcwd, remove, path
 
@@ -97,13 +97,7 @@ def account():
 @app.route("/search", methods=["POST", "GET"])
 @login_required
 def search():
-    form = SearchForm()
-    if form.validate_on_submit and request.method == "POST":
-        user_photos = sort_pictures_by_tag(Post.query.filter_by(user_id=current_user.id),
-                                           request.form.getlist('check'))
-    else:
-        user_photos = [i.image_file for i in current_user.posts]
-    return render_template("search.html", title="Search", form=form, user_photos=user_photos)
+    return render_template("search.html", title="Search")
 
 
 @app.route("/upload", methods=["POST", "GET"])
