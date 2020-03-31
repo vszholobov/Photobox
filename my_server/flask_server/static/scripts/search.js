@@ -71,7 +71,7 @@ function initializePage(imageList, columns, images) {
         let currentColumn = null;
         columns.forEach(column => (column.height < minHeight)? [minHeight, currentColumn] = [column.height, column]: null);
 
-        images.push(new Image(imageList[i], imageList[i]));
+        images.push(new Image(imageList[i]));
         currentColumn.addImage(images[i].node);
 
         currentColumn.changeHeight(imageList[i].htwRatio * columnWidth);
@@ -133,6 +133,9 @@ let images = [];
 // Список питоновских объектов фотографий. Используется при инициализации страницы.
 let imageList = [];
 
+// Список юзеров.
+let userList = [];
+
 // Хранит в себе объект текущего открытого div'a с изображением.
 let current_active_element = null;
 
@@ -143,35 +146,52 @@ let promise = new Promise(function(resolve, reject) {
     $.ajax({
         type: 'POST',
         url: '/ajax',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({"action": "init"}),
         success: function(data) {
-            imageList = data;
+            imageList = data[0];
+            userList = data[1];
             resolve('result');
         },
         error: function() {
             reject(new Error("Произошла ошибка( Попробуйте перезагрузить страницу."));
         }
-    })
+    });
 });
 promise.then(function(result) {
     initializePage(imageList, columns, images);
-    const imagesNodeList = document.getElementsByClassName("img");
+    const imagesNodeList = images.map(image => image.node);
 
     // Навешиваем обработчик кликов на фотографии. При клике появляется широкая область с описанием фотографии.
-    [].forEach.call(imagesNodeList, function(imageNode) {
+    [].forEach.call(imagesNodeList, function(imageNode, index) {
         imageNode.addEventListener('click', function() {
             if(current_active_element) {
                 document.querySelector(".description_zone").remove();
                 document.querySelector(".close").remove();
+                document.querySelector(".active_img").classList.remove("active_img");
                 current_active_element.classList.remove("active_container");
             }
-
+            imageNode.classList.add("active_img");
             current_active_element = imageNode.closest(".img_container");
             current_active_element.classList.add("active_container");
 
-            let div = document.createElement("div");
-            div.classList.add("description_zone");
-            current_active_element.append(div);
+            // Зона описания
+            let descriptionDiv = document.createElement("div");
+            descriptionDiv.classList.add("description_zone");
 
+            let authorAvatar = document.createElement("img");
+            authorAvatar.src = userList[images[index].userId - 1][1];
+            authorAvatar.classList.add("author_avatar");
+            descriptionDiv.append(authorAvatar);
+
+            let authorNameSpan = document.createElement("span");
+            authorNameSpan.innerText = userList[images[index].userId - 1][0];
+            descriptionDiv.append(authorNameSpan);
+
+            current_active_element.append(descriptionDiv);
+
+            // Кнопка крест в правом верхнем углу
             let closeButton = document.createElement("span");
             closeButton.classList.add("close");
             current_active_element.append(closeButton);
@@ -185,7 +205,6 @@ promise.then(function(result) {
             });
         });
     });
-
 });
 promise.catch(error => alert(error));
 

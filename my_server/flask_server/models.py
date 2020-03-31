@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    image_file = db.Column(db.String(), nullable=False, default="default.jpg")
+    image_file = db.Column(db.String(), nullable=False)
     password = db.Column(db.String(60), nullable=False)
     user_tag_list = db.Column(db.PickleType, default=["#Семья", "#Природа", "#Красота", "#Клоун", "#Путешествие"])
     posts = db.relationship("Post", backref="author", lazy=True)
@@ -27,10 +27,13 @@ class User(db.Model, UserMixin):
         Иначе возвращает выбранную им фотографию.
         """
 
-        if self.image_file == "default.jpg":
+        if self.image_file == self.email:
             digest = md5(self.email.lower().encode('utf-8')).hexdigest()
             return 'https://www.gravatar.com/avatar/{}?d=identicon&s=150'.format(digest)
         return url_for("static", filename="profile_pictures/" + self.image_file)
+
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
 class Post(db.Model):

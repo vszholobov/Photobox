@@ -9,7 +9,17 @@ from os import mkdir, getcwd, remove, path
 
 @app.route("/ajax", methods=['GET', 'POST'])
 def check():
-    return jsonify([i.as_dict() for i in Post.query.all()])
+    print(request.json["action"])
+
+    result = None
+    action = request.json["action"]
+
+    if action == "init":
+        result = [
+            [i.as_dict() for i in Post.query.all()],
+            [[i.as_dict()["username"], i.set_user_photo()] for i in User.query.all()]
+        ]
+    return jsonify(result)
 
 
 @app.route("/bot", methods=['GET', 'POST'])
@@ -31,7 +41,8 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password,
+                    image_file=form.email.data)
         db.session.add(user)
         db.session.commit()
 
