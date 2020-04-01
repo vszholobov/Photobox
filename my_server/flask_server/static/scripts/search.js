@@ -53,6 +53,7 @@ class Image {
         this.description = imageObject.description;
         this.creationDate = imageObject.creation_date;
         this.htwRatio = imageObject.htwRatio;
+        this.hidden = imageObject.hidden;
     }
 
     hide() {
@@ -121,6 +122,59 @@ function searchImages(columns, images, searchTagList) {
     }
 }
 
+// Создание зоны описания при раскрытии фотографии.
+function createDescriptionDiv(images, index) {
+    let descriptionDiv = document.createElement("div");
+    descriptionDiv.classList.add("description_zone");
+
+    // Создание области с фотографией пользователя, его именем и датой создания фотографии.
+    let authorDiv = document.createElement("div");
+    authorDiv.classList.add("top_div");
+
+    let authorAvatar = document.createElement("img");
+    authorAvatar.src = userList[images[index].userId - 1][1];
+    authorAvatar.classList.add("author_avatar");
+    authorDiv.append(authorAvatar);
+
+    let authorDateAndNameDiv = document.createElement("div");
+    authorDateAndNameDiv.classList.add("author_date_name");
+
+    let authorNameSpan = document.createElement("p");
+    authorNameSpan.innerText = userList[images[index].userId - 1][0];
+    authorDateAndNameDiv.append(authorNameSpan);
+
+    let imageCreationDate = document.createElement("p");
+    imageCreationDate.innerText = images[index].creationDate;
+    authorDateAndNameDiv.append(imageCreationDate);
+
+    authorDiv.append(authorDateAndNameDiv);
+    descriptionDiv.append(authorDiv);
+
+    // Создание области с описанием фотографии
+    let textDescriptionDiv = document.createElement("div");
+    textDescriptionDiv.classList.add("text_description");
+    textDescriptionDiv.classList.add("scroll");
+
+    let description = document.createElement("p");
+    description.innerText = images[index].description;
+    textDescriptionDiv.append(description);
+
+    descriptionDiv.append(textDescriptionDiv);
+
+    // Создание области с тегами фотографии.
+    let tagsDiv = document.createElement("div");
+    tagsDiv.classList.add("tags_zone");
+    tagsDiv.classList.add("scroll");
+
+    let tags = document.createElement("p");
+    tags.innerText = images[index].tagList;
+    tagsDiv.append(tags);
+
+    descriptionDiv.append(tagsDiv);
+
+    return descriptionDiv;
+}
+
 // Список столбцов, куда будут добавляться фотографии
 let columns = [new Column("img_column1"),
                new Column("img_column2"),
@@ -176,20 +230,8 @@ promise.then(function(result) {
             current_active_element = imageNode.closest(".img_container");
             current_active_element.classList.add("active_container");
 
-            // Зона описания
-            let descriptionDiv = document.createElement("div");
-            descriptionDiv.classList.add("description_zone");
-
-            let authorAvatar = document.createElement("img");
-            authorAvatar.src = userList[images[index].userId - 1][1];
-            authorAvatar.classList.add("author_avatar");
-            descriptionDiv.append(authorAvatar);
-
-            let authorNameSpan = document.createElement("span");
-            authorNameSpan.innerText = userList[images[index].userId - 1][0];
-            descriptionDiv.append(authorNameSpan);
-
-            current_active_element.append(descriptionDiv);
+            // Зона описания!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            current_active_element.append(createDescriptionDiv(images, index));
 
             // Кнопка крест в правом верхнем углу
             let closeButton = document.createElement("span");

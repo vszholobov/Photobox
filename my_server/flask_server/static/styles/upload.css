@@ -39,7 +39,7 @@
 
         position: sticky;
         top: 72px;
-        height: 60vh;
+        height: 40vh;
         min-height: 300px;
     }
 
@@ -180,6 +180,7 @@
     }
     .add_tags_div input:last-child:hover {
         background: #418777;
+        cursor: pointer;
     }
 .upload_checkbox {
     margin-top: 7px;

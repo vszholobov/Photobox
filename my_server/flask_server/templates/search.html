@@ -3,23 +3,20 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/search.css', v=1) }}">
 {% endblock head %}
 {% block content %}
-    {% set path = "users/" + current_user.id|string + "/images/" %}
     <div class="wrapper_middle">
         <div id="img_column1" class="img_column"></div>
         <div id="img_column2" class="img_column"></div>
         <div id="img_column3" class="img_column"></div>
         <div id="img_column4" class="img_column"></div>
-
-        <!--<span class="hidden close"></span>-->
     </div>
     <aside class="wrapper_aside">
         <hr class="hr">
         <h1 class="aside_title">Теги</h1>
-        <div class="checkbox_container">
+        <div class="checkbox_container scroll">
             {% for tag in current_user.user_tag_list %}
                 <div class="aside_center checkbox_div" title="{{ tag }}">
                     <label>
-                        <input type="checkbox" class="upload_checkbox" name="check" value="{{ tag }}" form="search_form">
+                        <input type="checkbox" class="upload_checkbox" name="check" value="{{ tag }}">
                         <span class="checkbox_span">{{ tag }}</span>
                     </label>
                 </div>

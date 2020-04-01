@@ -1,6 +1,7 @@
 * {
     margin: 0px;
     padding: 0px;
+    font-family: Arial;
 }
 body {
     background-color: #f0f0f0;
@@ -44,7 +45,7 @@ body {
     top: 72px;
 }
 #wrapper {
-    min-width: 1200px;
+    min-width: 1400px;
     min-height: 600px;
     height: 100vh;
 
@@ -69,4 +70,15 @@ body {
 .hr_top {
     border: 1px solid #3d9480;
     background-color: #3d9480;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 8px;
+}
+.scroll::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+.scroll::-webkit-scrollbar-thumb {
+    background: #b3b3b3;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }

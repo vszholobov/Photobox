@@ -13,7 +13,7 @@ body {
 .wrapper_aside {
     position: relative;
 
-    height: 60vh;
+    height: 40vh;
     min-height: 300px;
 
     background-color: white;
@@ -49,6 +49,9 @@ body {
 }
 .checkbox_div:first-child {
     margin-top: 4px;
+}
+.checkbox_div:last-child {
+    margin-bottom: 4px;
 }
 .checkbox_span {
     display: block;
@@ -114,15 +117,16 @@ body {
             width: 100%;
             height: 400px;
 
-            background: gray;
+            background: #3d9480;
             padding: 32px 0px;
             border-radius: 10px;
+            border: 2px solid white;
 
             display: flex;
             flex-direction: row;
             justify-content: center;
 
-            box-shadow: 7px 7px 3px 3px black;
+            box-shadow: 7px 7px 3px 3px #3f3d40;
             transition: padding 0.7s ease, box-shadow 1s ease;
         }
             .active_container .left_side_img_container {
@@ -148,10 +152,56 @@ body {
                 margin-left: 10px;
 
                 border-radius: 10px;
+                box-shadow: 0 4px 16px #4e4e4e;
+
+                display: flex;
+                flex-direction: column;
             }
+                .active_container .top_div {
+                    border-bottom: 2px solid #3d9480;
+                    height: 50px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                }
                 .active_container .author_avatar {
-                    width: 60px;
-                    height: 60px;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    border: 1px solid black;
+                    margin: 4px 5px;
+                }
+                .author_date_name {
+                    flex-grow: 1;
+                    overflow: hidden;
+                    white-space: nowrap
+                    text-overflow: ellipsis;
+                }
+                .author_date_name p {
+                    line-height: 25px;
+                    height: 25px;
+                    white-space: nowrap
+                }
+                .author_date_name p:first-child {
+                    color: blue;
+                    font-size: 17px;
+                }
+                .author_date_name p:last-child {
+                    color: #8a8989;
+                    font-size: 15px;
+                }
+
+                .text_description {
+                    border-bottom: 2px solid #3d9480;
+                    word-break: break-all;
+                    overflow: scroll;
+                    overflow-x: hidden;
+                    height: 40%;
+                }
+                .tags_zone {
+                    flex-grow: 1;
+                    overflow: scroll;
+                    overflow-x: hidden;
                 }
 
 .close {

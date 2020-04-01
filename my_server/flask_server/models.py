@@ -44,6 +44,7 @@ class Post(db.Model):
     htwRatio = db.Column(db.Integer, nullable=False)
     description = db.Column(db.Text, nullable=False)
     creation_date = db.Column(db.Text, nullable=False)
+    hidden = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return f"Post: '{self.id}', User: '{self.user_id}'"
