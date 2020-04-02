@@ -1,23 +1,6 @@
-/*
-const blocks = document.getElementsByClassName("img");
-const close_buttons = document.querySelectorAll(".img_container .close");
-let current_active_element;
+"use strict"
 
-[].forEach.call(blocks, function(item) {
-    item.addEventListener('click', () => {
-        if(current_active_element) {
-            current_active_element.closest(".img_container").classList.remove('active_container');
-        }
-        item.closest(".img_container").classList.add('active_container');
-        current_active_element = item;
-    });
-});
-[].forEach.call(close_buttons, function(item) {
-    item.addEventListener('click', () => {
-        document.querySelector(".active_container").classList.remove("active_container");
-        current_active_element = null;
-    });
-});*/
+
 class Column {
     constructor(elementId) {
         this.self = document.getElementById(elementId);
@@ -94,7 +77,7 @@ function searchImages(columns, images, searchTagList) {
     if(searchTagList.length) {
         //images.forEach(image => image.node.remove())
         for(let i = 0; i < images.length; i++) {
-            image = images[i];
+            let image = images[i];
             let MatchingTags = image.tagList.filter(tag => searchTagList.includes(tag)? true: false);
 
             if(MatchingTags.length && image.tagList.length) {
@@ -109,7 +92,7 @@ function searchImages(columns, images, searchTagList) {
         }
     } else {
         for(let i = 0; i < images.length; i++) {
-            image = images[i];
+            let image = images[i];
 
             let minHeight = 10000;
             let currentColumn = null;
@@ -122,8 +105,68 @@ function searchImages(columns, images, searchTagList) {
     }
 }
 
+// Создаеи список тегов для поиска. Используется при вызове SearchImages.
+function createSearchTagList() {
+    // Обнуляется в случае, если фото в данный момент открыто и пользователь нажал на checkbox.
+    current_active_element = null;
+
+    let searchTagList = [];
+    let activeCheckboxes = document.querySelectorAll(".active_checkbox");
+
+    // Берет значение следующего за checkbox'ом span'а.
+    for(let checkbox of activeCheckboxes) {
+        searchTagList.push(checkbox.nextElementSibling.innerText);
+    }
+
+    return searchTagList;
+}
+
+// Добавляет обработчик на нажатие чекбоксов.
+function addSearchListenerToCheckboxes(checkboxes) {
+    [].forEach.call(checkboxes, function(checkbox) {
+        checkbox.addEventListener('click', function() {
+            if(checkbox.classList.contains("active_checkbox")) checkbox.classList.remove("active_checkbox")
+            else checkbox.classList.add("active_checkbox");
+
+            searchImages(columns, images, createSearchTagList());
+        });
+    });
+}
+
+// При нажатии на тег из области фотографии передвигает его на панель поиска и запускает поиск.
+function moveTagToPanel(checkbox, columns, images) {
+    // Создание списка тегов для проверки наличия нажатого тега в панели.
+    let listOfCheckboxes = Array.from(document.querySelectorAll(".upload_checkbox"));
+    listOfCheckboxes = listOfCheckboxes.filter(node => !node.classList.contains("photo_checkbox"));
+    let listOfTags = listOfCheckboxes.map(checkbox => checkbox.nextElementSibling.innerText);
+    let tagText = checkbox.nextElementSibling.innerText;
+
+    if(!listOfTags.includes(tagText)) {
+        // Копируем div с тегом, на который нажали
+        let appendedTagContainer = checkbox.closest(".checkbox_div").cloneNode(true);
+        // Добавляем его на панель поиска
+        document.querySelector(".checkbox_container").append(appendedTagContainer);
+
+        // Удаление класса photo_checkbox у нового тега в списке и добавление класса active_checkbox
+        let listOfCheckboxes = Array.from(document.querySelectorAll(".photo_checkbox"));
+        let currentCheckbox = listOfCheckboxes[listOfCheckboxes.length - 1];
+        currentCheckbox.classList.remove("photo_checkbox");
+        currentCheckbox.classList.add("active_checkbox");
+
+        addSearchListenerToCheckboxes(new Array(currentCheckbox));
+        searchImages(columns, images, createSearchTagList());
+    } else {
+        let currentPanelCheckbox = listOfCheckboxes[listOfTags.indexOf(tagText)];
+        currentPanelCheckbox.classList.add("active_checkbox");
+        currentPanelCheckbox.checked = true;
+
+        // Запуск поиска
+        searchImages(columns, images, createSearchTagList());
+    }
+}
+
 // Создание зоны описания при раскрытии фотографии.
-function createDescriptionDiv(images, index) {
+function createDescriptionDiv(image) {
     let descriptionDiv = document.createElement("div");
     descriptionDiv.classList.add("description_zone");
 
@@ -132,7 +175,7 @@ function createDescriptionDiv(images, index) {
     authorDiv.classList.add("top_div");
 
     let authorAvatar = document.createElement("img");
-    authorAvatar.src = userList[images[index].userId - 1][1];
+    authorAvatar.src = userList[image.userId - 1][1];
     authorAvatar.classList.add("author_avatar");
     authorDiv.append(authorAvatar);
 
@@ -140,11 +183,11 @@ function createDescriptionDiv(images, index) {
     authorDateAndNameDiv.classList.add("author_date_name");
 
     let authorNameSpan = document.createElement("p");
-    authorNameSpan.innerText = userList[images[index].userId - 1][0];
+    authorNameSpan.innerText = userList[image.userId - 1][0];
     authorDateAndNameDiv.append(authorNameSpan);
 
     let imageCreationDate = document.createElement("p");
-    imageCreationDate.innerText = images[index].creationDate;
+    imageCreationDate.innerText = image.creationDate;
     authorDateAndNameDiv.append(imageCreationDate);
 
     authorDiv.append(authorDateAndNameDiv);
@@ -156,7 +199,7 @@ function createDescriptionDiv(images, index) {
     textDescriptionDiv.classList.add("scroll");
 
     let description = document.createElement("p");
-    description.innerText = images[index].description;
+    description.innerText = image.description;
     textDescriptionDiv.append(description);
 
     descriptionDiv.append(textDescriptionDiv);
@@ -166,10 +209,28 @@ function createDescriptionDiv(images, index) {
     tagsDiv.classList.add("tags_zone");
     tagsDiv.classList.add("scroll");
 
-    let tags = document.createElement("p");
-    tags.innerText = images[index].tagList;
-    tagsDiv.append(tags);
+    // Вывод тегов по одному
+    for(let tag of image.tagList) {
+        let tagContainer = document.createElement("div");
+        tagContainer.classList.add("aside_center");
+        tagContainer.classList.add("checkbox_div");
 
+        let tagLabel = document.createElement("label");
+
+        let tagCheckbox = document.createElement("input");
+        tagCheckbox.type = "checkbox";
+        tagCheckbox.classList.add("upload_checkbox");
+        tagCheckbox.classList.add("photo_checkbox");
+        tagLabel.append(tagCheckbox);
+
+        let tagSpan = document.createElement("span");
+        tagSpan.classList.add("checkbox_span");
+        tagSpan.innerText = tag;
+        tagLabel.append(tagSpan);
+
+        tagContainer.append(tagLabel);
+        tagsDiv.append(tagContainer);
+    }
     descriptionDiv.append(tagsDiv);
 
     return descriptionDiv;
@@ -187,7 +248,7 @@ let images = [];
 // Список питоновских объектов фотографий. Используется при инициализации страницы.
 let imageList = [];
 
-// Список юзеров.
+// Список нужных полей пользователей(Имя пользователя и имя файла его аватара).
 let userList = [];
 
 // Хранит в себе объект текущего открытого div'a с изображением.
@@ -196,6 +257,7 @@ let current_active_element = null;
 // Список объектов чекбоксов. Используются при поиске.
 const checkboxes = document.getElementsByClassName("upload_checkbox");
 
+// Promise на получение фотографий с сервера при открытии страницы
 let promise = new Promise(function(resolve, reject) {
     $.ajax({
         type: 'POST',
@@ -214,7 +276,11 @@ let promise = new Promise(function(resolve, reject) {
     });
 });
 promise.then(function(result) {
+    // Создает фотографии на странице
     initializePage(imageList, columns, images);
+
+    // Добавляет листенеры на чекбоксы. При нажатии запускается поиск.
+    addSearchListenerToCheckboxes(checkboxes);
     const imagesNodeList = images.map(image => image.node);
 
     // Навешиваем обработчик кликов на фотографии. При клике появляется широкая область с описанием фотографии.
@@ -230,8 +296,12 @@ promise.then(function(result) {
             current_active_element = imageNode.closest(".img_container");
             current_active_element.classList.add("active_container");
 
-            // Зона описания!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            current_active_element.append(createDescriptionDiv(images, index));
+            // Создание зоны описания
+            current_active_element.append(createDescriptionDiv(images[index]));
+
+            [].forEach.call(document.querySelectorAll(".photo_checkbox"), function(checkbox) {
+                checkbox.addEventListener('click', () => moveTagToPanel(checkbox, columns, images));
+            });
 
             // Кнопка крест в правом верхнем углу
             let closeButton = document.createElement("span");
@@ -249,20 +319,3 @@ promise.then(function(result) {
     });
 });
 promise.catch(error => alert(error));
-
-[].forEach.call(checkboxes, function(checkbox) {
-    checkbox.addEventListener('click', () => {
-        // Обнуляется в случае, если фото в данный момент открыто и пользователь нажал на checkbox.
-        current_active_element = null;
-
-        if(checkbox.classList.contains("active_checkbox")) checkbox.classList.remove("active_checkbox")
-        else checkbox.classList.add("active_checkbox");
-
-        let searchTagList = [];
-        let activeCheckboxes = document.querySelectorAll(".active_checkbox");
-        for(let checkbox of activeCheckboxes) {
-            searchTagList.push(checkbox.value);
-        }
-        searchImages(columns, images, searchTagList);
-    });
-});

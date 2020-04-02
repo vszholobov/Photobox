@@ -30,6 +30,11 @@ body {
     position: sticky;
     top: 72px;
 }
+.checkbox_container {
+    flex-grow: 1;
+    overflow: scroll;
+    overflow-x: hidden;
+}
 .checkbox_div {
     margin-top: 1px;
     background-color: #3d9480;
@@ -42,17 +47,12 @@ body {
     .checkbox_div:hover {
         background: #418777;
     }
-.checkbox_container {
-    flex-grow: 1;
-    overflow: scroll;
-    overflow-x: hidden;
-}
-.checkbox_div:first-child {
-    margin-top: 4px;
-}
-.checkbox_div:last-child {
-    margin-bottom: 4px;
-}
+    .checkbox_div:first-child {
+        margin-top: 4px;
+    }
+    .checkbox_div:last-child {
+        margin-bottom: 4px;
+    }
 .checkbox_span {
     display: block;
     white-space: nowrap;
@@ -197,11 +197,15 @@ body {
                     overflow: scroll;
                     overflow-x: hidden;
                     height: 40%;
+                    min-height: 40%;
                 }
                 .tags_zone {
                     flex-grow: 1;
                     overflow: scroll;
                     overflow-x: hidden;
+                }
+                .tags_zone .checkbox_div {
+                    width:
                 }
 
 .close {
