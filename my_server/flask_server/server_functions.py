@@ -145,6 +145,7 @@ def sort_pictures_by_tag(list_of_pictures, list_of_tags):
     count_of_coincidence = 0
     dict_of_pictures = {}
     sorted_list_of_pictures = []
+    sorted_list_of_ids = []
 
     for picture in list_of_pictures:
 
@@ -155,14 +156,15 @@ def sort_pictures_by_tag(list_of_pictures, list_of_tags):
                 count_of_coincidence += 1
 
         if count_of_coincidence > 0:
-            dict_of_pictures[picture.image_file] = count_of_coincidence
+            dict_of_pictures[picture] = count_of_coincidence
 
         count_of_coincidence = 0
 
     for coincidences in sorted(dict_of_pictures.items(), key=lambda item: item[1]):
-        sorted_list_of_pictures.append(coincidences[0])
+        sorted_list_of_pictures.append(coincidences[0].image_file)
+        sorted_list_of_ids.append(coincidences[0].user_id)
 
-    return reversed(sorted_list_of_pictures)
+    return sorted_list_of_pictures, sorted_list_of_ids
 
 
 def sorting_tags_by_alphabet(tag_list):

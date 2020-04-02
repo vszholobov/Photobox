@@ -5,7 +5,7 @@ from flask_server.models import User, Post
 from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, AddTagForm
 from flask_server.server_functions import save_picture, code_picture, tags, sort_pictures_by_tag, creation_date
 from os import mkdir, getcwd, remove, path
-
+from random import randint
 
 @app.route("/ajax", methods=['GET', 'POST'])
 def check():
@@ -26,7 +26,27 @@ def check():
 def bot_api():
     if request.method == "GET":
         return render_template("404.html")
-    return jsonify(f"https://www.pythonanywhere.com/user/photobox/files/home/photobox/my_server/flask_server/static/users/10/images/37fa41a43d6976c0.jpg")
+
+    action = request.json["action"]
+
+    if action == "random":
+        images = Post.query.all()
+        random_number = randint(0, len(images) - 1)
+        random_image = images[random_number]
+        return jsonify({"route": getcwd() + f"/flask_server/static/users"
+                                            f"/{random_image.user_id}/images"
+                                            f"/{random_image.image_file}"})
+    if action == "tags":
+        images = Post.query.all()
+        list_of_images = sort_pictures_by_tag(images, tags(request.json["tags"]))
+        list_of_routes = []
+        if len(list_of_images) < 1:
+            return
+        for i in range(len(list_of_images[0])):
+            list_of_routes.append(getcwd() + f"/flask_server/static/users"
+                                  f"/{list_of_images[1][i]}/images"
+                                  f"/{list_of_images[0][i]}")
+        return jsonify({"routes": list_of_routes})
 
 
 @app.route("/")
