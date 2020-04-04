@@ -2,7 +2,7 @@ from flask import render_template, url_for, redirect, flash, request, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_server import app, db, bcrypt
 from flask_server.models import User, Post
-from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, AddTagForm
+from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm
 from flask_server.server_functions import save_picture, code_picture, tags, sort_pictures_by_tag, creation_date
 from os import mkdir, getcwd, remove, path
 from random import randint
@@ -148,15 +148,13 @@ def account():
 @app.route("/search", methods=["POST", "GET"])
 @login_required
 def search():
-    form = AddTagForm()
-    return render_template("search.html", title="Search", form=form)
+    return render_template("search.html", title="Search")
 
 
 @app.route("/upload", methods=["POST", "GET"])
 @login_required
 def upload():
     form = PostForm()
-    form1 = AddTagForm()
     if form.validate_on_submit():
         id = int(current_user.id)
 
@@ -176,8 +174,4 @@ def upload():
 
             db.session.add(post)
             db.session.commit()
-    elif form1.validate_on_submit():
-        user = User.query.filter_by(id=current_user.id)
-        user.update({'user_tag_list': tags(form1.tags.data, current_user.user_tag_list)})
-        db.session.commit()
-    return render_template("upload.html", title="Upload", form=form, form1=form1)
+    return render_template("upload.html", title="Upload", form=form)

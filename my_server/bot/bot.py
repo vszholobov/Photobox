@@ -20,7 +20,40 @@ def photo_random(user_id, rand_int, route, message):
                                 'random_id': rand_int})
 
 
-token = "a003e074b079bb141039a77c63597331c9779be8e57c5a718e465f95a277fa6e66829e6d17ffe8227e042"
+def text_analize_bot(text):
+    d = {}
+    lenstr1 = len(text)
+    commands = ["привет", "пока", "здравствуйте", "как дела?", "кто ты?", "время",
+                "cколько времени?", "скажи", "случайно", "клоун", "прощай", "сайт",
+                "икит", "погода"]
+    difference = []
+    for command in commands:
+        lenstr2 = len(command)
+        for i in range(-1, lenstr1 + 1):
+            d[(i, -1)] = i + 1
+        for j in range(-1, lenstr2 + 1):
+            d[(-1, j)] = j + 1
+        for i in range(lenstr1):
+            for j in range(lenstr2):
+                if text[i] == command[j]:
+                    cost = 0
+                else:
+                    cost = 1
+                d[(i, j)] = min(
+                    d[(i - 1, j)] + 1,
+                    d[(i, j - 1)] + 1,
+                    d[(i - 1, j - 1)] + cost,
+                )
+                if i and j and text[i] == command[j - 1] and text[i - 1] == command[j]:
+                    d[(i, j)] = min(d[(i, j)], d[i - 2, j - 2] + cost)
+        difference.append(d[lenstr1 - 1, lenstr2 - 1])
+    print(difference)
+    a = difference.index(min(difference))
+    difference = commands[difference.index(min(difference))]
+    return difference
+
+
+token = "845b43c4cd5c2b81f14efc3d0e878581dd6245acba70292db1c9a55d0d76fe252207e10f1842b8bcf40da"
 space = chr(32)
 
 vk = vk_api.VkApi(token=token)
@@ -32,16 +65,35 @@ while True:
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW:
             if event.to_me:
+                if event.type == VkEventType.USER_RECORDING_VOICE:
+                    print("(Голосовое сообщение)")
                 request = event.text
                 randint = random.randint(100000000, 900000000)
-                if request[0] != "#":
-                    request = request.lower()
-                chat_id = vk.method('messages.getConversations')
-                chat_id = chat_id['items']
-                if request == "привет":
+                if request == "" or len(request) < 3:
+                    request = "qwerty"
+                elif request[0] != "#":
+                    request = text_analize_bot(request.lower())
+                if request == "привет" or request == "здравствуйте":
                     write_msg(randint, event.user_id, "Привет, Человек!".replace(" ", space))
-                elif request == "2":
+                elif request == "qwerty":
+                    write_msg(randint, event.user_id, "Зачем мне это, человек?")
+                elif request == "время" or request == "cколько времени?":
+                    write_msg(randint, event.user_id, "Время?".replace(" ", space))
+                elif request == "скажи":
+                    write_msg(randint, event.user_id, "Не скажу, человек.".replace(" ", space))
+                elif request == "клоун":
                     write_msg(randint, event.user_id, "&#129313;")
+                elif request == "как дела?":
+                    write_msg(randint, event.user_id, "Положительно. Но мое мнение может поменяться, "
+                                                      "человек.".replace(" ", space))
+                elif request == "пока" or request == "прощай":
+                    write_msg(randint, event.user_id, "Прощай, буду тебя ждать, человек".replace(" ", space))
+                elif request == "сайт":
+                    write_msg(randint, event.user_id, "http://photobox.pythonanywhere.com/".replace(" ", space))
+                elif request == "икит":
+                    write_msg(randint, event.user_id, "Мой дом, человек!".replace(" ", space))
+                elif request == "погода":
+                    write_msg(randint, event.user_id, "Я не чувствую тела, я робот, человек!".replace(" ", space))
                 elif request == "случайно":
                     bot_typing(random.randint(100000000, 900000000), event.user_id)
                     response = requests.post("http://127.0.0.1:5000/bot", json={"action": "random"})
@@ -58,6 +110,10 @@ while True:
                             bot_typing(random.randint(100000000, 900000000), event.user_id)
                             photo_random(event.user_id, random.randint(100000000, 900000000),
                                          json_response["routes"][i], request.replace(' ', ''))
-
                 else:
                     write_msg(randint, event.user_id, "Я не могу это расшифровать, прости.".replace(" ", space))
+
+
+#data['object']['attachments'][0]
+# chat_id = vk.method('messages.getConversations')
+# chat_id = chat_id['items']
