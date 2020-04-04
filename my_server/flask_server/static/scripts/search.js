@@ -65,7 +65,7 @@ function initializePage(imageList, columns, images) {
 function searchImages(columns, images, searchTagList) {
     const columnWidth = columns[0].self.offsetWidth;
 
-    // Обнуление колонки перед поиском
+    // Обнуление колонок перед поиском
     columns.forEach(function(column) {
         column.height = 0;
         column.divNumber = 0;
@@ -121,7 +121,7 @@ function createSearchTagList() {
     return searchTagList;
 }
 
-// Добавляет обработчик на нажатие чекбоксов.
+// Добавляет обработчик на нажатие чекбоксов. Принимает СПИСОК чекбоксов.
 function addSearchListenerToCheckboxes(checkboxes) {
     [].forEach.call(checkboxes, function(checkbox) {
         checkbox.addEventListener('click', function() {
@@ -144,8 +144,10 @@ function moveTagToPanel(checkbox, columns, images) {
     if(!listOfTags.includes(tagText)) {
         // Копируем div с тегом, на который нажали
         let appendedTagContainer = checkbox.closest(".checkbox_div").cloneNode(true);
-        // Добавляем его на панель поиска
-        document.querySelector(".checkbox_container").append(appendedTagContainer);
+        appendedTagContainer.classList.add("alien_tag");
+
+        // Добавляем его на панель поиска.
+        document.querySelector(".checkbox_container").prepend(appendedTagContainer);
 
         // Удаление класса photo_checkbox у нового тега в списке и добавление класса active_checkbox
         let listOfCheckboxes = Array.from(document.querySelectorAll(".photo_checkbox"));
@@ -215,6 +217,9 @@ function createDescriptionDiv(image) {
         tagContainer.classList.add("aside_center");
         tagContainer.classList.add("checkbox_div");
 
+        // Создание всплывающей подсказки.
+        tagContainer.title = tag;
+
         let tagLabel = document.createElement("label");
 
         let tagCheckbox = document.createElement("input");
@@ -236,6 +241,66 @@ function createDescriptionDiv(image) {
     return descriptionDiv;
 }
 
+// Вешает обработчик на кнопку "Добавить теги". При нажати делает запрос на добавление тегов в бд.
+// В успешном случае вызывает функцию createTags.
+function addListenerToAddTagButton() {
+    const submitButton = document.getElementById("submitTags");
+    const tagsInput = document.getElementById("inputTags");
+
+    submitButton.addEventListener("click", function() {
+        $.ajax({
+            type: 'POST',
+            url: '/ajax',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify({"action": "addTags", "tags": tagsInput.value}),
+            success: function(data) {
+                if(data.length) {
+                    createTags(data);
+                } else {
+                    alert("Введеные теги уже есть в вашем списке.");
+                }
+            },
+            error: function() {
+                alert("Произошла ошибка( Попробуйте перезагрузить страницу.");
+            }
+        });
+    });
+}
+
+// Создает теги, переданные в tagList
+function createTags(tagList) {
+    const placeToPut = document.querySelector(".add_tags_div");
+    let listOfCheckboxes = [];
+
+    for(let tag of tagList) {
+        let checkboxDiv = document.createElement("div");
+        checkboxDiv.classList.add("aside_center");
+        checkboxDiv.classList.add("checkbox_div");
+        checkboxDiv.setAttribute("title", tag);
+
+        let checkboxLabel = document.createElement("label");
+
+        let checkbox = document.createElement("input");
+        checkbox.classList.add("upload_checkbox");
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("value", tag);
+        checkbox.setAttribute("name", "check");
+        checkboxLabel.append(checkbox);
+
+        listOfCheckboxes.push(checkbox);
+
+        let checkboxSpan = document.createElement("span");
+        checkboxSpan.classList.add("checkbox_span");
+        checkboxSpan.innerText = tag;
+        checkboxLabel.append(checkboxSpan);
+
+        checkboxDiv.append(checkboxLabel);
+        placeToPut.before(checkboxDiv);
+    }
+    addSearchListenerToCheckboxes(listOfCheckboxes);
+}
+
 // Список столбцов, куда будут добавляться фотографии
 let columns = [new Column("img_column1"),
                new Column("img_column2"),
@@ -254,8 +319,15 @@ let userList = [];
 // Хранит в себе объект текущего открытого div'a с изображением.
 let current_active_element = null;
 
+//Координаты текущей фотографии
+let currentX = 0;
+let currentY = 0;
+
 // Список объектов чекбоксов. Используются при поиске.
 const checkboxes = document.getElementsByClassName("upload_checkbox");
+
+// Кнопка для добавления тегов.
+const addTagsButton = document.getElementById("submitTags");
 
 // Promise на получение фотографий с сервера при открытии страницы
 let promise = new Promise(function(resolve, reject) {
@@ -283,12 +355,16 @@ promise.then(function(result) {
     addSearchListenerToCheckboxes(checkboxes);
     const imagesNodeList = images.map(image => image.node);
 
+    // Добавляет обработчик на кнопку добавления тегов
+    addListenerToAddTagButton();
+
     // Навешиваем обработчик кликов на фотографии. При клике появляется широкая область с описанием фотографии.
     [].forEach.call(imagesNodeList, function(imageNode, index) {
         imageNode.addEventListener('click', function() {
             if(current_active_element) {
                 document.querySelector(".description_zone").remove();
                 document.querySelector(".close").remove();
+                document.querySelectorAll(".arrow").forEach(arrow => arrow.remove());
                 document.querySelector(".active_img").classList.remove("active_img");
                 current_active_element.classList.remove("active_container");
             }
@@ -296,8 +372,63 @@ promise.then(function(result) {
             current_active_element = imageNode.closest(".img_container");
             current_active_element.classList.add("active_container");
 
+            // Определение координат
+            currentX = columns.map(column => column.self).indexOf(imageNode.closest(".img_column"));
+            currentY = Array.from(columns[currentX].self.children).indexOf(current_active_element);
+
             // Создание зоны описания
             current_active_element.append(createDescriptionDiv(images[index]));
+
+            // Создание стрелок
+            let arrowRight = document.createElement("span")
+            arrowRight.classList.add("arrow");
+            arrowRight.classList.add("arrow_right");
+            current_active_element.append(arrowRight);
+
+            document.querySelector(".arrow_right").addEventListener("click", function() {
+                currentX = (currentX + 1) % 4;
+                if(!columns[currentX].self.children[currentY]) {
+                    currentY = columns[currentX].self.children.length - 1;
+                }
+                columns[currentX].self.children[currentY].querySelector(".img").dispatchEvent(new MouseEvent("click"));
+            });
+
+            let arrowLeft = document.createElement("span");
+            arrowLeft.classList.add("arrow");
+            arrowLeft.classList.add("arrow_left");
+            current_active_element.prepend(arrowLeft);
+
+            document.querySelector(".arrow_left").addEventListener("click", function() {
+                currentX = currentX - 1;
+                if(currentX < 0) currentX = 3;
+                if(!columns[currentX].self.children[currentY]) {
+                    currentY = columns[currentX].self.children.length - 1;
+                }
+
+                columns[currentX].self.children[currentY].querySelector(".img").dispatchEvent(new MouseEvent("click"));
+            });
+
+            let arrowUp = document.createElement("span");
+            arrowUp.classList.add("arrow");
+            arrowUp.classList.add("arrow_up");
+            current_active_element.prepend(arrowUp);
+
+            document.querySelector(".arrow_up").addEventListener("click", function() {
+                if(!currentY) currentY = columns[currentX].self.children.length - 1;
+                else currentY--;
+                columns[currentX].self.children[currentY].querySelector(".img").dispatchEvent(new MouseEvent("click"));
+            });
+
+            let arrowDown = document.createElement("span");
+            arrowDown.classList.add("arrow");
+            arrowDown.classList.add("arrow_down");
+            current_active_element.prepend(arrowDown);
+
+            document.querySelector(".arrow_down").addEventListener("click", function() {
+                if(currentY == columns[currentX].self.children.length - 1) currentY = 0;
+                else currentY++;
+                columns[currentX].self.children[currentY].querySelector(".img").dispatchEvent(new MouseEvent("click"));
+            });
 
             [].forEach.call(document.querySelectorAll(".photo_checkbox"), function(checkbox) {
                 checkbox.addEventListener('click', () => moveTagToPanel(checkbox, columns, images));
@@ -311,6 +442,7 @@ promise.then(function(result) {
             closeButton.addEventListener("click", function(self) {
                 document.querySelector(".description_zone").remove();
                 document.querySelector(".close").remove();
+                document.querySelectorAll(".arrow").forEach(arrow => arrow.remove());
                 current_active_element.classList.remove("active_container");
 
                 current_active_element = null;

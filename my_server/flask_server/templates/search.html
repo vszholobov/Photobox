@@ -21,6 +21,30 @@
                     </label>
                 </div>
             {% endfor %}
+            <div class="aside_center add_tags_div">
+                <input type="text" placeholder="Добавить теги" title="Пример: #Тег" id="inputTags" required>
+                <input type="submit" value="Добавить" id="submitTags">
+            </div>
+        </div>
+        <div style="display: flex; flex-direction: column; border-radius: 0px 0px 10px 10px; height: 60px; border-top: 2px solid #3d9480;">
+            <div class="aside_center search_radio_div" title="Поиск тех фотографий, у которых есть хотя бы один из перечисленных тегов.">
+                <label>
+                    <input type="radio" name="search_radio" class="search_radio">
+                    <span class="radio_span">Одно совпадение</span>
+                </label>
+            </div>
+            <div class="aside_center search_radio_div" title="Поиск тех фотографий, у которых есть все перечисленные теги.">
+                <label>
+                    <input type="radio" name="search_radio" class="search_radio">
+                    <span class="radio_span">Точное совпадение</span>
+                </label>
+            </div>
+            <div class="aside_center search_radio_div" title="Поиск только среди ваших фотографий. Ведь они самые лучшие :)">
+                <label>
+                    <input type="checkbox" class="search_checkbox">
+                    <span class="radio_span">Свои фотографии</span>
+                </label>
+            </div>
         </div>
     </aside>
     <script src="{{ url_for('static', filename='scripts/search.js', v=1) }}"></script>

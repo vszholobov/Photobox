@@ -79,7 +79,9 @@ body {
 .upload_checkbox:checked ~ span {
     color: #fff80f;
 }
-
+.alien_tag .upload_checkbox:checked ~ span {
+    color: black;
+}
 
 .wrapper_middle{
     flex-grow: 1;
@@ -234,6 +236,73 @@ body {
 }
 .close:after {
 	transform: rotate(-45deg);
+}
+
+    .search_radio_div {
+        margin-right: 14px;
+
+        line-height: 20px;
+    }
+    .search_radio_div .search_checkbox,
+    .search_radio_div .search_radio {
+        margin-left: 6px;
+        margin-top: 4px;
+        margin-right: 3px;
+        float: left;
+    }
+    .search_radio_div .search_checkbox:checked ~ span,
+    .search_radio_div .search_radio:checked ~ span {
+        font-weight: bold;
+    }
+    .search_radio_div .radio_span {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+        font-size: 16px;
+    }
+    .alien_tag {
+        background: #2196F3;
+    }
+    .alien_tag:hover {
+        background: #1a81d4;
+    }
+
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    border-color: white;
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+
+    position: absolute;
+}
+.arrow:hover {
+    border-color: #fff80f;
+}
+
+.arrow_right {
+    transform: rotate(-45deg);
+    top: 50%;
+    right: 8px;
+}
+.arrow_left {
+    transform: rotate(135deg);
+    top: 50%;
+    left: 8px;
+}
+
+.arrow_up {
+    transform: rotate(-135deg);
+    left: 50%;
+    top: 10px;
+}
+
+.arrow_down {
+    transform: rotate(45deg);
+    left: 50%;
+    bottom: 10px;
 }
 
 .hidden {

@@ -7,6 +7,7 @@ from flask_server.server_functions import save_picture, code_picture, tags, sort
 from os import mkdir, getcwd, remove, path
 from random import randint
 
+
 @app.route("/ajax", methods=['GET', 'POST'])
 def check():
     print(request.json["action"])
@@ -19,6 +20,15 @@ def check():
             [i.as_dict() for i in Post.query.all()],
             [[i.as_dict()["username"], i.set_user_photo()] for i in User.query.all()]
         ]
+    elif action == "addTags":
+        tag_string = request.json["tags"]
+        user = User.query.filter_by(id=current_user.id)
+
+        old_tag_list = current_user.user_tag_list.copy()
+        user.update({'user_tag_list': tags(tag_string, current_user.user_tag_list)})
+        db.session.commit()
+        # Разница между текущими тегами и бывшими(добавленные теги)
+        result = list(set(current_user.user_tag_list) - set(old_tag_list))
     return jsonify(result)
 
 
@@ -138,7 +148,8 @@ def account():
 @app.route("/search", methods=["POST", "GET"])
 @login_required
 def search():
-    return render_template("search.html", title="Search")
+    form = AddTagForm()
+    return render_template("search.html", title="Search", form=form)
 
 
 @app.route("/upload", methods=["POST", "GET"])
