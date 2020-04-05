@@ -9,7 +9,7 @@ from random import randint
 
 
 @app.route("/ajax", methods=['GET', 'POST'])
-def check():
+def ajax():
     print(request.json["action"])
 
     result = None
@@ -18,7 +18,8 @@ def check():
     if action == "init":
         result = [
             [i.as_dict() for i in Post.query.all()],
-            [[i.as_dict()["username"], i.set_user_photo()] for i in User.query.all()]
+            [[i.as_dict()["username"], i.set_user_photo()] for i in User.query.all()],
+            current_user.id
         ]
     elif action == "addTags":
         tag_string = request.json["tags"]

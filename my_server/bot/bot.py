@@ -53,7 +53,16 @@ def text_analize_bot(text):
     return difference
 
 
+def add_person(string):
+    return string + ", человек" + random.choice([".", "!"])
+
+
 token = "845b43c4cd5c2b81f14efc3d0e878581dd6245acba70292db1c9a55d0d76fe252207e10f1842b8bcf40da"
+good_bye = list(map(add_person, ['Пока', 'Аривидерчи', 'Гуд бай', 'До свидания', 'Покеда']))
+hel_lo = list(map(add_person, ["Привет", "Х-а-а-а-й", "Здравствуй", "Гутен таг", "Дратути"]))
+emoji = [" &#128526;", " &#129313;", " &#128108;", " &#128522;", " &#128515;", " &#128521;", " &#128518;", " &#128373;",
+             " &#129314;", " &#128529;", " &#128567;", " &#128519;", " &#127482;&#127462;", " &#127465;&#127466;",
+             " &#128169;"]
 space = chr(32)
 
 vk = vk_api.VkApi(token=token)
@@ -74,26 +83,26 @@ while True:
                 elif request[0] != "#":
                     request = text_analize_bot(request.lower())
                 if request == "привет" or request == "здравствуйте":
-                    write_msg(randint, event.user_id, "Привет, Человек!".replace(" ", space))
+                    write_msg(randint, event.user_id, random.choice(hel_lo).replace(" ", space) + emoji[random.randint(0, 14)])
                 elif request == "qwerty":
-                    write_msg(randint, event.user_id, "Зачем мне это, человек?")
+                    write_msg(randint, event.user_id, "Зачем мне это, человек?" + emoji[random.randint(0, 14)])
                 elif request == "время" or request == "cколько времени?":
-                    write_msg(randint, event.user_id, "Время?".replace(" ", space))
+                    write_msg(randint, event.user_id, "Время?".replace(" ", space) + emoji[random.randint(0, 14)])
                 elif request == "скажи":
-                    write_msg(randint, event.user_id, "Не скажу, человек.".replace(" ", space))
+                    write_msg(randint, event.user_id, "Не скажу, человек.".replace(" ", space) + emoji[random.randint(0, 14)])
                 elif request == "клоун":
                     write_msg(randint, event.user_id, "&#129313;")
                 elif request == "как дела?":
                     write_msg(randint, event.user_id, "Положительно. Но мое мнение может поменяться, "
-                                                      "человек.".replace(" ", space))
+                                                      "человек.".replace(" ", space) + emoji[random.randint(0, 14)])
                 elif request == "пока" or request == "прощай":
-                    write_msg(randint, event.user_id, "Прощай, буду тебя ждать, человек".replace(" ", space))
+                    write_msg(randint, event.user_id, random.choice(good_bye).replace(" ", space) + emoji[random.randint(0, 14)])
                 elif request == "сайт":
-                    write_msg(randint, event.user_id, "http://photobox.pythonanywhere.com/".replace(" ", space))
+                    write_msg(randint, event.user_id, "http://photobox.pythonanywhere.com/".replace(" ", space) + emoji[random.randint(0, 14)])
                 elif request == "икит":
-                    write_msg(randint, event.user_id, "Мой дом, человек!".replace(" ", space))
+                    write_msg(randint, event.user_id, "Мой дом, человек!".replace(" ", space) + emoji[random.randint(0, 14)])
                 elif request == "погода":
-                    write_msg(randint, event.user_id, "Я не чувствую тела, я робот, человек!".replace(" ", space))
+                    write_msg(randint, event.user_id, "Я не чувствую тела, я робот, человек!".replace(" ", space) + emoji[random.randint(0, 14)])
                 elif request == "случайно":
                     bot_typing(random.randint(100000000, 900000000), event.user_id)
                     response = requests.post("http://127.0.0.1:5000/bot", json={"action": "random"})
@@ -111,7 +120,7 @@ while True:
                             photo_random(event.user_id, random.randint(100000000, 900000000),
                                          json_response["routes"][i], request.replace(' ', ''))
                 else:
-                    write_msg(randint, event.user_id, "Я не могу это расшифровать, прости.".replace(" ", space))
+                    write_msg(randint, event.user_id, "Я не могу это расшифровать, прости.".replace(" ", space) + emoji[random.randint(0, 14)])
 
 
 #data['object']['attachments'][0]

@@ -53,6 +53,8 @@ body {
     flex-flow: column nowrap;
 }
 #content_wrapper {
+    max-width: 3000px;
+    margin: 0px auto;
     width: 100%;
     flex-grow: 1;
     padding-top: 20px;

@@ -30,8 +30,12 @@
                 <div id="nav_left">
                     <a href="{{ url_for('home') }}"><img class="link_photo" src="{{ url_for('static', filename='logo.png') }}">Фотобокс</a>
                     {% if current_user.is_authenticated %}
-                        <a href="{{ url_for('upload') }}">Загрузить</a>
-                        <a href="{{ url_for('search') }}">Искать</a>
+                        <div id="nav_search_input_container">
+                            <div id="nav_search_input_container2">
+                                <input type="text" id="nav_search_input" placeholder="Поиск">
+                                <input type="submit" id="nav_submit_input" value="Искать">
+                            </div>
+                        </div>
                     {% endif %}
                 </div>
                 <div id="nav_right">
@@ -49,6 +53,10 @@
                 <div class="main menu">
                     <hr class="hr">
                     <h1 class="aside_title">Меню</h1>
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('upload') }}">Загрузить</a>
+                        <a href="{{ url_for('search') }}">Искать</a>
+                    {% endif %}
                 </div>
                 <div id="content_wrapper2">
                     {% block content %}{% endblock %}

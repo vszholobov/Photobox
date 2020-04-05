@@ -11,6 +11,7 @@ nav {
 	justify-content: space-between;
 
 	height: 100%;
+	max-width: 2100px;
 }
 nav a:link, nav a:visited {
 	display: flex;
@@ -29,6 +30,11 @@ nav a:hover{
 #nav_left {
     display: flex;
     flex-direction: row;
+    flex-grow: 1;
+}
+#nav_left a {
+    color: white;
+    text-shadow: 2px 2px 3px black;
 }
 #nav_right {
 	display: flex;
@@ -48,4 +54,56 @@ nav a:hover{
 
 #user_photo_link {
     max-width: 100px;
+}
+
+#nav_search_input_container {
+    margin-left: 20px;
+    width: 55%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#nav_search_input_container2 {
+    height: 25px;
+    position: relative;
+}
+
+#nav_search_input {
+    border: 1px solid #418777;
+    background: white;
+    box-shadow: 0px 0px 6px 0px black inset;
+    height: 25px;
+    width: 100%;
+    border-radius: 5px;
+}
+    #nav_search_input::placeholder {
+        text-indent: 5px;
+    }
+    #nav_search_input:focus::placeholder {
+        opacity: 0;
+        transition: 0.3s;
+    }
+    #nav_search_input:focus {
+        color: black;
+        border: 1px solid black;
+        outline: none;
+    }
+#nav_submit_input {
+    height: 25px;
+    border: 1px solid #418777;
+    background: #2196f3;
+    color: white;
+
+    position: absolute;
+    right: -1px;
+    border-radius: 0px 5px 5px 0px;
+    top: 1px;
+    width: 50px;
+
+    transition: 0.3s;
+}
+#nav_submit_input:hover {
+    cursor: pointer;
+    background: #1a81d4;
 }

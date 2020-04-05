@@ -26,24 +26,30 @@
                 <input type="submit" value="Добавить" id="submitTags">
             </div>
         </div>
-        <div style="display: flex; flex-direction: column; border-radius: 0px 0px 10px 10px; height: 60px; border-top: 2px solid #3d9480;">
-            <div class="aside_center search_radio_div" title="Поиск тех фотографий, у которых есть хотя бы один из перечисленных тегов.">
-                <label>
-                    <input type="radio" name="search_radio" class="search_radio">
-                    <span class="radio_span">Одно совпадение</span>
-                </label>
+        <div class="radio_container">
+            <div class="radio_row">
+                <div class="search_radio_div active_search_mode" title="Поиск тех фотографий, у которых есть хотя бы один из перечисленных тегов.">
+                    <label>
+                        <input type="radio" name="search_radio" class="search_radio" checked>
+                        <span class="radio_span">Одно совпадение</span>
+                    </label>
+                </div>
             </div>
-            <div class="aside_center search_radio_div" title="Поиск тех фотографий, у которых есть все перечисленные теги.">
-                <label>
-                    <input type="radio" name="search_radio" class="search_radio">
-                    <span class="radio_span">Точное совпадение</span>
-                </label>
+            <div class="radio_row">
+                <div class="search_radio_div" title="Поиск тех фотографий, у которых есть все перечисленные теги.">
+                    <label>
+                        <input type="radio" name="search_radio" class="search_radio">
+                        <span class="radio_span">Точное совпадение</span>
+                    </label>
+                </div>
             </div>
-            <div class="aside_center search_radio_div" title="Поиск только среди ваших фотографий. Ведь они самые лучшие :)">
-                <label>
-                    <input type="checkbox" class="search_checkbox">
-                    <span class="radio_span">Мои фотографии</span>
-                </label>
+            <div class="radio_row">
+                <div class="search_radio_div" title="Поиск только среди ваших фотографий. Ведь они самые лучшие :)">
+                    <label>
+                        <input type="checkbox" class="search_checkbox">
+                        <span class="radio_span">Мои фотографии</span>
+                    </label>
+                </div>
             </div>
         </div>
     </aside>

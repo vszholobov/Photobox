@@ -78,9 +78,28 @@ function searchImages(columns, images, searchTagList) {
         //images.forEach(image => image.node.remove())
         for(let i = 0; i < images.length; i++) {
             let image = images[i];
-            let MatchingTags = image.tagList.filter(tag => searchTagList.includes(tag)? true: false);
 
-            if(MatchingTags.length && image.tagList.length) {
+            // Если поиск идет только по своим фотографиям
+            if(myPhotoButton.checked) {
+                if(image.userId != currentUserId) continue;
+            }
+
+            let MatchingTags = null;
+            let tagListsAreEqual = null;
+
+            // If - поиск с хотя бы одним совпаденим, else - поиск с точным совпадением.
+            if(radioButtons[0].checked) {
+                MatchingTags = image.tagList.filter(tag => searchTagList.includes(tag)? true: false);
+            } else {
+                tagListsAreEqual = true;
+                if(image.tagList.length == searchTagList.length) {
+                    image.tagList.forEach(tag => (searchTagList.includes(tag))? null: tagListsAreEqual = false);
+                } else {
+                    tagListsAreEqual = false;
+                }
+            }
+
+            if((radioButtons[0].checked && MatchingTags.length && image.tagList.length) || (radioButtons[1].checked && tagListsAreEqual)) {
                 let minHeight = 10000;
                 let currentColumn = null;
                 columns.forEach(column => (column.height < minHeight)? [minHeight, currentColumn] = [column.height, column]: null);
@@ -93,6 +112,11 @@ function searchImages(columns, images, searchTagList) {
     } else {
         for(let i = 0; i < images.length; i++) {
             let image = images[i];
+
+            // Если поиск идет только по своим фотографиям
+            if(myPhotoButton.checked) {
+                if(image.userId != currentUserId) continue;
+            }
 
             let minHeight = 10000;
             let currentColumn = null;
@@ -301,6 +325,47 @@ function createTags(tagList) {
     addSearchListenerToCheckboxes(listOfCheckboxes);
 }
 
+function addEventListenerToSearchModes(myPhotoButton, radioButtons) {
+    myPhotoButton.addEventListener("click", function() {
+        let myPhotoButtonContainerClassList = myPhotoButton.closest(".search_radio_div").classList;
+        myPhotoButtonContainerClassList.contains("active_search_mode")?
+            myPhotoButtonContainerClassList.remove("active_search_mode"):
+            myPhotoButtonContainerClassList.add("active_search_mode");
+
+        searchImages(columns, images, createSearchTagList());
+    });
+
+    radioButtons[0].addEventListener("click", function() {
+        radioButtons[0].closest(".search_radio_div").classList.add("active_search_mode");
+        radioButtons[1].closest(".search_radio_div").classList.remove("active_search_mode");
+
+        searchImages(columns, images, createSearchTagList());
+    });
+
+    radioButtons[1].addEventListener("click", function(){
+        radioButtons[1].closest(".search_radio_div").classList.add("active_search_mode");
+        radioButtons[0].closest(".search_radio_div").classList.remove("active_search_mode");
+
+        searchImages(columns, images, createSearchTagList());
+    });
+}
+
+function askCurrentUserId() {
+    $.ajax({
+        type: 'POST',
+        url: '/ajax',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({"action": "askCurrentUserId"}),
+        success: function(data) {
+
+        },
+        error: function() {
+            alert("Произошла ошибка( Попробуйте перезагрузить страницу.");
+        }
+    });
+}
+
 // Список столбцов, куда будут добавляться фотографии
 let columns = [new Column("img_column1"),
                new Column("img_column2"),
@@ -316,6 +381,9 @@ let imageList = [];
 // Список нужных полей пользователей(Имя пользователя и имя файла его аватара).
 let userList = [];
 
+// Id текушего пользователя. Используется при поиске по своим фотографиям.
+let currentUserId = null;
+
 // Хранит в себе объект текущего открытого div'a с изображением.
 let current_active_element = null;
 
@@ -329,6 +397,12 @@ const checkboxes = document.getElementsByClassName("upload_checkbox");
 // Кнопка для добавления тегов.
 const addTagsButton = document.getElementById("submitTags");
 
+// Кнопка "Искать мои фотографии"
+const myPhotoButton = document.querySelector(".search_checkbox");
+
+// Переключатели поиска
+const radioButtons = document.querySelectorAll(".search_radio");
+
 // Promise на получение фотографий с сервера при открытии страницы
 let promise = new Promise(function(resolve, reject) {
     $.ajax({
@@ -340,6 +414,7 @@ let promise = new Promise(function(resolve, reject) {
         success: function(data) {
             imageList = data[0];
             userList = data[1];
+            currentUserId = data[2];
             resolve('result');
         },
         error: function() {
@@ -357,6 +432,9 @@ promise.then(function(result) {
 
     // Добавляет обработчик на кнопку добавления тегов
     addListenerToAddTagButton();
+
+    // Добавляет обработчик на кнопки режимов поиска
+    addEventListenerToSearchModes(myPhotoButton, radioButtons);
 
     // Навешиваем обработчик кликов на фотографии. При клике появляется широкая область с описанием фотографии.
     [].forEach.call(imagesNodeList, function(imageNode, index) {
@@ -414,7 +492,7 @@ promise.then(function(result) {
             current_active_element.prepend(arrowUp);
 
             document.querySelector(".arrow_up").addEventListener("click", function() {
-                if(!currentY) currentY = columns[currentX].self.children.length - 1;
+                if(!currentY) alert("Вы уперлись в потолок.");
                 else currentY--;
                 columns[currentX].self.children[currentY].querySelector(".img").dispatchEvent(new MouseEvent("click"));
             });
@@ -425,7 +503,7 @@ promise.then(function(result) {
             current_active_element.prepend(arrowDown);
 
             document.querySelector(".arrow_down").addEventListener("click", function() {
-                if(currentY == columns[currentX].self.children.length - 1) currentY = 0;
+                if(currentY == columns[currentX].self.children.length - 1) alert("Вы уперлись в пол.");
                 else currentY++;
                 columns[currentX].self.children[currentY].querySelector(".img").dispatchEvent(new MouseEvent("click"));
             });
