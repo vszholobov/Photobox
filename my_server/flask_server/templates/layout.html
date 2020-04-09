@@ -33,7 +33,9 @@
                         <div id="nav_search_input_container">
                             <div id="nav_search_input_container2">
                                 <input type="text" id="nav_search_input" placeholder="Поиск">
-                                <input type="submit" id="nav_submit_input" value="Искать">
+                                <div id="search_image_container">
+                                    <input type="image" id="nav_submit_input" src="{{ url_for('static', filename='search.png') }}">
+                                </div>
                             </div>
                         </div>
                     {% endif %}
@@ -50,12 +52,18 @@
         </div>
         <div id="content_wrapper">
             <div class="center center_content_wrapper">
-                <div class="main menu">
+                <div class="main menu asider_height">
                     <hr class="hr">
                     <h1 class="aside_title">Меню</h1>
                     {% if current_user.is_authenticated %}
-                        <a href="{{ url_for('upload') }}">Загрузить</a>
-                        <a href="{{ url_for('search') }}">Искать</a>
+                        <div class="menu_links_container">
+                            <div class="link_div">
+                                <a href="{{ url_for('upload') }}" class="menu_link">Загрузить</a>
+                            </div>
+                            <div class="link_div">
+                                <a href="{{ url_for('search') }}" class="menu_link">Искать</a>
+                            </div>
+                        </div>
                     {% endif %}
                 </div>
                 <div id="content_wrapper2">
