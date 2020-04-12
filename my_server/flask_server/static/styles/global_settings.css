@@ -50,10 +50,23 @@ body {
         justify-content: flex-start;
     }
     .link_div {
-
+        height: 30px;
     }
     .menu_link {
-
+        font-size: 18px;
+        line-height: 30px;
+        display: block;
+        text-decoration: none;
+        color: #3d9480;
+    }
+    .menu_link img {
+        float: left;
+        width: 30px;
+        height: 30px;
+        margin-right: 3px;
+    }
+    .menu_link:hover {
+        background: #f0f0f0;
     }
 #wrapper {
     min-width: 1400px;

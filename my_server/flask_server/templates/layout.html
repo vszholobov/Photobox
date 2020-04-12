@@ -58,10 +58,28 @@
                     {% if current_user.is_authenticated %}
                         <div class="menu_links_container">
                             <div class="link_div">
-                                <a href="{{ url_for('upload') }}" class="menu_link">Загрузить</a>
+                                <a href="{{ url_for('account') }}" class="menu_link">
+                                    <img src="/static/home.png">
+                                    Профиль
+                                </a>
                             </div>
                             <div class="link_div">
-                                <a href="{{ url_for('search') }}" class="menu_link">Искать</a>
+                                <a href="{{ url_for('home') }}" class="menu_link">
+                                    <img src="/static/camera.png">
+                                    Мои фото
+                                </a>
+                            </div>
+                            <div class="link_div">
+                                <a href="{{ url_for('upload') }}" class="menu_link">
+                                    <img src="/static/download.png">
+                                    Загрузка
+                                </a>
+                            </div>
+                            <div class="link_div">
+                                <a href="{{ url_for('search') }}" class="menu_link">
+                                    <img src="/static/search.png">
+                                    Поиск
+                                </a>
                             </div>
                         </div>
                     {% endif %}

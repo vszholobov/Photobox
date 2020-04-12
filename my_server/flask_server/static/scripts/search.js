@@ -64,6 +64,7 @@ function initializePage(imageList, columns, images) {
 
 function searchImages(columns, images, searchTagList) {
     const columnWidth = columns[0].self.offsetWidth;
+    const pathToShrek = "/static/404.jpg";
 
     // Обнуление колонок перед поиском
     columns.forEach(function(column) {
@@ -125,6 +126,24 @@ function searchImages(columns, images, searchTagList) {
             currentColumn.addImage(images[i].node);
 
             currentColumn.changeHeight(images[i].htwRatio * columnWidth);
+        }
+    }
+    if(!columns[0].height) {
+        if(!document.querySelector(".shrek")) {
+            let shrek = document.createElement("img");
+            shrek.src = pathToShrek;
+            shrek.classList.add("shrek");
+            let x = 0;
+            let timerId = setInterval(function() {
+                x++;
+                let new_rotate = "rotate(" + x + "deg)"
+                shrek.style.transform = new_rotate;
+            }, 25);
+            document.querySelector(".wrapper_middle").append(shrek);
+        }
+    } else {
+        if(document.querySelector(".shrek")) {
+            document.querySelector(".shrek").remove();
         }
     }
 }

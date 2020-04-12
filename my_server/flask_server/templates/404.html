@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Страница не найдена</h1>
-    <p><a href="{{ url_for('home') }}">Назад</a></p>
-    <img src="{{ url_for('static', filename='404.jpg') }}" id="shrek" style="width: 500px; height: 500px; border-radius: 500px;">
+    <div style="width: 500px; margin: 0px auto;">
+        <h1 style="width: 500px; text-align: center; color: #3d9480;">Страница не найдена</h1>
+        <img src="{{ url_for('static', filename='404.jpg') }}" id="shrek" style="width: 500px; height: 500px; border-radius: 50%;">
+    </div>
     <script src="{{ url_for('static', filename='scripts/404.js') }}"></script>
 {% endblock %}
