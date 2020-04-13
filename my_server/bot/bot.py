@@ -24,6 +24,7 @@ def find_command(text_of_command, list_of_commands):
 
  
 def write_msg(user, message, emoji):
+    bot_typing(user)
     message = message.replace(" ", chr(32)) + emoji[random.randint(0, len(emoji) - 1)]
     vk.method('messages.send', {'user_id': user[0], 'message': message, 'random_id': user[1]})
 
@@ -65,9 +66,20 @@ def text_analize_bot(text, commands):
                     d[(i, j)] = min(d[(i, j)], d[i - 2, j - 2] + cost)
         difference.append(d[lenstr1 - 1, lenstr2 - 1])
     print(difference)
-    a = difference.index(min(difference))
-    difference = commands[difference.index(min(difference))]
-    return difference
+    d = []
+    dif = 0
+    local_min = min(difference)
+    for i in range(len(difference)):
+        if difference[i] == local_min:
+            difference[i] = dif - 1
+            dif -= 1
+            d.append(commands[difference.index(min(difference))])
+    print(d)
+    for i in range(len(d)):
+        print(str_analise_bot(d[i], text))
+        d[i] = str_analise_bot(d[i], text)
+    print(d)
+    return random.choice(d)
 
 
 def add_person(string):
@@ -84,6 +96,7 @@ def hashtag_search(user, message, emoji):
             bot_typing(user)
             photo_random(user, json_response["routes"][i], message)
 
+
 def random_search(user, message):
     bot_typing(user)
     response = requests.post("http://127.0.0.1:5000/bot", json={"action": "random"})
@@ -96,8 +109,23 @@ def random_last_message():
     return random.choice(message)
 
 
+def random_reiteration_message():
+    message = ["Не смог распознать", "Анализ произошел неудачно", "Знаю тысячи языков, но это не смог распознать",
+               "Сложные буквы"]
+    return random.choice(message)
 
 
+def str_analise_bot(str1, str2):
+    similarity = 0
+    max_str_len = min(len(str1), len(str2))
+    for i in range(max_str_len):
+        if str1[i] == str2[i]:
+            similarity += 1
+    residual = max_str_len/2
+    if similarity > residual:
+        return str1
+    else:
+        return "Nope"
 
 
 token = "845b43c4cd5c2b81f14efc3d0e878581dd6245acba70292db1c9a55d0d76fe252207e10f1842b8bcf40da"
@@ -105,18 +133,18 @@ token = "845b43c4cd5c2b81f14efc3d0e878581dd6245acba70292db1c9a55d0d76fe252207e10
 activators = {
     "привет": ["привет", "здравствуй"],
     "пока": ["прощай", "пока", "до свидания"],
-    "как дела?": ["как дела?"],
-    "кто ты?": ["кто ты?"],
+    "какдела?": ["какдела?"],
+    "ктоты?": ["ктоты?"],
     "случайно": ["случайно"]
 }
 
 answers = {
     "привет": ["Привет", "Х-а-а-а-й", "Здравствуй", "Гутен таг", "Дратути"],
     "пока": ['Пока', 'Аривидерчи', 'Гуд бай', 'До свидания', 'Покеда'],
-    "как дела?": ["Положительно. Но мое мнение может поменяться", "Отлично думаю",
+    "какдела?": ["Положительно. Но мое мнение может поменяться", "Отлично думаю",
                   "Работаю на Фотобокс", "Нормально, роботизирую процессы", "Всё ок",
                   "Окей", "Амбивалентно", "Как у колобка — слева и справа одинаково"],
-    "кто ты?": ["Робот", "Машина", "Бот, Джеймс Бот", "Точно не человек", "Твой помощник",
+    "ктоты?": ["Робот", "Машина", "Бот, Джеймс Бот", "Точно не человек", "Твой помощник",
                 "Работник Фотобокс, сисадмин", "Существо, обитающее в ВКонтакте"],
     "случайно": ["случайно"]
 }
@@ -146,15 +174,16 @@ while True:
                 user = [event.user_id, random.randint(100000000, 900000000)]
                 if event.type == VkEventType.USER_RECORDING_VOICE:
                     print("(Голосовое сообщение)")
-
                 message = event.text
                 if "#" in message:
                     hashtag_search(user, message, emoji)
-                message = text_analize_bot(message.lower(), commands)
+                message = text_analize_bot(message.lower().replace(' ', ''), commands)
                 if message == last_message:
                     write_msg(user, add_person(random_last_message()), emoji)
                 elif message == "случайно":
                     random_search(user, message)
+                elif message == "Nope":
+                    write_msg(user, add_person(random_reiteration_message()), emoji)
                 else:
                     last_message = message
                     write_msg(user, find_command(message, list_of_commands), emoji)
