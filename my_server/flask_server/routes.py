@@ -10,8 +10,6 @@ from random import randint
 
 @app.route("/ajax", methods=['GET', 'POST'])
 def ajax():
-    print(request.json["action"])
-
     result = None
     action = request.json["action"]
 
@@ -176,3 +174,8 @@ def upload():
             db.session.add(post)
             db.session.commit()
     return render_template("upload.html", title="Upload", form=form)
+
+
+@app.route("/my_images")
+def my_images():
+    return render_template("my_images.html", title="My images")

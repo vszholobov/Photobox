@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/my_images.css', v=1) }}">
+{% endblock head %}
+{% block content %}
+    <div class="content_columns_wrapper">
+        <div class="content_column">
+            <div id="photo_zone">
+
+            </div>
+            <div id="tags_zone">
+
+            </div>
+        </div>
+        <div class="content_column">
+
+        </div>
+    </div>
+{% endblock content %}

@@ -34,7 +34,7 @@ nav a:hover{
 }
 #nav_left a {
     color: white;
-    text-shadow: 2px 2px 3px black;
+    font-size: 17px;
 }
 #nav_right {
 	display: flex;
