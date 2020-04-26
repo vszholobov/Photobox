@@ -52,38 +52,38 @@
         </div>
         <div id="content_wrapper">
             <div class="center center_content_wrapper">
-                <div class="main menu asider_height">
-                    <hr class="hr">
-                    <h1 class="aside_title">Меню</h1>
-                    {% if current_user.is_authenticated %}
-                        <div class="menu_links_container">
-                            <div class="link_div">
-                                <a href="{{ url_for('account') }}" class="menu_link">
-                                    <img src="/static/home.png">
-                                    Профиль
-                                </a>
+                {% if current_user.is_authenticated %}
+                    <div class="main menu asider_height">
+                        <hr class="hr">
+                        <h1 class="aside_title">Меню</h1>
+                            <div class="menu_links_container">
+                                <div class="link_div">
+                                    <a href="{{ url_for('account') }}" class="menu_link">
+                                        <img src="/static/home.png">
+                                        Профиль
+                                    </a>
+                                </div>
+                                <div class="link_div">
+                                    <a href="{{ url_for('my_images') }}" class="menu_link">
+                                        <img src="/static/camera.png">
+                                        Мои фото
+                                    </a>
+                                </div>
+                                <div class="link_div">
+                                    <a href="{{ url_for('upload') }}" class="menu_link">
+                                        <img src="/static/download.png">
+                                        Загрузка
+                                    </a>
+                                </div>
+                                <div class="link_div">
+                                    <a href="{{ url_for('search') }}" class="menu_link">
+                                        <img src="/static/search.png">
+                                        Поиск
+                                    </a>
+                                </div>
                             </div>
-                            <div class="link_div">
-                                <a href="{{ url_for('my_images') }}" class="menu_link">
-                                    <img src="/static/camera.png">
-                                    Мои фото
-                                </a>
-                            </div>
-                            <div class="link_div">
-                                <a href="{{ url_for('upload') }}" class="menu_link">
-                                    <img src="/static/download.png">
-                                    Загрузка
-                                </a>
-                            </div>
-                            <div class="link_div">
-                                <a href="{{ url_for('search') }}" class="menu_link">
-                                    <img src="/static/search.png">
-                                    Поиск
-                                </a>
-                            </div>
-                        </div>
-                    {% endif %}
-                </div>
+                    </div>
+                {% endif %}
                 <div id="content_wrapper2">
                     {% block content %}{% endblock %}
                 </div>

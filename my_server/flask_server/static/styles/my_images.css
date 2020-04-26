@@ -1,36 +1,58 @@
+#content_wrapper2 {
+    display: flex;
+    flex-direction: column;
+
+    max-height: 1000px;
+}
 .content_columns_wrapper {
     flex-grow: 1;
-    height: 100%;
+    height: 500px;
+    max-height: 500px;
 
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    margin-bottom: 15px;
 }
 
 .content_column {
-
+    display: flex;
+    flex-direction: column;
+    height: 500px;
 }
 .content_column:first-child {
     flex-grow: 1;
 }
     #photo_zone {
-        height: 400px;
+        height: 100%;
         background: white;
         box-shadow: 0 4px 16px #ccc;
         border-radius: 10px;
     }
     #tags_zone {
-        height: 300px;
-        margin-top: 15px;
+        width: 100%;
+        flex-grow: 1;
+        min-height: 250px;
         background: white;
         box-shadow: 0 4px 16px #ccc;
         border-radius: 10px;
     }
 .content_column:last-child {
-    width: 300px;
+    width: 350px;
     background: white;
     box-shadow: 0 4px 16px #ccc;
-    height: 715px;
     margin-left: 15px;
     border-radius: 10px;
+}
+
+.img_column {
+    width: 50%;
+}
+    .img_column:first-child {
+        margin-left: 10px;
+    }
+.img_column img {
+    width: 100%;
+    max-width: 100%;
 }

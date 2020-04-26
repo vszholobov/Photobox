@@ -28,6 +28,8 @@ def ajax():
         db.session.commit()
         # Разница между текущими тегами и бывшими(добавленные теги)
         result = list(set(current_user.user_tag_list) - set(old_tag_list))
+    elif action == "get_my_images":
+        result = [i.as_dict() for i in Post.query.filter_by(user_id=current_user.id)]
     return jsonify(result)
 
 

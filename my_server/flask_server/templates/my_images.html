@@ -9,13 +9,22 @@
                 <hr class="hr">
                 <h1 class="aside_title">Изменение фото</h1>
             </div>
-            <div id="tags_zone">
-
-            </div>
         </div>
         <div class="content_column">
             <hr class="hr">
-            <h1 class="aside_title">Ваши фото</h1>
+            <h1 class="aside_title">Мои фото</h1>
+            <div style="display: flex; flex-direction: row; overflow: scroll; overflow-x: hidden; max-height: 100%;" class="scroll">
+                <div id="img_column1" class="img_column">
+
+                </div>
+                <div id="img_column2" class="img_column">
+
+                </div>
+            </div>
         </div>
     </div>
+    <div id="tags_zone">
+
+    </div>
+    <script src="{{ url_for('static', filename='scripts/my_photo.js', v=1) }}"></script>
 {% endblock content %}

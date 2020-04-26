@@ -51,6 +51,7 @@ body {
     }
     .link_div {
         height: 30px;
+        margin-top: 1px;
     }
     .menu_link {
         font-size: 18px;
@@ -62,8 +63,9 @@ body {
     .menu_link img {
         float: left;
         width: 30px;
-        height: 30px;
+        height: 25px;
         margin-right: 3px;
+        margin-left: 1px;
     }
     .menu_link:hover {
         background: #f0f0f0;
