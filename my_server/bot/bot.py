@@ -2,6 +2,7 @@ import vk_api
 import random
 import requests
 from vk_api.longpoll import VkLongPoll, VkEventType
+from PIL import Image, ImageDraw, ImageFont
 
 
 class Commands:
@@ -126,6 +127,42 @@ def str_analise_bot(str1, str2):
         return str1
     else:
         return "Nope"
+
+def photo_create_height(photo, number, imgsize):
+    headline = ImageFont.truetype("arial.ttf", size=60)
+    draw_img = ImageDraw.Draw(photo)
+    draw_img.text((0,0), str(number), font=headline)
+    photo = resize((128, int((imgsize[1]/imgsize[0])*128)), Image.ANTIALIAS)
+    return photo
+    
+def photo_matrix_create(photos, heights):
+    heights = [0, 0, 0, 0]
+    img = Image.new(mode='RGB', size=(max_height, 128*4), color=(255, 255, 255))
+    for i in range(len(photos)):
+        img_to_paste = Image.open(photo[i])
+        img_copy = img.copy()
+        
+        imgsize =  img_to_paste.size
+        img_to_paste = photo_create_height(img_to_paste, i, imgsize)
+        imgsize =  img_to_paste.size
+        
+        photo_number = heights.index(min(heights))
+        column_len = heights[photo_number]
+        
+        if height[heights.index(max(heights))] < height[photo_number] + imsize[1]:
+            height[photo_number] = height[photo_number] + imsize[1]
+            img = Image.new(mode='RGB', size=(height[photo_number] + imsize[1], 128*4), color=(255, 255, 255))
+            img.paste(img_copy, (0, 0))
+        else:
+            height[photo_number] = height[photo_number] + imsize[1]
+        if photo_number == 0:
+            img.paste(img_to_paste, (0, column_len))
+        elif photo_number == 1:
+            img.paste(img_to_paste, (128, column_len))
+        elif photo_number == 2:
+            img.paste(img_to_paste, (256, column_len))
+        elif photo_number == 3:
+            img.paste(img_to_paste, (384, column_len))
 
 
 token = "845b43c4cd5c2b81f14efc3d0e878581dd6245acba70292db1c9a55d0d76fe252207e10f1842b8bcf40da"
@@ -264,4 +301,36 @@ commands = ["привет", "пока", "здравствуйте", "как де
     a = difference.index(min(difference))
     difference = commands[difference.index(min(difference))]
     return difference
+    #from PIL import Image, ImageDraw, ImageFont
+
+
+max_height = 0
+img = Image.new(mode='RGB', size=(128*4, 128*4), color=(255, 255, 255))
+img1 = Image.open('1.jpg')
+img2 = Image.open('2.jpg')
+img4 = Image.open('2.jpg')
+img3 = Image.open('2.jpg')
+
+imgsize1 = img1.size
+imgsize2 = img2.size
+imgsize3 = img3.size
+imgsize4 = img4.size
+
+headline = ImageFont.truetype("arial.ttf", size=60)
+draw_img = ImageDraw.Draw(img1)
+draw_img.text((0,0), str(123), font=headline)
+img1 = img1.resize((128, int((imgsize1[1]/imgsize1[0])*128)), Image.ANTIALIAS)
+img2 = img2.resize((128, int((imgsize2[1]/imgsize2[0])*128)), Image.ANTIALIAS)
+img3 = img3.resize((128, int((imgsize3[1]/imgsize3[0])*128)), Image.ANTIALIAS)
+img4 = img4.resize((128, int((imgsize4[1]/imgsize4[0])*128)), Image.ANTIALIAS)
+img.paste(img1, (0,0))
+img.paste(img2, (128,0))
+img.paste(img3, (128*2,0))
+img.paste(img3, (128*3,0))
+img_copy = img.copy()
+img = Image.new(mode = 'RGB', size=(128*4, 128*4), color=(255, 255, 255))
+img.paste(img_copy, (0, 0))
+img.paste(img1, (0, int((imgsize1[1]/imgsize1[0])*128)))
+img.show()
+img.save("out.jpg")
 """
