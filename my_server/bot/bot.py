@@ -92,10 +92,12 @@ def hashtag_search(user, message, emoji):
     json_response = response.json()
     if len(json_response["routes"]) < 1:
         write_msg(user, "Ничего не нашёл, человек", emoji)
+        return []
     else:
-        for i in range(len(json_response["routes"])):
-            bot_typing(user)
-            photo_random(user, json_response["routes"][i], message)
+        bot_typing(user)
+        photo_matrix_create(json_response["routes"])
+        photo_random(user, "out.jpg", message)
+        return json_response["routes"]
 
 
 def random_search(user, message):
@@ -128,33 +130,49 @@ def str_analise_bot(str1, str2):
     else:
         return "Nope"
 
-def photo_create_height(photo, number, imgsize):
-    headline = ImageFont.truetype("arial.ttf", size=60)
-    draw_img = ImageDraw.Draw(photo)
-    draw_img.text((0,0), str(number), font=headline)
-    photo = resize((128, int((imgsize[1]/imgsize[0])*128)), Image.ANTIALIAS)
-    return photo
-    
-def photo_matrix_create(photos, heights):
+
+def photo_matrix_create(photos):
     heights = [0, 0, 0, 0]
-    img = Image.new(mode='RGB', size=(max_height, 128*4), color=(255, 255, 255))
+    img = Image.new(mode='RGB', size=(512, 0), color=(255, 255, 255))
     for i in range(len(photos)):
-        img_to_paste = Image.open(photo[i])
+        img_to_paste = Image.open(photos[i])
         img_copy = img.copy()
         
-        imgsize =  img_to_paste.size
-        img_to_paste = photo_create_height(img_to_paste, i, imgsize)
-        imgsize =  img_to_paste.size
-        
+        img_size = img_to_paste.size
+        img_to_paste = img_to_paste.resize((128, int((img_size[1]/img_size[0])*128)), Image.ANTIALIAS)
+        img_size = img_to_paste.size
+
+        headline = ImageFont.truetype("arial.ttf", size=30)
+        draw_img = ImageDraw.Draw(img_to_paste)
+        number_text = str(i + 1)
+        offset = 3
+        shadow_color = 'black'
+
+        x = 5
+        y = 2
+
+        for off in range(offset):
+            draw_img.text((x - off, y), number_text, font=headline, fill=shadow_color)
+            draw_img.text((x + off, y), number_text, font=headline, fill=shadow_color)
+            draw_img.text((x, y + off), number_text, font=headline, fill=shadow_color)
+            draw_img.text((x, y - off), number_text, font=headline, fill=shadow_color)
+            draw_img.text((x - off, y + off), number_text, font=headline, fill=shadow_color)
+            draw_img.text((x + off, y + off), number_text, font=headline, fill=shadow_color)
+            draw_img.text((x - off, y - off), number_text, font=headline, fill=shadow_color)
+            draw_img.text((x + off, y - off), number_text, font=headline, fill=shadow_color)
+
+        draw_img.text((x, y), number_text, font=headline)
+
         photo_number = heights.index(min(heights))
         column_len = heights[photo_number]
         
-        if height[heights.index(max(heights))] < height[photo_number] + imsize[1]:
-            height[photo_number] = height[photo_number] + imsize[1]
-            img = Image.new(mode='RGB', size=(height[photo_number] + imsize[1], 128*4), color=(255, 255, 255))
+        if heights[heights.index(max(heights))] < heights[photo_number] + img_size[1]:
+            heights[photo_number] = heights[photo_number] + img_size[1]
+            img = Image.new(mode='RGB', size=(512, heights[photo_number]), color=(255, 255, 255))
             img.paste(img_copy, (0, 0))
         else:
-            height[photo_number] = height[photo_number] + imsize[1]
+            heights[photo_number] = heights[photo_number] + img_size[1]
+
         if photo_number == 0:
             img.paste(img_to_paste, (0, column_len))
         elif photo_number == 1:
@@ -163,6 +181,8 @@ def photo_matrix_create(photos, heights):
             img.paste(img_to_paste, (256, column_len))
         elif photo_number == 3:
             img.paste(img_to_paste, (384, column_len))
+
+        img.save("out.jpg")
 
 
 token = "845b43c4cd5c2b81f14efc3d0e878581dd6245acba70292db1c9a55d0d76fe252207e10f1842b8bcf40da"
@@ -228,16 +248,27 @@ while True:
                 if event.type == VkEventType.USER_RECORDING_VOICE:
                     print("(Голосовое сообщение)")
                 message = event.text
+                hash_tag = False
                 if "#" in message:
-                    hashtag_search(user, message, emoji)
+                    routes_list = hashtag_search(user, message, emoji)
+                    hash_tag = True
+                    if len(routes_list) > 0:
+                        for event in longpoll.listen():
+                            if event.type == VkEventType.MESSAGE_NEW:
+                                if event.to_me:
+                                    numbers = event.text.split()
+                                    for number in numbers:
+                                        if number.isdigit() and int(number) <= len(routes_list):
+                                            photo_random(user, routes_list[int(number) - 1], "Фото")
+                                    break
                 message = text_analize_bot(message.lower().replace(' ', ''), commands)
-                if message == last_message:
+                if message == last_message and not hash_tag:
                     write_msg(user, add_person(random_last_message()), emoji)
                 elif message == "случайно":
                     random_search(user, message)
-                elif message == "Nope":
+                elif message == "Nope" and not hash_tag:
                     write_msg(user, add_person(random_reiteration_message()), emoji)
-                else:
+                elif not hash_tag:
                     last_message = message
                     write_msg(user, find_command(message, list_of_commands), emoji)
 
