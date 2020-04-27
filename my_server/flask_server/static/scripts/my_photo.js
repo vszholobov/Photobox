@@ -72,9 +72,8 @@ let images = [];
 // Список питоновских объектов фотографий. Используется при инициализации страницы.
 let imageList = [];
 
-let currentUserId = 0;
-
-let current_active_element;
+// Фотография, которую обрабатывают.
+let current_active_element = null;
 
 // Promise на получение фотографий с сервера при открытии страницы
 let promise = new Promise(function(resolve, reject) {
@@ -97,39 +96,76 @@ promise.then(function(result) {
     // Создает фотографии на странице
     initializePage(imageList, columns, images);
 
-    //const imagesNodeList = images.map(image => image.node);
+    const imagesNodeList = images.map(image => image.node);
 
-    /*
-    // Навешиваем обработчик кликов на фотографии. При клике появляется широкая область с описанием фотографии.
-    [].forEach.call(imagesNodeList, function(imageNode, index) {
-        imageNode.addEventListener('click', function() {
+    let photoZone = document.getElementById("photo_container");
+    let tagsZone = document.getElementById("checkbox_container");
+    let descriptionTextArea = document.getElementById("description_textarea");
 
+    let column_to_return = null;
 
-
-            if(current_active_element) {
-                document.querySelector(".description_zone").remove();
-                document.querySelector(".close").remove();
-                document.querySelectorAll(".arrow").forEach(arrow => arrow.remove());
-                document.querySelector(".active_img").classList.remove("active_img");
-                current_active_element.classList.remove("active_container");
+    [].forEach.call(imagesNodeList, function(imageNode) {
+        imageNode.addEventListener("click", function() {
+            if(!current_active_element) {
+                current_active_element = imageNode;
+                column_to_return = imageNode.closest(".img_column");
+                photoZone.append(imageNode);
+            } else if(current_active_element == imageNode) {
+                current_active_element = null;
+                column_to_return.append(imageNode);
+                column_to_return = null;
+            } else {
+                column_to_return.append(current_active_element);
+                current_active_element = imageNode;
+                column_to_return = imageNode.closest(".img_column");
+                photoZone.append(imageNode);
             }
 
-            // Кнопка крест в правом верхнем углу
-            let closeButton = document.createElement("span");
-            closeButton.classList.add("close");
-            current_active_element.append(closeButton);
+            let image = images.find(img => img.node == current_active_element);
 
-            closeButton.addEventListener("click", function(self) {
-                document.querySelector(".description_zone").remove();
-                document.querySelector(".close").remove();
-                document.querySelectorAll(".arrow").forEach(arrow => arrow.remove());
-                current_active_element.classList.remove("active_container");
+            if(tagsZone.children.length) {
+                for(let i = 0; i < tagsZone.children.length; i++) {
+                    tagsZone.children[i].remove();
+                    i--;
+                }
+            }
 
-                current_active_element = null;
-            });
+            descriptionTextArea.value = "";
+
+            if(image) {
+                if(image.tagList.length) {
+                    for(let tag of image.tagList) {
+                        let checkbox_div = document.createElement("div");
+                        checkbox_div.classList.add("aside_center");
+                        checkbox_div.classList.add("checkbox_div");
+                        checkbox_div.title = tag;
+
+                        let label = document.createElement("label");
+
+                        let checkbox = document.createElement("input");
+                        checkbox.type = "checkbox";
+                        checkbox.classList.add("checkbox");
+                        checkbox.name = "check";
+                        checkbox.value = tag;
+
+                        let span = document.createElement("span");
+                        span.classList.add("checkbox_span");
+                        span.innerText = tag;
+
+                        label.append(checkbox);
+                        label.append(span);
+
+                        checkbox_div.append(label);
+                        tagsZone.append(checkbox_div);
+                    }
+                }
+
+                if(image.description.length) {
+                    descriptionTextArea.value = image.description;
+                }
+            }
         });
     });
-    */
+
 });
 promise.catch(error => alert(error));
-

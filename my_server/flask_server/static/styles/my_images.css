@@ -29,6 +29,27 @@
         background: white;
         box-shadow: 0 4px 16px #ccc;
         border-radius: 10px;
+
+        display: flex;
+        flex-direction: column;
+    }
+    #photo_container {
+        height: 469px;
+        border-radius: 0px 0px 10px 10px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        background: gray;
+    }
+    #photo_container img {
+        margin: auto auto;
+        display: block;
+        min-width: 0px;
+        max-height: 100%;
+        max-width: 100%;
+        cursor: pointer;
     }
     #tags_zone {
         width: 100%;
@@ -40,10 +61,15 @@
     }
 .content_column:last-child {
     width: 350px;
+    min-width: 350px;
     background: white;
     box-shadow: 0 4px 16px #ccc;
     margin-left: 15px;
     border-radius: 10px;
+}
+.content_column:last-child img:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 3px 3px #4e4e4e;
 }
 
 .img_column {
@@ -51,8 +77,85 @@
 }
     .img_column:first-child {
         margin-left: 10px;
+        margin-right: 2px;
+    }
+    .img_column:last-child {
+        margin-right: 2px;
     }
 .img_column img {
     width: 100%;
     max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px #4e4e4e;
+}
+
+#tags_zone {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.tags_zone_container {
+    width: 30%;
+    height: 230px;
+
+    border-radius: 10px;
+    background: #f0f0f0;
+    margin: auto 0px;
+
+    display: flex;
+    flex-direction: column;
+}
+    #checkbox_container {
+        flex-grow: 1;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+    .checkbox_div {
+        margin-top: 1px;
+        background-color: #3d9480;
+        padding-left: 5px;
+        border-radius: 5px;
+        color: white;
+        line-height: 25px;
+        transition: 0.3s;
+    }
+    .checkbox_div:hover {
+        background: #418777;
+    }
+    .checkbox_div:first-child {
+        margin-top: 4px;
+    }
+    .checkbox_div:last-child {
+        margin-bottom: 4px;
+    }
+    .checkbox_span {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+    }
+    .checkbox {
+        margin-top: 7px;
+        margin-right: 3px;
+        float: left;
+    }
+    .checkbox, label {
+        cursor: pointer;
+        font-family: Arial;
+        font-size: 20px;
+    }
+    .checkbox:checked ~ span {
+        color: #fff80f;
+    }
+#description_textarea {
+    resize: none;
+    flex-grow: 1;
+    border-radius: 0px 0px 0px 10px;
+    outline: none;
+    background: #f0f0f0;
+}
+#description_textarea:focus,
+#description_textarea:not(:placeholder-shown) {
+    background: white;
 }

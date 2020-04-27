@@ -8,6 +8,9 @@
             <div id="photo_zone">
                 <hr class="hr">
                 <h1 class="aside_title">Изменение фото</h1>
+                <div id="photo_container">
+
+                </div>
             </div>
         </div>
         <div class="content_column">
@@ -24,7 +27,22 @@
         </div>
     </div>
     <div id="tags_zone">
+        <div id="tags_container" class="tags_zone_container">
+            <hr class="hr">
+            <h1 class="aside_title">Теги</h1>
+            <div id="checkbox_container" class="scroll">
 
+            </div>
+        </div>
+        <div id="description_container" class="tags_zone_container">
+            <hr class="hr">
+            <h1 class="aside_title">Описание</h1>
+            <textarea id="description_textarea" class="scroll" placeholder=" "></textarea>
+        </div>
+        <div id="buttons_container" class="tags_zone_container">
+            <hr class="hr">
+            <h1 class="aside_title">Действия</h1>
+        </div>
     </div>
     <script src="{{ url_for('static', filename='scripts/my_photo.js', v=1) }}"></script>
 {% endblock content %}
