@@ -15,7 +15,8 @@ def ajax():
 
     if action == "init":
         result = [
-            [i.as_dict() for i in Post.query.all()],
+            [i.as_dict() for i in Post.query.filter_by(hidden=False)] +
+            [i.as_dict() for i in Post.query.filter_by(hidden=True, user_id=current_user.id)],
             [[i.as_dict()["username"], i.set_user_photo()] for i in User.query.all()],
             current_user.id
         ]
@@ -28,8 +29,37 @@ def ajax():
         db.session.commit()
         # Разница между текущими тегами и бывшими(добавленные теги)
         result = list(set(current_user.user_tag_list) - set(old_tag_list))
+    elif action == "addTagsToImage":
+        tag_string = request.json["tags"]
+        image = Post.query.filter_by(id=request.json["imageId"])
+
+        old_tag_list = image[0].tag_list
+        image.update({"tag_list": tags(tag_string, image[0].tag_list)})
+        db.session.commit()
+        # Разница между текущими тегами и бывшими(добавленные теги)
+        result = list(set(Post.query.filter_by(id=request.json["imageId"])[0].tag_list) - set(old_tag_list))
     elif action == "get_my_images":
         result = [i.as_dict() for i in Post.query.filter_by(user_id=current_user.id)]
+    elif action == "changeImageHiddenAttr":
+        hidden = request.json["hidden"]
+        image = Post.query.filter_by(id=request.json["imageId"])
+        image.update({"hidden": not hidden})
+        db.session.commit()
+    elif action == "changeDescription":
+        image = Post.query.filter_by(id=request.json["imageId"])
+        image.update({"description": request.json["description"]})
+        db.session.commit()
+    elif action == "deleteTagsImage":
+        image = Post.query.filter_by(id=request.json["imageId"])
+        tag_list = request.json["tags"]
+        deleted_tags = []
+        for tag in tag_list:
+            new_tag_list = image[0].tag_list
+            new_tag_list.pop(new_tag_list.index(tag))
+            deleted_tags.append(tag)
+            image.update({"tag_list": new_tag_list})
+            db.session.commit()
+        result = deleted_tags
     return jsonify(result)
 
 

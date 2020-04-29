@@ -40,8 +40,6 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-
-        background: gray;
     }
     #photo_container img {
         margin: auto auto;
@@ -159,3 +157,27 @@
 #description_textarea:not(:placeholder-shown) {
     background: white;
 }
+
+#buttons_container button {
+    cursor: pointer;
+}
+
+.change_button {
+    border-radius: 10px;
+    height: 15%;
+    border: none;
+    outline: none;
+    background: gray;
+}
+    #delete_tags {
+        background: red;
+    }
+    #save_description {
+        background: #3d9480;
+    }
+    #hide_image {
+        background: #6464d0;
+    }
+    #delete_image {
+        background: red;
+    }

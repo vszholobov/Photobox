@@ -30,6 +30,7 @@ class Image {
         this.node.src = `/static/users/${imageObject.user_id}/images/${imageObject.image_file}`;
         this.node.className = "img";
 
+        this.id = imageObject.id;
         this.tagList = imageObject.tag_list;
         this.fileName = imageObject.image_file;
         this.userId = imageObject.user_id;
@@ -59,6 +60,38 @@ function initializePage(imageList, columns, images) {
         currentColumn.addImage(images[i].node);
 
         currentColumn.changeHeight(imageList[i].htwRatio * columnWidth);
+    }
+}
+
+// Создает теги, переданные в tagList
+function createTags(tagList) {
+    const placeToPut = document.querySelector(".add_tags_div");
+    let listOfCheckboxes = [];
+
+    for(let tag of tagList) {
+        let checkboxDiv = document.createElement("div");
+        checkboxDiv.classList.add("aside_center");
+        checkboxDiv.classList.add("checkbox_div");
+        checkboxDiv.setAttribute("title", tag);
+
+        let checkboxLabel = document.createElement("label");
+
+        let checkbox = document.createElement("input");
+        checkbox.classList.add("checkbox");
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("value", tag);
+        checkbox.setAttribute("name", "check");
+        checkboxLabel.append(checkbox);
+
+        listOfCheckboxes.push(checkbox);
+
+        let checkboxSpan = document.createElement("span");
+        checkboxSpan.classList.add("checkbox_span");
+        checkboxSpan.innerText = tag;
+        checkboxLabel.append(checkboxSpan);
+
+        checkboxDiv.append(checkboxLabel);
+        placeToPut.before(checkboxDiv);
     }
 }
 
@@ -103,6 +136,9 @@ promise.then(function(result) {
     let descriptionTextArea = document.getElementById("description_textarea");
 
     let column_to_return = null;
+    let hideImageButton = document.getElementById("hide_image");
+    let saveDescriptionButton = document.getElementById("save_description");
+    let deleteTagsButton = document.getElementById("delete_tags");
 
     [].forEach.call(imagesNodeList, function(imageNode) {
         imageNode.addEventListener("click", function() {
@@ -159,13 +195,139 @@ promise.then(function(result) {
                         tagsZone.append(checkbox_div);
                     }
                 }
+                let input_div = document.createElement("div");
+                input_div.classList.add("aside_center");
+                input_div.classList.add("add_tags_div");
+
+                let input_text = document.createElement("input");
+                input_text.id = "inputTags";
+                input_text.type = "text";
+                input_text.placeholder = "Добавить теги";
+                input_text.title = "Пример: #Тег";
+                input_text.required = true;
+
+                input_div.append(input_text);
+
+                let input_submit = document.createElement("input");
+                input_submit.id = "submitTags";
+                input_submit.type = "submit";
+                input_submit.value = "Добавить";
+
+                input_div.append(input_submit);
+
+                tagsZone.append(input_div);
 
                 if(image.description.length) {
                     descriptionTextArea.value = image.description;
+                }
+
+                let submitButton = document.getElementById("submitTags");
+                submitButton.addEventListener("click", function() {
+                    let tagsInput = document.getElementById("inputTags");
+                    let current_image = images.find(img => img.node == current_active_element);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ajax',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        data: JSON.stringify({"action": "addTagsToImage", "tags": tagsInput.value, "imageId": current_image.id}),
+                        success: function(data) {
+                            if(data.length) {
+                                for(let tag of data) {
+                                    current_image.tagList.push(tag);
+                                }
+                                createTags(data);
+                            } else {
+                                alert("Введеные теги уже есть в вашем списке.");
+                            }
+                        },
+                        error: function() {
+                            alert("Произошла ошибка( Попробуйте перезагрузить страницу.");
+                        }
+                    });
+                });
+
+                if(image.hidden) {
+                    hideImageButton.innerText = "Сделать общедоступной";
+                } else {
+                    hideImageButton.innerText = "Скрыть фотографию";
                 }
             }
         });
     });
 
+    hideImageButton.addEventListener("click", function() {
+        let current_image = images.find(img => img.node == current_active_element);
+        if(current_image) {
+            $.ajax({
+                type: 'POST',
+                url: '/ajax',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({"action": "changeImageHiddenAttr", "hidden": current_image.hidden, "imageId": current_image.id}),
+                success: function() {
+                    current_image.hidden = !current_image.hidden;
+                    if(current_image.hidden) {
+                        hideImageButton.innerText = "Сделать общедоступной";
+                        alert("Фотография была успешно скрыта");
+                    } else {
+                        hideImageButton.innerText = "Скрыть фотографию";
+                        alert("Фотография была успешно сделана общедоступной");
+                    }
+                },
+                error: function() {
+                    alert("Произошла ошибка( Попробуйте перезагрузить страницу.");
+                }
+            });
+        }
+    });
+
+    saveDescriptionButton.addEventListener("click", function() {
+        let current_image = images.find(img => img.node == current_active_element);
+        if(current_image) {
+            let textArea = document.getElementById("description_textarea");
+            $.ajax({
+                type: 'POST',
+                url: '/ajax',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({"action": "changeDescription", "description": textArea.value, "imageId": current_image.id}),
+                success: function() {
+                    current_image.description = textArea.value;
+                    alert("Описание успешно изменено");
+                },
+                error: function() {
+                    alert("Произошла ошибка( Попробуйте перезагрузить страницу.");
+                }
+            });
+        }
+    });
+
+    deleteTagsButton.addEventListener("click", function() {
+        let current_image = images.find(img => img.node == current_active_element);
+        if(current_image) {
+            let checkboxes = Array.from(document.querySelectorAll(".checkbox"));
+            checkboxes = checkboxes.filter(checkbox => checkbox.checked);
+            checkboxes = checkboxes.map(checkbox => checkbox.value);
+            $.ajax({
+                type: 'POST',
+                url: '/ajax',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({"action": "deleteTagsImage", "tags": checkboxes, "imageId": current_image.id}),
+                success: function(data) {
+                    let checkboxes = Array.from(document.querySelectorAll(".checkbox"));
+                    checkboxes = checkboxes.filter(checkbox => checkbox.checked);
+                    checkboxes = checkboxes.map(checkbox => checkbox.closest(".checkbox_div"))
+                    for(let div of checkboxes) {
+                        div.remove();
+                    }
+                },
+                error: function() {
+                    alert("Произошла ошибка( Попробуйте перезагрузить страницу.");
+                }
+            });
+        }
+    });
 });
 promise.catch(error => alert(error));

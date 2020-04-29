@@ -16,7 +16,7 @@
         <div class="content_column">
             <hr class="hr">
             <h1 class="aside_title">Мои фото</h1>
-            <div style="display: flex; flex-direction: row; overflow: scroll; overflow-x: hidden; max-height: 100%;" class="scroll">
+            <div style="display: flex; flex-direction: row; overflow: scroll; overflow-x: hidden; max-height: 100%; height: 100%;" class="scroll">
                 <div id="img_column1" class="img_column">
 
                 </div>
@@ -42,6 +42,10 @@
         <div id="buttons_container" class="tags_zone_container">
             <hr class="hr">
             <h1 class="aside_title">Действия</h1>
+            <button class="aside_center change_button" id="save_description">Сохранить описание</button>
+            <button class="aside_center change_button" id="hide_image">Скрыть фото</button>
+            <button class="aside_center change_button" id="delete_tags">Удалить выбранные теги</button>
+            <button class="aside_center change_button" id="delete_image">Удалить фото</button>
         </div>
     </div>
     <script src="{{ url_for('static', filename='scripts/my_photo.js', v=1) }}"></script>
