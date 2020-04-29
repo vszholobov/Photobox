@@ -78,7 +78,7 @@ def bot_api():
                                             f"/{random_image.user_id}/images"
                                             f"/{random_image.image_file}"})
     if action == "tags":
-        images = Post.query.all()
+        images = Post.query.filter_by(hidden=False)
         list_of_images = sort_pictures_by_tag(images, tags(request.json["tags"]))
         list_of_routes = []
         if len(list_of_images) < 1:

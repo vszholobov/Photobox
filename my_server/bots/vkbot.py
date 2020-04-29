@@ -2,7 +2,7 @@ import vk_api
 import random
 import requests
 from vk_api.longpoll import VkLongPoll, VkEventType
-from bot_functions import analyze_text, add_person, create_photo_matrix, Commands, find_command
+import bot_functions
 
 
 def tag_search(user, message, emoji):
@@ -11,9 +11,12 @@ def tag_search(user, message, emoji):
     if len(json_response["routes"]) < 1:
         write_msg(user, "Ничего не нашёл, человек", emoji)
         return []
+    elif len(json_response["routes"]) == 1:
+        send_photo(user, json_response["routes"][0], message)
+        return json_response["routes"]
     else:
         bot_typing(user)
-        create_photo_matrix(json_response["routes"])
+        bot_functions.create_photo_matrix(json_response["routes"])
         send_photo(user, "out.jpg", message)
         return json_response["routes"]
 
@@ -43,102 +46,54 @@ def random_search(user, message):
     send_photo(user, json_response["route"], message)
 
 
-def random_last_message():
-    message = ["Ты повторился", "Опять", "Вроде не смешно", "Повторение", "Я почему-то вижу эхо", "Отзвук"]
-    return random.choice(message)
-
-
-def random_reiteration_message():
-    message = ["Не смог распознать", "Анализ произошел неудачно", "Знаю тысячи языков, но это не смог распознать",
-               "Сложные буквы", "Ты повторился", "Опять", "Вроде не смешно", "Повторение", "Я почему-то вижу эхо",
-               "Отзвук"]
-    return random.choice(message)
-
-
-token = "845b43c4cd5c2b81f14efc3d0e878581dd6245acba70292db1c9a55d0d76fe252207e10f1842b8bcf40da"
-
-activators = {
-    "привет": ["привет", "здравствуй"],
-    "пока": ["прощай", "пока", "досвидания"],
-    "какдела?": ["какдела?"],
-    "ктоты?": ["ктоты?"],
-    "случайно": ["случайно", "рандом"],
-    "фотобокс": ["фотобокс"],
-    "создатель": ["ктотебясоздал"],
-    "сайт": ["сайт", "ссылка"],
-    "фото": ["фото", "фотография", "картинка"],
-    "команды": ["команда", "чтотыумеешь", "управление"],
-    "икит": ["икит"],
-
-
-}
-
-answers = {
-    "привет": ["Привет", "Х-а-а-а-й", "Здравствуй", "Гутен таг", "Дратути"],
-    "пока": ['Пока', 'Аривидерчи', 'Гуд бай', 'До свидания', 'Покеда'],
-    "какдела?": ["Положительно. Но мое мнение может поменяться", "Отлично думаю",
-                  "Работаю на Фотобокс", "Нормально, роботизирую процессы", "Всё ок",
-                  "Окей", "Амбивалентно", "Как у колобка — слева и справа одинаково"],
-    "ктоты?": ["Робот", "Машина", "Бот, Джеймс Бот", "Точно не человек", "Твой помощник",
-                "Работник Фотобокс, сисадмин", "Существо, обитающее в ВКонтакте"],
-    "случайно": ["случайно"],
-    "фотобокс": ["Место, где я работаю", "Мой дом", "Здесь меня собрали", "Люблю фотобокс", "Выдает картиночки",
-                 "Хранитель фотографий"],
-    "создатель": [""],
-    "сайт": ["Держи: http://photobox.pythonanywhere.com/ - это сайт"],
-    "фото": ["У меня нет глаз, но их двоичный код прекрасен", "Это ты можешь загрузить на фотобокс",
-             "Только если в цифровом формате"],
-    "команды": ["Ты можешь ввести спомощью '#' слова и я постараюсь найти фото по этим хештэгам"],
-    "икит": ["Прерасное место", "Жить без него не могу", "Там программируют"],
-}
-
-emoji = [" &#128526;", " &#129313;", " &#128522;", " &#128515;", " &#128521;", " &#128518;", " &#129302;",
-         " &#128373;", " &#128529;", " &#128567;", " &#128519;", " &#128169;", " &#128527;", " &#128517;",
-         " &#128524;", " &#128516;", " &#129315;", " &#129300;", " &#128578;", " &#128513;", " &#128512;",
-         " &#9786;", " &#128540;", " &#128514;"]
-
 list_of_commands = []
 commands = []
-last_message = ""
+last_message = None
 
-for key in activators:
-    list_of_commands.append(Commands(activators[key], list(map(add_person, answers[key]))))
-    commands.extend(activators[key])
+for key in bot_functions.activators:
+    list_of_commands.append(bot_functions.Commands(bot_functions.activators[key],
+                                                   list(map(bot_functions.add_person,
+                                                        bot_functions.answers[key]))))
+    commands.extend(bot_functions.activators[key])
 
-vk = vk_api.VkApi(token=token)
+vk = vk_api.VkApi(token=bot_functions.vk_token)
 longpoll = VkLongPoll(vk)
 
 print("Бот запущен")
 
 while True:
     for event in longpoll.listen():
-        if event.type == VkEventType.MESSAGE_NEW:
-            if event.to_me:
-                user = [event.user_id, random.randint(100000000, 900000000)]
-                if event.type == VkEventType.USER_RECORDING_VOICE:
-                    print("(Голосовое сообщение)")
-                message = event.text
-                hash_tag = False
-                if "#" in message:
-                    routes_list = tag_search(user, message, emoji)
-                    hash_tag = True
-                    if len(routes_list) > 0:
-                        for event in longpoll.listen():
-                            if event.type == VkEventType.MESSAGE_NEW:
-                                if event.to_me:
-                                    numbers = event.text.split()
-                                    for number in numbers:
-                                        if number.isdigit() and int(number) <= len(routes_list):
-                                            send_photo(user, routes_list[int(number) - 1], "Фото")
-                                    break
-                message = analyze_text(message.lower().replace(' ', ''), commands)
-                if message == last_message and not hash_tag:
-                    write_msg(user, add_person(random_last_message()), emoji)
+        if event.type == VkEventType.USER_RECORDING_VOICE and event.to_me:
+            user = [event.user_id, random.randint(100000000, 900000000)]
+            print("(Голосовое сообщение)")
+            write_msg(user, bot_functions.add_person("Не понимаю голосовых"), bot_functions.vk_emoji)
+        elif event.type == VkEventType.MESSAGE_NEW and event.to_me:
+            user = [event.user_id, random.randint(100000000, 900000000)]
+            if "#" in event.text:
+                routes_list = tag_search(user, event.text, bot_functions.vk_emoji)
+                if len(routes_list) > 1:
+                    for second_event in longpoll.listen():
+                        if second_event.type == VkEventType.MESSAGE_NEW and second_event.to_me:
+                            numbers = second_event.text.split()
+                            numbers = list(set(numbers))
+                            for number in numbers:
+                                if number.isdigit() and int(number) <= len(routes_list):
+                                    send_photo(user, routes_list[int(number) - 1], event.text)
+                                else:
+                                    write_msg(user, f"Выбора {number} нет.",
+                                              bot_functions.vk_emoji)
+                            break
+            else:
+                message = bot_functions.analyze_text(event.text.lower().replace(' ', ''), commands)
+                if event.text == last_message:
+                    write_msg(user, bot_functions.add_person(bot_functions.random_last_message()),
+                              bot_functions.vk_emoji)
                 elif message == "случайно":
                     random_search(user, message)
-                elif message == "Nope" and not hash_tag:
-                    write_msg(user, add_person(random_reiteration_message()), emoji)
-                elif not hash_tag:
-                    last_message = message
-                    write_msg(user, find_command(message, list_of_commands), emoji)
+                elif message == "Nope":
+                    write_msg(user, bot_functions.add_person(bot_functions.random_nope_message()),
+                              bot_functions.vk_emoji)
+                else:
+                    write_msg(user, bot_functions.find_command(message, list_of_commands), bot_functions.vk_emoji)
+                last_message = event.text
 
