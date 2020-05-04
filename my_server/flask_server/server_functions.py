@@ -63,6 +63,16 @@ def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
 
     Возвращает имя фотографии.
     """
+
+    try:
+        image = Image.open(form_picture)
+        htwRatio = image.size[1] / image.size[0]
+        if htwRatio > 2.5:
+            return False
+        if len(image.fp.read()) > 3145728:
+            return False
+    except Exception:
+        return False
     if path == "static/profile_pictures":
 
         picture_path_3 = os.path.join(app.root_path, path, picture_fn)
@@ -75,9 +85,11 @@ def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
 
     picture_path_1 = os.path.join(app.root_path, path + "images/", picture_fn)
 
-    image = Image.open(form_picture)
-    htwRatio = image.size[1] / image.size[0]
-    image.save(picture_path_1)
+
+    if image.format == "GIF":
+        image.save(picture_path_1, save_all=True)
+    else:
+        image.save(picture_path_1)
 
     return htwRatio
 

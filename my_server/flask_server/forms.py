@@ -56,6 +56,6 @@ class UpdateAccountForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    picture_file = MultipleFileField("Picture", validators=[DataRequired(), FileAllowed(["jpg", "png"])])
+    picture_file = MultipleFileField("Picture", validators=[DataRequired(), FileAllowed(["jpg", "png", "gif"])])
     description = TextAreaField("Description")
     submit = SubmitField("Отправить")

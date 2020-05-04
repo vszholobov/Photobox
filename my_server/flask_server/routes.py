@@ -60,6 +60,7 @@ def ajax():
             image.update({"tag_list": new_tag_list})
             db.session.commit()
         result = deleted_tags
+
     return jsonify(result)
 
 
@@ -155,7 +156,10 @@ def account():
 
             new_name = code_picture(form.picture.data)
             picture_file = save_picture(form.picture.data, new_name)
-            current_user.image_file = picture_file
+            if not picture_file:
+                pass
+            else:
+                current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
@@ -196,15 +200,17 @@ def upload():
         for photo in form.picture_file.data:
             new_name = code_picture(photo)
             htwRatio = save_picture(photo, new_name, getcwd() + "/flask_server/static/users/" + str(id) + "/")
+            if not htwRatio:
+                print("Неправильное фото")
+            else:
+                post = Post(image_file=new_name, description=form.description.data,
+                            tag_list=request.form.getlist('check'), user_id=current_user.id,
+                            creation_date=creation_date(), htwRatio=htwRatio)
 
-            post = Post(image_file=new_name, description=form.description.data,
-                        tag_list=request.form.getlist('check'), user_id=current_user.id,
-                        creation_date=creation_date(), htwRatio=htwRatio)
+                print(f"~UPLOAD: {post.image_file};")
 
-            print(f"~UPLOAD: {post.image_file};")
-
-            db.session.add(post)
-            db.session.commit()
+                db.session.add(post)
+                db.session.commit()
     return render_template("upload.html", title="Upload", form=form)
 
 
