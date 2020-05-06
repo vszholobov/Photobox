@@ -1,0 +1,8 @@
+stages:
+  - test
+  
+test 1:
+  stage: test
+  script:
+    - CHCP 65001
+    - DIR
