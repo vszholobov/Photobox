@@ -8,10 +8,22 @@ from os import mkdir, getcwd, remove, path
 from random import randint
 
 
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+    form = LoginForm()
+    if request.method == "POST":
+        if form.username.data == "1" and form.password.data == "2":
+            return render_template("admin_panel.html", title="Admin")
+    return render_template("admin.html", form=form, title="Admin")
+
+
 @app.route("/ajax", methods=['GET', 'POST'])
 def ajax():
     result = None
     action = request.json["action"]
+
+    if not current_user:
+        return jsonify("Тебя заволжанили")
 
     if action == "init":
         result = [
@@ -19,6 +31,10 @@ def ajax():
             [i.as_dict() for i in Post.query.filter_by(hidden=True, user_id=current_user.id)],
             [[i.as_dict()["username"], i.set_user_photo()] for i in User.query.all()],
             current_user.id
+        ]
+    elif action == "admin_init":
+        result = [
+            [user.as_dict() for user in User.query.all()]
         ]
     elif action == "addTags":
         tag_string = request.json["tags"]

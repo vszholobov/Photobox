@@ -50,12 +50,12 @@ body {
         justify-content: flex-start;
     }
     .link_div {
-        height: 30px;
+        height: 40px;
         margin-top: 1px;
     }
     .menu_link {
         font-size: 18px;
-        line-height: 30px;
+        line-height: 40px;
         display: block;
         text-decoration: none;
         color: #3d9480;
@@ -64,6 +64,7 @@ body {
         float: left;
         width: 30px;
         height: 25px;
+        margin-top: 6px;
         margin-right: 3px;
         margin-left: 1px;
     }

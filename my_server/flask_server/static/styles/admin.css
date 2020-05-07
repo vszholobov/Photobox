@@ -1,0 +1,27 @@
+#main {
+    display: flex;
+    flex-direction: row;
+}
+.column:first-child {
+    flex-grow: 1;
+    height: 100%;
+    background: green;
+
+    display: flex;
+    flex-direction: column;
+}
+    #photo_zone {
+        height: 400px;
+        width: 100%;
+        background: orange;
+    }
+    #buttons_zone {
+        flex-grow: 1;
+        width: 100%;
+        background: blue;
+    }
+.column:last-child {
+    width: 30%;
+    background: red;
+    height: 100%;
+}
