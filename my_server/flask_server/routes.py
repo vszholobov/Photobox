@@ -6,6 +6,7 @@ from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, P
 from flask_server.server_functions import save_picture, code_picture, tags, sort_pictures_by_tag, creation_date
 from os import mkdir, getcwd, remove, path
 from random import randint
+# import shutil
 
 
 @app.route("/admin", methods=["GET", "POST"])
@@ -166,10 +167,13 @@ def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.picture.data:
-            # path = "static/profile_pictures"
-            # path_file = path.join(app.root_path, path, current_user.image_file)
-            # remove(path_file)
-
+            if current_user.image_file != current_user.email:
+                static_path = "static/profile_pictures"
+                path_file = path.join(app.root_path, static_path, current_user.image_file)
+                try:
+                    remove(path_file)
+                except OSError:
+                    print(f"~DELETION-ERROR: {path_file};")
             new_name = code_picture(form.picture.data)
             picture_file = save_picture(form.picture.data, new_name)
             if not picture_file:
@@ -233,3 +237,29 @@ def upload():
 @app.route("/my_images")
 def my_images():
     return render_template("my_images.html", title="My images")
+
+
+"""        
+    post_to_delete = Post.query.filter_by(id=int(id))
+    static_path = "static/users"
+    static_path += f"/{post_to_delete[0].user_id}"
+    path_file = path.join(app.root_path, static_path, f"{post_to_delete[0].image_file}")
+    try:
+        remove(path_file)
+    except OSError:
+        print(f"~DELETION-ERROR: {path_file};")
+    db.session.delete(post_to_delete)
+    db.session.commit()
+
+    user_to_delete = User.query.filter_by(id=int(id))
+    user_posts = Post.query.filter_by(user_id=user_to_delete[0].id)
+    for post in user_posts:
+        db.session.delete(post)
+    db.session.commit()
+    static_path = "static/users"
+    path_file = path.join(app.root_path, static_path, f"{user_to_delete[0].id}") 
+    try:
+        shutil.rmtree(path_file)
+    except OSError:
+        print(f"~DELETION-ERROR: {path_file};")
+"""

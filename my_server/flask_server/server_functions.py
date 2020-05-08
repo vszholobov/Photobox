@@ -1,7 +1,7 @@
 import os
 import secrets
 import copy
-from PIL import Image, ImageFilter
+from PIL import Image
 from flask_server import app
 from datetime import datetime
 
@@ -252,5 +252,4 @@ def sorting_tags_by_alphabet(tag_list):
 def creating_routes(list_of_images):
     for image in list_of_images:
         image.route = '/users/' + str(image.user_id) + '/scaled_images/' + str(image.image_file)
-
 
