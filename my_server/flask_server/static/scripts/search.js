@@ -29,6 +29,7 @@ class Image {
         this.node = document.createElement("img");
         this.node.src = `/static/users/${imageObject.user_id}/images/${imageObject.image_file}`;
         this.node.className = "img";
+        this.node.loading = "lazy";
 
         this.tagList = imageObject.tag_list;
         this.fileName = imageObject.image_file;

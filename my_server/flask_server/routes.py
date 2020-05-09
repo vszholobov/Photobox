@@ -182,6 +182,7 @@ def account():
                 current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
+        current_user.password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
         db.session.commit()
 
         flash("Аккаунт успешно обновлен!")

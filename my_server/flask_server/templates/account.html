@@ -1,11 +1,52 @@
 {% extends "layout.html" %}
 {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/account.css', v=1) }}">
 {% endblock head %}
 {% block content %}
     <main class="main">
-        <h1>{{ current_user.username }}</h1>
-        <h2>{{ current_user.email }}</h2>
-        <img src="{{ current_user.set_user_photo() }}">
+        <div id="content_container">
+            <div id="image_container">
+                <img src="{{ current_user.set_user_photo() }}">
+            </div>
+            <div id="form_container">
+                <hr class="hr">
+                <h1 id="author_name">{{ current_user.username }}</h1>
+                <div>
+                    <form action="" method="POST" enctype="multipart/form-data" class="form center">
+                        {{ form.hidden_tag() }}
+
+                        <div class="form_group center">
+                            {{ form.username(class="form_input", placeholder=" ") }}
+                            {{ form.username.label(class="form_label") }}
+                        </div>
+
+                        <div class="form_group center">
+                            {{ form.email(class="form_input", placeholder=" ") }}
+                            {{ form.email.label(class="form_label") }}
+                        </div>
+
+                        <div class="form_group center">
+                            {{ form.password(class="form_input", placeholder=" ") }}
+                            {{ form.password.label(class="form_label") }}
+                        </div>
+
+                        <div class="form_group center">
+                            {{ form.confirm_password(class="form_input", placeholder=" ") }}
+                            {{ form.confirm_password.label(class="form_label") }}
+                        </div>
+
+                        <div id="last_group" class="form_group center">
+                            <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                <div class="buttons">{{ form.picture }}</div>
+                                <div class="buttons">{{ form.submit(class="form_button") }}</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <!--
         <form action="" method="POST" enctype="multipart/form-data" class="form center">
             {{ form.hidden_tag() }}
             <h1 class="form_title">Обновить аккаунт</h1>
@@ -50,7 +91,6 @@
             <div class="form_group center">
                 {{ form.submit(class="form_button") }}
             </div>
-            <a href="{{ url_for('logout') }}">Выйти</a>
-        </form>
+        </form>-->
     </main>
 {% endblock content %}

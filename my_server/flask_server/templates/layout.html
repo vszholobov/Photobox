@@ -43,6 +43,7 @@
                 <div id="nav_right">
                     {% if current_user.is_authenticated %}
                         <a id="user_photo_link" href="{{ url_for('account') }}"><img class="link_photo" src="{{ current_user.set_user_photo() }}">Аккаунт</a>
+                        <a href="{{ url_for('logout') }}">Выйти</a>
                     {% else %}
                         <a href="{{ url_for('login') }}">Авторизация</a>
                         <a href="{{ url_for('register') }}">Регистрация</a>

@@ -38,6 +38,8 @@ class UpdateAccountForm(FlaskForm):
                                                                                       "и 15 символами")])
     email = StringField("Электронная почта", validators=[Email(), DataRequired()])
     picture = FileField("Изменить аватар", validators=[FileAllowed(["jpg", "png"])])
+    password = PasswordField("Пароль", validators=[DataRequired()])
+    confirm_password = PasswordField("Повтор пароля", validators=[DataRequired(), EqualTo("password")])
     submit = SubmitField("Обновить")
 
     @staticmethod
