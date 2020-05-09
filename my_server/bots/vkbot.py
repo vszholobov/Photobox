@@ -3,6 +3,7 @@ import random
 import requests
 from vk_api.longpoll import VkLongPoll, VkEventType
 import bot_functions
+import json
 
 
 def tag_search(user, message, emoji):
@@ -21,10 +22,10 @@ def tag_search(user, message, emoji):
         return json_response["routes"]
 
 
-def write_msg(user, message, emoji):
+def write_msg(user, message, emoji, keybord):
     bot_typing(user)
     message = message.replace(" ", chr(32)) + emoji[random.randint(0, len(emoji) - 1)]
-    vk.method('messages.send', {'user_id': user[0], 'message': message, 'random_id': user[1]})
+    vk.method('messages.send', {'user_id': user[0], 'message': message, 'random_id': user[1], "keyboard": keyboard})
 
 
 def bot_typing(user):
@@ -56,18 +57,36 @@ for key in bot_functions.activators:
                                                         bot_functions.answers[key]))))
     commands.extend(bot_functions.activators[key])
 
+keyboard = {
+    "one_time": False,
+    "buttons": [
+        [{
+                "action": {
+                    "type": "text",
+                    "payload": "{\"button\": \"1\"}",
+                    "label": "Случайно"
+                },
+                "color": "primary"
+            },
+            {
+                "action": {
+                    "type": "text",
+                    "payload": [],
+                    "label": "Команды"
+                },
+                "color": "positive"
+        }]
+    ]
+}
 vk = vk_api.VkApi(token=bot_functions.vk_token)
 longpoll = VkLongPoll(vk)
+keyboard = str(json.dumps(keyboard, ensure_ascii=False))
 
 print("Бот запущен")
 
 while True:
     for event in longpoll.listen():
-        if event.type == VkEventType.USER_RECORDING_VOICE and event.to_me:
-            user = [event.user_id, random.randint(100000000, 900000000)]
-            print("(Голосовое сообщение)")
-            write_msg(user, bot_functions.add_person("Не понимаю голосовых"), bot_functions.vk_emoji)
-        elif event.type == VkEventType.MESSAGE_NEW and event.to_me:
+        if event.type == VkEventType.MESSAGE_NEW and event.to_me:
             user = [event.user_id, random.randint(100000000, 900000000)]
             if "#" in event.text:
                 routes_list = tag_search(user, event.text, bot_functions.vk_emoji)
@@ -81,19 +100,20 @@ while True:
                                     send_photo(user, routes_list[int(number) - 1], event.text)
                                 else:
                                     write_msg(user, f"Выбора {number} нет.",
-                                              bot_functions.vk_emoji)
+                                              bot_functions.vk_emoji, keyboard)
                             break
             else:
                 message = bot_functions.analyze_text(event.text.lower().replace(' ', ''), commands)
                 if event.text == last_message:
                     write_msg(user, bot_functions.add_person(bot_functions.random_last_message()),
-                              bot_functions.vk_emoji)
+                              bot_functions.vk_emoji, keyboard)
                 elif message == "случайно":
                     random_search(user, message)
                 elif message == "Nope":
                     write_msg(user, bot_functions.add_person(bot_functions.random_nope_message()),
-                              bot_functions.vk_emoji)
+                              bot_functions.vk_emoji, keyboard)
                 else:
-                    write_msg(user, bot_functions.find_command(message, list_of_commands), bot_functions.vk_emoji)
+                    write_msg(user, bot_functions.find_command(message, list_of_commands), bot_functions.vk_emoji,
+                              keyboard)
                 last_message = event.text
 
