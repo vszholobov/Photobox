@@ -5,15 +5,23 @@
 {% block content %}
     <main id="main" class="main">
         <div class="column">
-            <div id="photo_zone">
+            <div id="photo_zone" class="scroll">
+                <div id="img_column1">
 
+                </div>
+                <div id="img_column2">
+
+                </div>
             </div>
             <div id="buttons_zone">
 
             </div>
         </div>
         <div class="column">
+            <h1 style="text-align: center;">Пользователи</h1>
+            <div id="users_column" style="display: flex; flex-direction: column;">
 
+            </div>
         </div>
     </main>
     <script src="{{ url_for('static', filename='scripts/admin.js', v=1) }}"></script>

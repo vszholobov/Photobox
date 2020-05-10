@@ -35,8 +35,12 @@ def ajax():
         ]
     elif action == "admin_init":
         result = [
-            [user.as_dict() for user in User.query.all()]
+            [user.as_dict() for user in User.query.all()],
+            [i.set_user_photo() for i in User.query.all()]
         ]
+    elif action == "adminGetUserPhotos":
+        result = [i.as_dict() for i in Post.query.filter_by(user_id=request.json["user_id"])]
+        print(result)
     elif action == "addTags":
         tag_string = request.json["tags"]
         user = User.query.filter_by(id=current_user.id)

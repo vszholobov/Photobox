@@ -1,6 +1,7 @@
 #main {
     display: flex;
     flex-direction: row;
+    color: #3d9480;
 }
 .column:first-child {
     flex-grow: 1;
@@ -14,6 +15,18 @@
         height: 400px;
         width: 100%;
         background: orange;
+
+        display: flex;
+        flex-direction: row;
+
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+    #photo_zone div {
+        width: 50%;
+    }
+    #photo_zone img {
+        max-width: 100%;
     }
     #buttons_zone {
         flex-grow: 1;
@@ -21,7 +34,28 @@
         background: blue;
     }
 .column:last-child {
-    width: 30%;
+    width: 270px;
+    min-width: 270px;
     background: red;
     height: 100%;
+}
+.user_div {
+    height: 50px;
+    line-height: 50px;
+
+    display: flex;
+    flex-direction: row;
+}
+.user_div:hover {
+    background: black;
+}
+
+
+.user_avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+    margin-right: 5px;
+    margin-left: 10px;
 }
