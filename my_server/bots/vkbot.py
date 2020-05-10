@@ -6,11 +6,11 @@ import bot_functions
 import json
 
 
-def tag_search(user, message, emoji):
+def tag_search(user, message, emoji, keyboard):
     response = requests.post("http://127.0.0.1:5000/bot", json={"action": "tags", "tags": message})
     json_response = response.json()
     if len(json_response["routes"]) < 1:
-        write_msg(user, "Ничего не нашёл, человек", emoji)
+        write_msg(user, "Ничего не нашёл, человек", emoji, keyboard)
         return []
     elif len(json_response["routes"]) == 1:
         send_photo(user, json_response["routes"][0], message)
@@ -22,7 +22,7 @@ def tag_search(user, message, emoji):
         return json_response["routes"]
 
 
-def write_msg(user, message, emoji, keybord):
+def write_msg(user, message, emoji, keyboard):
     bot_typing(user)
     message = message.replace(" ", chr(32)) + emoji[random.randint(0, len(emoji) - 1)]
     vk.method('messages.send', {'user_id': user[0], 'message': message, 'random_id': user[1], "keyboard": keyboard})
@@ -89,7 +89,7 @@ while True:
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
             user = [event.user_id, random.randint(100000000, 900000000)]
             if "#" in event.text:
-                routes_list = tag_search(user, event.text, bot_functions.vk_emoji)
+                routes_list = tag_search(user, event.text, bot_functions.vk_emoji, keyboard)
                 if len(routes_list) > 1:
                     for second_event in longpoll.listen():
                         if second_event.type == VkEventType.MESSAGE_NEW and second_event.to_me:
@@ -104,7 +104,7 @@ while True:
                             break
             else:
                 message = bot_functions.analyze_text(event.text.lower().replace(' ', ''), commands)
-                if event.text == last_message:
+                if event.text == last_message and message != "случайно":
                     write_msg(user, bot_functions.add_person(bot_functions.random_last_message()),
                               bot_functions.vk_emoji, keyboard)
                 elif message == "случайно":

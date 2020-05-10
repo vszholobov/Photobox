@@ -25,25 +25,36 @@ def analyze_text(text, commands):
                     dictionary[(i, j)] = min(dictionary[(i, j)], dictionary[i - 2, j - 2] + cost)
         difference.append(dictionary[text_len - 1,  command_len - 1])
     coincidence = []
-    distinction = 0
     local_min = min(difference)
     for i in range(len(difference)):
         if difference[i] == local_min:
-            difference[i] = distinction - 1
-            distinction -= 1
+            difference[i] = local_min - 1
             coincidence.append(commands[difference.index(min(difference))])
-    for i in range(len(coincidence)):
-        coincidence[i] = analyze_command(coincidence[i], text)
-    return random.choice(coincidence)
+    len_of_coincidence = len(coincidence)
+    odds = 3.0
+    if len_of_coincidence > 1:
+        while True:
+            if coincidence.count("Nope") == len_of_coincidence:
+                return "Nope"
+            elif coincidence.count("Nope") == len_of_coincidence - 1:
+                for i in range(len(coincidence)):
+                    if coincidence[i] != "Nope":
+                        return coincidence[i]
+            else:
+                for i in range(len(coincidence)):
+                    coincidence[i] = analyze_command(coincidence[i], text, odds)
+                odds -= 0.5
+    else:
+        return coincidence[0]
 
 
-def analyze_command(coincidence, text):
+def analyze_command(coincidence, text, odds):
     similarity = 0
     max_str_len = min(len(coincidence), len(text))
     for i in range(max_str_len):
         if coincidence[i] == text[i]:
             similarity += 1
-    residual = max_str_len/2
+    residual = max_str_len/odds
     if similarity > residual:
         return coincidence
     else:
