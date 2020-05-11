@@ -4,6 +4,7 @@ import requests
 from vk_api.longpoll import VkLongPoll, VkEventType
 import bot_functions
 import json
+import os
 
 
 def tag_search(user, message, emoji, keyboard):
@@ -17,9 +18,12 @@ def tag_search(user, message, emoji, keyboard):
         return json_response["routes"]
     else:
         bot_typing(user)
-        bot_functions.create_photo_matrix(json_response["routes"])
-        send_photo(user, "out.jpg", message)
-        return json_response["routes"]
+        create_success = bot_functions.create_photo_matrix(json_response["routes"], user[0])
+        if create_success:
+            send_photo(user, str(user[0]) + ".jpg", message)
+            return json_response["routes"]
+        else:
+            return []
 
 
 def write_msg(user, message, emoji, keyboard):
@@ -90,7 +94,10 @@ while True:
             user = [event.user_id, random.randint(100000000, 900000000)]
             if "#" in event.text:
                 routes_list = tag_search(user, event.text, bot_functions.vk_emoji, keyboard)
-                if len(routes_list) > 1:
+                if len(routes_list) == 0:
+                    write_msg(user, f"Не получилось создать матрицу картинок!", bot_functions.vk_emoji, keyboard)
+                elif len(routes_list) > 1:
+                    write_msg(user, "Выберите цифры фотографий через пробел!", bot_functions.vk_emoji, keyboard)
                     for second_event in longpoll.listen():
                         if second_event.type == VkEventType.MESSAGE_NEW and second_event.to_me:
                             numbers = second_event.text.split()
@@ -99,8 +106,12 @@ while True:
                                 if number.isdigit() and int(number) <= len(routes_list):
                                     send_photo(user, routes_list[int(number) - 1], event.text)
                                 else:
-                                    write_msg(user, f"Выбора {number} нет.",
-                                              bot_functions.vk_emoji, keyboard)
+                                    write_msg(user, f"Выбора {number} нет.", bot_functions.vk_emoji, keyboard)
+                            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), str(user[0]) + '.jpg')
+                            try:
+                                os.remove(path)
+                            except OSError:
+                                print(f"~DELETION-ERROR: {path};")
                             break
             else:
                 message = bot_functions.analyze_text(event.text.lower().replace(' ', ''), commands)

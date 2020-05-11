@@ -65,7 +65,7 @@ def add_person(string):
     return string + ", человек" + random.choice([".", "!"])
 
 
-def create_photo_matrix(photos):
+def create_photo_matrix(photos, user_name):
     heights = [0, 0, 0, 0]
 
     if len(photos) == 1:
@@ -80,6 +80,8 @@ def create_photo_matrix(photos):
     img = Image.new(mode='RGB', size=(width, 0), color=(255, 255, 255))
     for i in range(len(photos)):
         img_to_paste = Image.open(photos[i])
+        if img_to_paste.format == "GIF":
+            continue
         img_copy = img.copy()
 
         img_size = img_to_paste.size
@@ -94,7 +96,6 @@ def create_photo_matrix(photos):
 
         x = 5
         y = 2
-
         for off in range(offset):
             draw_img.text((x - off, y), number_text, font=headline, fill=shadow_color)
             draw_img.text((x + off, y), number_text, font=headline, fill=shadow_color)
@@ -104,7 +105,6 @@ def create_photo_matrix(photos):
             draw_img.text((x + off, y + off), number_text, font=headline, fill=shadow_color)
             draw_img.text((x - off, y - off), number_text, font=headline, fill=shadow_color)
             draw_img.text((x + off, y - off), number_text, font=headline, fill=shadow_color)
-
         draw_img.text((x, y), number_text, font=headline)
 
         photo_number = heights.index(min(heights))
@@ -126,7 +126,10 @@ def create_photo_matrix(photos):
         elif photo_number == 3:
             img.paste(img_to_paste, (384, column_len))
 
-        img.save("out.jpg")
+        img.save(str(user_name) + ".jpg")
+    if img.size[1] != 0:
+        return True
+    return False
 
 
 class Commands:

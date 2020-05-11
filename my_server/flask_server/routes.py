@@ -6,7 +6,7 @@ from flask_server.forms import LoginForm, RegistrationForm, UpdateAccountForm, P
 from flask_server.server_functions import save_picture, code_picture, tags, sort_pictures_by_tag, creation_date
 from os import mkdir, getcwd, remove, path
 from random import randint
-# import shutil
+import shutil
 
 
 @login_required
@@ -83,13 +83,39 @@ def ajax():
             db.session.commit()
         result = deleted_tags
     elif action == "adminDeleteUserPhoto":
-        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         photo_id = request.json["photoId"]
-        print(photo_id)
+        post_to_delete = Post.query.filter_by(id=int(photo_id)).first()
+        static_path = "static/users"
+        static_path += f"/{post_to_delete.user_id}/images"
+        path_file = path.join(app.root_path, static_path, f"{post_to_delete.image_file}")
+        try:
+            remove(path_file)
+        except OSError:
+            print(f"~DELETION-ERROR: {path_file};")
+        db.session.delete(post_to_delete)
+        db.session.commit()
     elif action == "adminDeleteUser":
-        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         user_id = request.json["userId"]
         print(user_id)
+        user_to_delete = User.query.filter_by(id=int(user_id)).first()
+        if user_to_delete.image_file != user_to_delete.email:
+            static_path = "static/profile_pictures"
+            path_file = path.join(app.root_path, static_path, user_to_delete.image_file)
+            try:
+                remove(path_file)
+            except OSError:
+                print(f"~DELETION-ERROR: {path_file};")
+        user_posts = Post.query.filter_by(user_id=user_to_delete.id)
+        for post in user_posts:
+            db.session.delete(post)
+        db.session.delete(user_to_delete)
+        db.session.commit()
+        static_path = "static/users"
+        path_file = path.join(app.root_path, static_path, f"{user_to_delete.id}")
+        try:
+            shutil.rmtree(path_file)
+        except OSError:
+            print(f"~DELETION-ERROR: {path_file};")
 
     return jsonify(result)
 
@@ -251,29 +277,3 @@ def upload():
 @app.route("/my_images")
 def my_images():
     return render_template("my_images.html", title="My images")
-
-
-"""        
-    post_to_delete = Post.query.filter_by(id=int(id))
-    static_path = "static/users"
-    static_path += f"/{post_to_delete[0].user_id}"
-    path_file = path.join(app.root_path, static_path, f"{post_to_delete[0].image_file}")
-    try:
-        remove(path_file)
-    except OSError:
-        print(f"~DELETION-ERROR: {path_file};")
-    db.session.delete(post_to_delete)
-    db.session.commit()
-
-    user_to_delete = User.query.filter_by(id=int(id))
-    user_posts = Post.query.filter_by(user_id=user_to_delete[0].id)
-    for post in user_posts:
-        db.session.delete(post)
-    db.session.commit()
-    static_path = "static/users"
-    path_file = path.join(app.root_path, static_path, f"{user_to_delete[0].id}") 
-    try:
-        shutil.rmtree(path_file)
-    except OSError:
-        print(f"~DELETION-ERROR: {path_file};")
-"""
