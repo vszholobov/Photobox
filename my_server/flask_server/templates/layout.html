@@ -30,6 +30,7 @@
                 <div id="nav_left">
                     <a href="{{ url_for('home') }}"><img class="link_photo" src="{{ url_for('static', filename='logo.png') }}">Фотобокс</a>
                     {% if current_user.is_authenticated %}
+                        <!--
                         <div id="nav_search_input_container">
                             <div id="nav_search_input_container2">
                                 <input type="text" id="nav_search_input" placeholder="Поиск">
@@ -37,7 +38,7 @@
                                     <input type="image" id="nav_submit_input" src="{{ url_for('static', filename='search.png') }}">
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     {% endif %}
                 </div>
                 <div id="nav_right">

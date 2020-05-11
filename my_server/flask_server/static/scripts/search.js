@@ -470,12 +470,13 @@ promise.then(function(result) {
             current_active_element = imageNode.closest(".img_container");
             current_active_element.classList.add("active_container");
 
+            // Создание зоны описания
+            current_active_element.append(createDescriptionDiv(images[index]));
+
+            /*
             // Определение координат
             currentX = columns.map(column => column.self).indexOf(imageNode.closest(".img_column"));
             currentY = Array.from(columns[currentX].self.children).indexOf(current_active_element);
-
-            // Создание зоны описания
-            current_active_element.append(createDescriptionDiv(images[index]));
 
             // Создание стрелок
             let arrowRight = document.createElement("span")
@@ -526,7 +527,7 @@ promise.then(function(result) {
                 if(currentY == columns[currentX].self.children.length - 1) alert("Вы уперлись в пол.");
                 else currentY++;
                 columns[currentX].self.children[currentY].querySelector(".img").dispatchEvent(new MouseEvent("click"));
-            });
+            });*/
 
             [].forEach.call(document.querySelectorAll(".photo_checkbox"), function(checkbox) {
                 checkbox.addEventListener('click', () => moveTagToPanel(checkbox, columns, images));

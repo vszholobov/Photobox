@@ -9,6 +9,7 @@ from random import randint
 # import shutil
 
 
+@login_required
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
     form = LoginForm()
@@ -81,6 +82,14 @@ def ajax():
             image.update({"tag_list": new_tag_list})
             db.session.commit()
         result = deleted_tags
+    elif action == "adminDeleteUserPhoto":
+        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        photo_id = request.json["photoId"]
+        print(photo_id)
+    elif action == "adminDeleteUser":
+        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        user_id = request.json["userId"]
+        print(user_id)
 
     return jsonify(result)
 

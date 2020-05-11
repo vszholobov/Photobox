@@ -6,7 +6,6 @@
 .column:first-child {
     flex-grow: 1;
     height: 100%;
-    background: green;
 
     display: flex;
     flex-direction: column;
@@ -14,7 +13,6 @@
     #photo_zone {
         height: 400px;
         width: 100%;
-        background: orange;
 
         display: flex;
         flex-direction: row;
@@ -24,19 +22,28 @@
     }
     #photo_zone div {
         width: 50%;
+        display: flex;
+        flex-direction: column;
     }
     #photo_zone img {
         max-width: 100%;
+        margin-bottom: 20px;
     }
     #buttons_zone {
         flex-grow: 1;
         width: 100%;
-        background: blue;
+
+        display: flex;
+        flex-direction: column;
+
+        background: gray;
+
+        border-radius: 0px 0px 0px 10px;
+        margin: -1px 0px;
     }
 .column:last-child {
     width: 270px;
     min-width: 270px;
-    background: red;
     height: 100%;
 }
 .user_div {
@@ -58,4 +65,86 @@
 
     margin-right: 5px;
     margin-left: 10px;
+}
+
+#tags_zone {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.tags_zone_container {
+    width: 30%;
+    height: 230px;
+
+    border-radius: 10px;
+    background: #f0f0f0;
+    margin: auto 0px;
+
+    display: flex;
+    flex-direction: column;
+}
+    #checkbox_container {
+        flex-grow: 1;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+    .checkbox_div {
+        margin-top: 1px;
+        background-color: #3d9480;
+        padding-left: 5px;
+        border-radius: 5px;
+        color: white;
+        line-height: 25px;
+        transition: 0.3s;
+    }
+    .checkbox_div:hover {
+        background: #418777;
+    }
+    .checkbox_div:first-child {
+        margin-top: 4px;
+    }
+    .checkbox_div:last-child {
+        margin-bottom: 4px;
+    }
+    .checkbox_span {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+    }
+    .checkbox {
+        margin-top: 7px;
+        margin-right: 3px;
+        float: left;
+    }
+    .checkbox, label {
+        cursor: pointer;
+        font-family: Arial;
+        font-size: 20px;
+    }
+    .checkbox:checked ~ span {
+        color: #fff80f;
+    }
+#description_textarea {
+    resize: none;
+    flex-grow: 1;
+    border-radius: 0px 0px 0px 10px;
+    outline: none;
+    background: #f0f0f0;
+}
+#description_textarea:focus,
+#description_textarea:not(:placeholder-shown) {
+    background: white;
+}
+
+.buttons {
+    margin-top: 20px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.buttons input {
+    width: 30%;
 }
