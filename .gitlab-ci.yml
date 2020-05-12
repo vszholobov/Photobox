@@ -1,13 +1,13 @@
 stages:
   - test
   
-test 1:
+test server:
   stage: test
   script:
     - CHCP 65001
     - pytest .\my_server\test_server.py -v
 
-test 2:
+test bots:
   stage: test
   script:
     - CHCP 65001
