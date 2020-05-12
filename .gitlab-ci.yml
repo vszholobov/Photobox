@@ -6,3 +6,9 @@ test 1:
   script:
     - CHCP 65001
     - pytest .\my_server\test_server.py -v
+
+test 2:
+  stage: test
+  script:
+    - CHCP 65001
+    - pytest .\my_server\test_bots.py -v

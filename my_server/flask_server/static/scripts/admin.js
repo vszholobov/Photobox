@@ -138,20 +138,24 @@ deletePhotoButton.addEventListener("click", function() {
 });
 
 deleteUserButton.addEventListener("click", function() {
-    if(currentActiveUser) {
-        $.ajax({
-            type: 'POST',
-            url: '/ajax',
-            contentType: 'application/json',
-            dataType: 'json',
-            data: JSON.stringify({"action": "adminDeleteUser", "userId": currentActiveUser.id}),
-            success: function(data) {
-                alert("Пользователь успешно удален.");
-            },
-            error: function() {
-                reject(new Error("Произошла ошибка( Попробуйте перезагрузить страницу."));
-            }
-        });
+    if(confirm("Вы уверены, что хотите удалить пользователя: " + currentActiveUser.username + "?", "")) {
+        if(currentActiveUser) {
+            $.ajax({
+                type: 'POST',
+                url: '/ajax',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({"action": "adminDeleteUser", "userId": currentActiveUser.id}),
+                success: function(data) {
+                    alert("Пользователь успешно удален.");
+                },
+                error: function() {
+                    reject(new Error("Произошла ошибка( Попробуйте перезагрузить страницу."));
+                }
+            });
+        }
+    } else {
+        alert("Удаление отменено.");
     }
 });
 

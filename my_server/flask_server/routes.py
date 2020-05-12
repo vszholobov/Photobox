@@ -24,7 +24,7 @@ def ajax():
     result = None
     action = request.json["action"]
 
-    if not current_user:
+    if current_user.is_anonymous:
         return jsonify("Тебя заволжанили")
 
     if action == "init":
@@ -116,6 +116,23 @@ def ajax():
             shutil.rmtree(path_file)
         except OSError:
             print(f"~DELETION-ERROR: {path_file};")
+    elif action == "userDeletePhoto":
+        print(current_user.posts)
+        post_to_delete = Post.query.filter_by(user_id=current_user.id, id=request.json["imageId"]).first()
+        if post_to_delete is None:
+            result = {"status": "error"}
+        else:
+            static_path = "static/users"
+            static_path += f"/{post_to_delete.user_id}/images"
+            path_file = path.join(app.root_path, static_path, f"{post_to_delete.image_file}")
+            try:
+                remove(path_file)
+            except OSError:
+                print(f"~DELETION-ERROR: {path_file};")
+
+            db.session.delete(post_to_delete)
+            db.session.commit()
+            result = {"status": "success"}
 
     return jsonify(result)
 

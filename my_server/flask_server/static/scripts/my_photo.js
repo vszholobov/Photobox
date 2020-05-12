@@ -139,6 +139,7 @@ promise.then(function(result) {
     let hideImageButton = document.getElementById("hide_image");
     let saveDescriptionButton = document.getElementById("save_description");
     let deleteTagsButton = document.getElementById("delete_tags");
+    let deletePhotoButton = document.getElementById("delete_image");
 
     [].forEach.call(imagesNodeList, function(imageNode) {
         imageNode.addEventListener("click", function() {
@@ -321,6 +322,33 @@ promise.then(function(result) {
                     checkboxes = checkboxes.map(checkbox => checkbox.closest(".checkbox_div"))
                     for(let div of checkboxes) {
                         div.remove();
+                    }
+                },
+                error: function() {
+                    alert("Произошла ошибка( Попробуйте перезагрузить страницу.");
+                }
+            });
+        }
+    });
+
+    deletePhotoButton.addEventListener("click", function() {
+        let current_image = images.find(img => img.node == current_active_element);
+        if(current_image) {
+            $.ajax({
+                type: 'POST',
+                url: '/ajax',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({"action": "userDeletePhoto", "imageId": current_image.id}),
+                success: function(data) {
+                    if(data.status == "success") {
+                        imageList.splice(imageList.indexOf(current_active_element), 1);
+                        images.splice(images.indexOf(current_image), 1);
+                        current_active_element.remove();
+                        current_active_element = null;
+                        alert("Фото успешно удалено.");
+                    } else {
+                        alert("Произошла ошибка( Попробуйте перезагрузить страницу.");
                     }
                 },
                 error: function() {
