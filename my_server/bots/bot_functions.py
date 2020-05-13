@@ -202,3 +202,33 @@ vk_emoji = [" &#128526;", " &#129313;", " &#128522;", " &#128515;", " &#128521;"
          " &#9786;", " &#128540;", " &#128514;"]
 ds_emoji = []
 tlg_emoji = []
+
+alphabet_of_change_translit = {"а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e", "ж": "j", "з": "z",
+                               "и": "i", "й": "i", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o", "п": "p",
+                               "р": "r", "с": "s", "т": "t", "у": "y", "ф": "f", "х": "h", "ц": "ts", "ч": "ch",
+                               "ш": "sh", "щ": "sh", "ъ": "", "ы": "i", "ь": "'", "э": "e", "ю": "yu", "я": "ya",
+                               "ё": "e", "?": "?"}
+
+alphabet_of_change = {"а": "f", "б": ",", "в": "d", "г": "u", "д": "l", "е": "t", "ж": ";", "з": "p",
+                      "и": "b", "й": "q", "к": "r", "л": "k", "м": "v", "н": "y", "о": "j", "п": "g",
+                      "р": "h", "с": "c", "т": "n", "у": "e", "ф": "a", "х": "[", "ц": "w", "ч": "x",
+                      "ш": "i", "щ": "o", "ъ": "]", "ы": "s", "ь": "m", "э": "'", "ю": ".", "я": "z",
+                      "ё": "`", "?": "?"}
+
+for key in activators:
+    buffer_array = []
+
+    for activator in activators[key]:
+        new_activator_translit = ''
+        new_activator = ''
+
+        for letter in activator:
+            new_activator_translit += alphabet_of_change_translit[letter]
+
+        for letter in activator:
+            new_activator += alphabet_of_change[letter]
+
+        buffer_array.append(new_activator_translit)
+        buffer_array.append(new_activator)
+
+    activators[key] += buffer_array
