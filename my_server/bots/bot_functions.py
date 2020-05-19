@@ -80,10 +80,7 @@ def create_photo_matrix(photos, user_name):
     img = Image.new(mode='RGB', size=(width, 0), color=(255, 255, 255))
     for i in range(len(photos)):
         img_to_paste = Image.open(photos[i])
-        if img_to_paste.format == "GIF":
-            continue
         img_copy = img.copy()
-
         img_size = img_to_paste.size
         img_to_paste = img_to_paste.resize((128, int((img_size[1] / img_size[0]) * 128)), Image.ANTIALIAS)
         img_size = img_to_paste.size
@@ -127,9 +124,6 @@ def create_photo_matrix(photos, user_name):
             img.paste(img_to_paste, (384, column_len))
 
         img.save(str(user_name) + ".jpg")
-    if img.size[1] != 0:
-        return True
-    return False
 
 
 class Commands:

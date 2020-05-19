@@ -8,6 +8,7 @@ import os
 
 
 def tag_search(user, message, emoji, keyboard):
+    bot_typing(user)
     response = requests.post("http://127.0.0.1:5000/bot", json={"action": "tags", "tags": message})
     json_response = response.json()
     if len(json_response["routes"]) < 1:
@@ -17,17 +18,14 @@ def tag_search(user, message, emoji, keyboard):
         send_photo(user, json_response["routes"][0], message)
         return json_response["routes"]
     else:
-        bot_typing(user)
-        create_success = bot_functions.create_photo_matrix(json_response["routes"], user[0])
-        if create_success:
-            send_photo(user, str(user[0]) + ".jpg", message)
-            return json_response["routes"]
-        else:
-            return []
+        bot_functions.create_photo_matrix(json_response["routes"], user[0])
+        send_photo(user, str(user[0]) + ".jpg", message)
+        return json_response["routes"]
 
 
 def write_msg(user, message, emoji, keyboard):
     bot_typing(user)
+    user[1] = random.randint(100000000, 900000000)
     message = message.replace(" ", chr(32)) + emoji[random.randint(0, len(emoji) - 1)]
     vk.method('messages.send', {'user_id': user[0], 'message': message, 'random_id': user[1], "keyboard": keyboard})
 
@@ -94,9 +92,7 @@ while True:
             user = [event.user_id, random.randint(100000000, 900000000)]
             if "#" in event.text:
                 routes_list = tag_search(user, event.text, bot_functions.vk_emoji, keyboard)
-                if len(routes_list) == 0:
-                    write_msg(user, f"Не получилось создать матрицу картинок!", bot_functions.vk_emoji, keyboard)
-                elif len(routes_list) > 1:
+                if len(routes_list) > 1:
                     write_msg(user, "Выберите цифры фотографий через пробел!", bot_functions.vk_emoji, keyboard)
                     for second_event in longpoll.listen():
                         if second_event.type == VkEventType.MESSAGE_NEW and second_event.to_me:
@@ -106,6 +102,7 @@ while True:
                                 if number.isdigit() and int(number) <= len(routes_list):
                                     send_photo(user, routes_list[int(number) - 1], event.text)
                                 else:
+                                    print(1)
                                     write_msg(user, f"Выбора {number} нет.", bot_functions.vk_emoji, keyboard)
                             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), str(user[0]) + '.jpg')
                             try:

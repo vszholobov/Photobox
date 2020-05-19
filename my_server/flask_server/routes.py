@@ -145,14 +145,14 @@ def bot_api():
     action = request.json["action"]
 
     if action == "random":
-        images = Post.query.all()
+        images = list(filter(lambda post: 'gif' not in post.image_file, list(Post.query.filter_by(hidden=False))))
         random_number = randint(0, len(images) - 1)
         random_image = images[random_number]
         return jsonify({"route": getcwd() + f"/flask_server/static/users"
                                             f"/{random_image.user_id}/images"
                                             f"/{random_image.image_file}"})
     if action == "tags":
-        images = Post.query.filter_by(hidden=False)
+        images = list(filter(lambda post: 'gif' not in post.image_file, list(Post.query.filter_by(hidden=False))))
         list_of_images = sort_pictures_by_tag(images, tags(request.json["tags"]))
         list_of_routes = []
         if len(list_of_images) < 1:
