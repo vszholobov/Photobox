@@ -3,6 +3,15 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 def analyze_text(text, commands):
+    """
+    Функция получает на вход две переменные, по которым определяются дальнейшие действия бота.
+    Обработка текста полученного из переменной text происходит с помощью вычисления редакционного расстояния
+    (расстояния Левенштейна), после выполнения которого выбирается наиболее подходящая команда из переменной commands.
+
+    :param text: строка, которую отправил пользователь боту.
+    :param commands: команды, которые бот может распознать в text.
+    :return: "Nope", если функция не распознала команду в text, иначе возвращает подходящую команду.
+    """
     dictionary = {}
     text_len = len(text)
     difference = []
@@ -49,6 +58,15 @@ def analyze_text(text, commands):
 
 
 def analyze_command(coincidence, text, odds):
+    """
+    Функция провряет сообщение, полученное из text на наличие команды, полученной из coincidence,
+    c точностью odds.
+
+    :param coincidence: команда для сравнения с text.
+    :param text: строка, которую отправил пользователь боту.
+    :param odds: параметр, влияющий на точность выбора, подходящей команды (чем меньше, тем точнее).
+    :return: "Nope", если функция не распознала команду в text по длине, иначе возвращает подходящую команду.
+    """
     similarity = 0
     max_str_len = min(len(coincidence), len(text))
     for i in range(max_str_len):
@@ -62,10 +80,25 @@ def analyze_command(coincidence, text, odds):
 
 
 def add_person(string):
+    """
+    Функция, составляющая ответ для пользователя.
+
+    :param string: отправляемое ботом сообщение.
+    :return: сообщение, которое увидит пользователь в диалоге с ботом.
+    """
     return string + ", человек" + random.choice([".", "!"])
 
 
-def create_photo_matrix(photos, user_name):
+def create_photo_matrix(photos, user_id):
+    """
+    Функция создает матрицу из фотографий, находящихся в директориях, полученных из photos, и сохраняет её в директории
+    ботов c именем, полученным из user_id.
+    Как работает: каждой ячейке матрицы функция присваивает номер, который потом нужен для
+    выбора фотографии пользователем, этот выбор зависит от высоты фотографии. Затем составляются четыре колонки и в
+    колонку, с наименьшей высотой добавляется фотография в матрицу.
+    :param photos: список директорий фотографий.
+    :param user_id: Индентификатор пользователя.
+    """
     heights = [0, 0, 0, 0]
 
     if len(photos) == 1:
@@ -123,22 +156,45 @@ def create_photo_matrix(photos, user_name):
         elif photo_number == 3:
             img.paste(img_to_paste, (384, column_len))
 
-        img.save(str(user_name) + ".jpg")
+        img.save(str(user_id) + ".jpg")
 
 
 class Commands:
     def __init__(self, activators, answers):
+        """
+        Инициализирует обьект класса Commands с заданными переданными параметрами.
+        :param activators: активаторы команд.
+        :param answers: ответы команд.
+        """
         self.activators = activators
         self.answers = answers
 
     def check_command(self, command):
+        """
+        Функция проверяет команду на наличие.
+
+        :param command: команда для проверки
+        :return: возвращает результат проверки наличия command в атрибуте activators
+        """
         return command in self.activators
 
     def return_random_answer(self):
+        """
+        Функция возвращает случайный ключ словаря answers.
+
+        :return: случайный ключ словаря
+        """
         return random.choice(self.answers)
 
 
 def find_command(text_of_command, list_of_commands):
+    """
+    Функция находит нужную команду, и возвращает случайный ответ.
+
+    :param text_of_command: потенциальная команда.
+    :param list_of_commands: список команд, распозноваемых ботом.
+    :return: случайный ответ из списка в словаре по ключу command.
+    """
     copy = list_of_commands.copy()
     for command in copy:
         if command.check_command(text_of_command):
@@ -146,11 +202,22 @@ def find_command(text_of_command, list_of_commands):
 
 
 def random_last_message():
+    """
+    Функция отправляет пользователю случайный элемент списка message, если предыдущее и нынешнее сообщения пользователя
+    совпадают.
+
+    :return: случайный элемент списка message.
+    """
     message = ["Ты повторился", "Опять", "Вроде не смешно", "Повторение", "Я почему-то вижу эхо", "Отзвук"]
     return random.choice(message)
 
 
 def random_nope_message():
+    """
+    Функция отправляет пользователю случайный элемент списка message, если на данное сообщение не предусмотрен ответ.
+
+    :return: случайный элемент списка message.
+    """
     message = ["Не смог распознать", "Анализ произошел неудачно", "Знаю тысячи языков, но это не смог распознать",
                "Сложные буквы"]
     return random.choice(message)

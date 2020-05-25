@@ -27,6 +27,13 @@ print("Бот запущен")
 
 
 def create_keyboard(min_border, max_border):
+    """
+    Функция создает клавиатуру, которая выведется пользователю.
+
+    :param min_border: минимальное значение диапазона клавиатуры.
+    :param max_border: максимальное значение диапазона клавиатуры.
+    :return: квавиатура в виде списка списков.
+    """
     keyboard = []
     degree = len(str(max_border)) - 2
     if max_border - min_border <= 100:
@@ -49,6 +56,12 @@ def create_keyboard(min_border, max_border):
 
 
 def random_search(bot: Bot, update: Update):
+    """
+    Функция делает запрос на сервер и отправляет случайную фотографию пользователю.
+
+    :param bot: объект бота.
+    :param update: объект update.
+    """
     response = requests.post("http://127.0.0.1:5000/bot", json={"action": "random"})
     json_response = response.json()
     print(json_response["route"])
@@ -57,6 +70,13 @@ def random_search(bot: Bot, update: Update):
 
 
 def tag_search(message, chat_id):
+    """
+    Функция делает запрос на сервер и возвращает список директорий подходящих к тэгам фотографий.
+
+    :param message: сообщение пользователя.
+    :param chat_id: индентификатор пользователя.
+    :return:
+    """
     response = requests.post("http://127.0.0.1:5000/bot", json={"action": "tags", "tags": message})
     json_response = response.json()
     if len(json_response["routes"]) < 1:
@@ -68,14 +88,32 @@ def tag_search(message, chat_id):
             return 0
 
 
-def send_photo(bot: Bot, update: Update):
+def send_photo(bot: Bot, update: Update, first_keyboard):
+    """
+    Функция заставляет бота отправить фотографию пользователю.
+
+    :param bot: объект бота.
+    :param update: объект update.
+    :param first_keyboard: стартовая клавиатура.
+    """
     global list_of_photos
+    bot.send_message(chat_id=update.effective_message.chat_id, text="Совпадений не найдено ;(",
+                     reply_markup=ReplyKeyboardMarkup(first_keyboard, one_time_keyboard=True,
+                                                      resize_keyboard=True))
 
     bot.send_photo(chat_id=update.effective_message.chat_id,
-                   photo=open(list_of_photos[int(update.effective_message.text) - 1], "rb"))
+                   photo=open(list_of_photos[int(update.effective_message.text) - 1], "rb"),
+                   reply_markup=ReplyKeyboardMarkup(first_keyboard, one_time_keyboard=True,
+                                                    resize_keyboard=True))
 
 
 def message_handler(bot: Bot, update: Update):
+    """
+    Функция обработки сообщений, приходящих от пользователя.
+
+    :param bot: объект бота.
+    :param update: объект update.
+    """
 
     first_keyboard = [["Сайт", "Random"]]
     global last_message
@@ -87,7 +125,7 @@ def message_handler(bot: Bot, update: Update):
         if level_of_keyboard == 1:
             for i in range(len(choose_keyboard)):
                 if update.effective_message.text in choose_keyboard[i]:
-                    send_photo(bot, update)
+                    send_photo(bot, update, first_keyboard)
             level_of_keyboard -= 1
 
         else:

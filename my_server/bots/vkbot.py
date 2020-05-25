@@ -8,6 +8,15 @@ import os
 
 
 def tag_search(user, message, emoji, keyboard):
+    """
+    Функция по тэгам ищет фотографии: делает запрос на сервер и возвражает директории фотографий.
+
+    :param user: кортеж из индентификатора и случайного числа в виде кортежа.
+    :param message: сообщение для пользователя.
+    :param emoji: список эмодзи.
+    :param keyboard: клавиатура в виде словаря.
+    :return: список директорий фотографий.
+    """
     bot_typing(user)
     response = requests.post("http://127.0.0.1:5000/bot", json={"action": "tags", "tags": message})
     json_response = response.json()
@@ -24,6 +33,14 @@ def tag_search(user, message, emoji, keyboard):
 
 
 def write_msg(user, message, emoji, keyboard):
+    """
+    Функция отправляет сообщение пользователя через бота.
+
+    :param user: кортеж из индентификатора и случайного числа в виде кортежа.
+    :param message: сообщение для пользователя.
+    :param emoji: список эмодзи.
+    :param keyboard: клавиатура в виде словаря.
+    """
     bot_typing(user)
     user[1] = random.randint(100000000, 900000000)
     message = message.replace(" ", chr(32)) + emoji[random.randint(0, len(emoji) - 1)]
@@ -31,10 +48,22 @@ def write_msg(user, message, emoji, keyboard):
 
 
 def bot_typing(user):
+    """
+    Функция заставлет бота имитировать печатание текста при общении с поьзователем.
+
+    :param user: кортеж из индентификатора и случайного числа в виде кортежа.
+    """
     vk.method("messages.setActivity", {"type": "typing", "peer_id": user[0], "random_id": user[1]})
     
 
 def send_photo(user, route, message):
+    """
+    Функция заставляет бота отправлять фото пользователю.
+
+    :param user: кортеж из индентификатора и случайного числа в виде кортежа.
+    :param message: сообщение для пользователя.
+    :param route: директория фотографии.
+    """
     a = vk.method("photos.getMessagesUploadServer")
     b = requests.post(a['upload_url'], files={'photo': open(route, 'rb')}).json()
     c = vk.method('photos.saveMessagesPhoto', {'photo': b['photo'], 'server': b['server'], 'hash': b['hash']})[0]
@@ -43,6 +72,12 @@ def send_photo(user, route, message):
 
 
 def random_search(user, message):
+    """
+    Функция делает запрос на сервер затем отправляет случайную фотографию пользователю.
+
+    :param user: кортеж из индентификатора и случайного числа в виде кортежа.
+    :param message: сообщение для пользователя.
+    """
     bot_typing(user)
     response = requests.post("http://127.0.0.1:5000/bot", json={"action": "random"})
     json_response = response.json()

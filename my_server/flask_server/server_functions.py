@@ -7,7 +7,11 @@ from datetime import datetime
 
 
 def creation_date(date=datetime.now()):
-
+    """
+    Функция возвращает дату для фотографии при сохранении.
+    :param date: текущая дата
+    :return: дата в виде "25 Мая 2020".
+    """
     month = {1: "января", 2: "февраля",
              3: "марта", 4: "апреля",
              5: "мая", 6: "июня",
@@ -21,6 +25,12 @@ def creation_date(date=datetime.now()):
 
 
 def code_picture(form_picture):
+    """
+    Функция задает имя фотографии в закодираванном виде.
+
+    :param form_picture: объект фотографии.
+    :return: закодираванное имя фотографии.
+    """
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
@@ -28,6 +38,11 @@ def code_picture(form_picture):
 
 
 def size_t_analise(image):
+    """
+    Функция определяет размер фотографии, исходя из соотношения её сторон.
+    :param image: объект фотографии.
+    :return: размер фотографии в виде кортежа.
+    """
     size = image.size
     if (size[0] / size[1]) >= 1.2:
         shape = (300, 150)
@@ -40,8 +55,13 @@ def size_t_analise(image):
 
 def size_analise(image):
     """
-    size[0] - длина(горизонт)
+    Функция обрезает фотографию, делая из нее квадрат со стороной равной длине меньшей стороны изначальной фотографии,
+    при этом центрируя новую фотографию относительно исходной.
+
+    :param image: объект фотографии.
+    :return: измененный обьект переданной фотографии.
     """
+    # size[0] - длина(горизонт)
     size = image.size
 
     # width = size[0]
@@ -58,10 +78,12 @@ def size_analise(image):
 
 def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
     """
-    Сохраняет фотографии под случайным 16-значным именем в static/profile_pictures. Будет добавлена возможность
-    сохранения фотографии в личную папку пользователя.
+    Сохраняет фотографии под случайным 16-значным именем в static/profile_pictures.
 
-    Возвращает имя фотографии.
+    :param form_picture: объект фотографии
+    :param picture_fn: имя фотографии
+    :param path: директория для сохранения фотографий.
+    :return: возвращает отношение высоты к ширине фотографии.
     """
 
     try:
@@ -85,7 +107,6 @@ def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
 
     picture_path_1 = os.path.join(app.root_path, path + "images/", picture_fn)
 
-
     if image.format == "GIF":
         image.save(picture_path_1, save_all=True)
     else:
@@ -95,6 +116,12 @@ def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
 
 
 def tags(string, tags=None):
+    """
+    Функция обнаруживает тэги в сообщении пользователя и добавляет их в tags.
+    :param string: строка, которую ввел пользователь.
+    :param tags: список тэгов фотографий.
+    :return: обновленный список фотографий.
+    """
     if tags is None:
         tags = []
 
@@ -141,6 +168,12 @@ def tags(string, tags=None):
 
 
 def join_templates(tags, description):
+    """
+    Функция соединяет тэги и описание в один список.
+    :param tags: список тэгов.
+    :param description: описание фотографии.
+    :return: список из тэгов и описания.
+    """
     description = description.split()
     description.extend(tags)
     description = list(set(description))
@@ -151,7 +184,9 @@ def sort_pictures_by_tag(list_of_pictures, list_of_tags):
     """
     Сортирует фотографии по тегам, выбраным пользователем.
 
-    Возвращает отсортированный по количеству совпадений список фотографий
+    :param list_of_pictures: список объектов фотографий.
+    :param list_of_tags: список тэгов.
+    :return: возвращает кортеж, состоящий из списка директорий и списка индентификаторов пользователей.
     """
 
     count_of_coincidence = 0
@@ -183,7 +218,8 @@ def sorting_tags_by_alphabet(tag_list):
     """
     Сортирует теги по алфавиту.
 
-    Возвращает отсортированный по алфавиту список тегов.
+    :param tag_list: cписок тэгов.
+    :return: Возвращает отсортированный по алфавиту список тегов.
     """
 
     # Ё = 1025
@@ -250,6 +286,10 @@ def sorting_tags_by_alphabet(tag_list):
 
 
 def creating_routes(list_of_images):
+    """
+    Функция заполняет у объекта фотографий атрибут route.
+    :param list_of_images: список объектов фотографий.
+    """
     for image in list_of_images:
         image.route = '/users/' + str(image.user_id) + '/scaled_images/' + str(image.image_file)
 
