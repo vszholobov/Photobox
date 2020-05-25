@@ -9,6 +9,7 @@ from datetime import datetime
 def creation_date(date=datetime.now()):
     """
     Функция возвращает дату для фотографии при сохранении.
+
     :param date: текущая дата
     :return: дата в виде "25 Мая 2020".
     """
@@ -40,6 +41,7 @@ def code_picture(form_picture):
 def size_t_analise(image):
     """
     Функция определяет размер фотографии, исходя из соотношения её сторон.
+
     :param image: объект фотографии.
     :return: размер фотографии в виде кортежа.
     """
@@ -118,6 +120,7 @@ def save_picture(form_picture, picture_fn, path="static/profile_pictures"):
 def tags(string, tags=None):
     """
     Функция обнаруживает тэги в сообщении пользователя и добавляет их в tags.
+
     :param string: строка, которую ввел пользователь.
     :param tags: список тэгов фотографий.
     :return: обновленный список фотографий.
@@ -170,6 +173,7 @@ def tags(string, tags=None):
 def join_templates(tags, description):
     """
     Функция соединяет тэги и описание в один список.
+
     :param tags: список тэгов.
     :param description: описание фотографии.
     :return: список из тэгов и описания.
@@ -288,6 +292,7 @@ def sorting_tags_by_alphabet(tag_list):
 def creating_routes(list_of_images):
     """
     Функция заполняет у объекта фотографий атрибут route.
+
     :param list_of_images: список объектов фотографий.
     """
     for image in list_of_images:

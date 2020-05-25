@@ -75,7 +75,7 @@ def tag_search(message, chat_id):
 
     :param message: сообщение пользователя.
     :param chat_id: индентификатор пользователя.
-    :return:
+    :return: список директорий к фотографиям, если есть хотя бы одна фотография
     """
     response = requests.post("http://127.0.0.1:5000/bot", json={"action": "tags", "tags": message})
     json_response = response.json()
@@ -202,10 +202,12 @@ def message_handler(bot: Bot, update: Update):
                                  text=bot_functions.find_command(message, list_of_commands))
 
 
-bot = Bot(token="1254233101:AAHhRM7bqItByr5Au621sNXoxyH4WIAc4NM")
-updater = Updater(bot=bot)
-handler = MessageHandler(Filters.all, message_handler)
-updater.dispatcher.add_handler(handler)
+if __name__ == '__main__':
 
-updater.start_polling()
-updater.idle()
+    bot = Bot(token="1254233101:AAHhRM7bqItByr5Au621sNXoxyH4WIAc4NM")
+    updater = Updater(bot=bot)
+    handler = MessageHandler(Filters.all, message_handler)
+    updater.dispatcher.add_handler(handler)
+
+    updater.start_polling()
+    updater.idle()

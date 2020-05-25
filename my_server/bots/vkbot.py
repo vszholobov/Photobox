@@ -115,48 +115,49 @@ keyboard = {
         }]
     ]
 }
-vk = vk_api.VkApi(token=bot_functions.vk_token)
-longpoll = VkLongPoll(vk)
-keyboard = str(json.dumps(keyboard, ensure_ascii=False))
 
-print("Бот запущен")
+if __name__ == '__main__':
+    vk = vk_api.VkApi(token=bot_functions.vk_token)
+    longpoll = VkLongPoll(vk)
+    keyboard = str(json.dumps(keyboard, ensure_ascii=False))
 
-while True:
-    for event in longpoll.listen():
-        if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-            user = [event.user_id, random.randint(100000000, 900000000)]
-            if "#" in event.text:
-                routes_list = tag_search(user, event.text, bot_functions.vk_emoji, keyboard)
-                if len(routes_list) > 1:
-                    write_msg(user, "Выберите цифры фотографий через пробел!", bot_functions.vk_emoji, keyboard)
-                    for second_event in longpoll.listen():
-                        if second_event.type == VkEventType.MESSAGE_NEW and second_event.to_me:
-                            numbers = second_event.text.split()
-                            numbers = list(set(numbers))
-                            for number in numbers:
-                                if number.isdigit() and int(number) <= len(routes_list):
-                                    send_photo(user, routes_list[int(number) - 1], event.text)
-                                else:
-                                    print(1)
-                                    write_msg(user, f"Выбора {number} нет.", bot_functions.vk_emoji, keyboard)
-                            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), str(user[0]) + '.jpg')
-                            try:
-                                os.remove(path)
-                            except OSError:
-                                print(f"~DELETION-ERROR: {path};")
-                            break
-            else:
-                message = bot_functions.analyze_text(event.text.lower().replace(' ', ''), commands)
-                if event.text == last_message and message != "случайно":
-                    write_msg(user, bot_functions.add_person(bot_functions.random_last_message()),
-                              bot_functions.vk_emoji, keyboard)
-                elif message == "случайно":
-                    random_search(user, message)
-                elif message == "Nope":
-                    write_msg(user, bot_functions.add_person(bot_functions.random_nope_message()),
-                              bot_functions.vk_emoji, keyboard)
+    print("Бот запущен")
+
+    while True:
+        for event in longpoll.listen():
+            if event.type == VkEventType.MESSAGE_NEW and event.to_me:
+                user = [event.user_id, random.randint(100000000, 900000000)]
+                if "#" in event.text:
+                    routes_list = tag_search(user, event.text, bot_functions.vk_emoji, keyboard)
+                    if len(routes_list) > 1:
+                        write_msg(user, "Выберите цифры фотографий через пробел!", bot_functions.vk_emoji, keyboard)
+                        for second_event in longpoll.listen():
+                            if second_event.type == VkEventType.MESSAGE_NEW and second_event.to_me:
+                                numbers = second_event.text.split()
+                                numbers = list(set(numbers))
+                                for number in numbers:
+                                    if number.isdigit() and int(number) <= len(routes_list):
+                                        send_photo(user, routes_list[int(number) - 1], event.text)
+                                    else:
+                                        print(1)
+                                        write_msg(user, f"Выбора {number} нет.", bot_functions.vk_emoji, keyboard)
+                                path = os.path.join(os.path.abspath(os.path.dirname(__file__)), str(user[0]) + '.jpg')
+                                try:
+                                    os.remove(path)
+                                except OSError:
+                                    print(f"~DELETION-ERROR: {path};")
+                                break
                 else:
-                    write_msg(user, bot_functions.find_command(message, list_of_commands), bot_functions.vk_emoji,
-                              keyboard)
-                last_message = event.text
-
+                    message = bot_functions.analyze_text(event.text.lower().replace(' ', ''), commands)
+                    if event.text == last_message and message != "случайно":
+                        write_msg(user, bot_functions.add_person(bot_functions.random_last_message()),
+                                  bot_functions.vk_emoji, keyboard)
+                    elif message == "случайно":
+                        random_search(user, message)
+                    elif message == "Nope":
+                        write_msg(user, bot_functions.add_person(bot_functions.random_nope_message()),
+                                  bot_functions.vk_emoji, keyboard)
+                    else:
+                        write_msg(user, bot_functions.find_command(message, list_of_commands), bot_functions.vk_emoji,
+                                  keyboard)
+                    last_message = event.text

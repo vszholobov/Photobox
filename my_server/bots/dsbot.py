@@ -79,5 +79,6 @@ async def test(ctx, arg):
     await ctx.send(arg)
 
 
-    
-bot.run('NzA0NTk2OTQzMTQ5NzI3Nzc0.XqgWWQ.gAvXH6C3Ex5sqaR9lfI8AL2heZ8')
+if __name__ == '__main__':
+
+    bot.run('NzA0NTk2OTQzMTQ5NzI3Nzc0.XqgWWQ.gAvXH6C3Ex5sqaR9lfI8AL2heZ8')
