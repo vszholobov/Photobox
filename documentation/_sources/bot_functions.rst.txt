@@ -1,0 +1,7 @@
+bot\_functions module
+=====================
+
+.. automodule:: bot_functions
+   :members:
+   :undoc-members:
+   :show-inheritance:

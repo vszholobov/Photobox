@@ -15,13 +15,25 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField("Отправить")
 
     @staticmethod
-    def validate_username(self, username):
+    def validate_username(username):
+        """
+        Функция проверки одинаковых имен пользователей при регистрации аккаунта.
+
+        :param username: имя пользователя.
+        :return: если пользователь уже существует, то ошибка, иначе - ничего.
+        """
         user = User.query.filter_by(username=username.data).first()
         if user:
             raise ValidationError("Пользователь с таким именем уже существует.")
 
     @staticmethod
-    def validate_email(self, email):
+    def validate_email(email):
+        """
+        Функция проверки одинаковых email пользователей при регистрации аккаунта.
+
+        :param email: email пользователя.
+        :return: если email уже существует, то ошибка, иначе - ничего.
+        """
         user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError("Пользователь с такой почтой уже существует.")
@@ -43,14 +55,26 @@ class UpdateAccountForm(FlaskForm):
     submit = SubmitField("Обновить")
 
     @staticmethod
-    def validate_username(self, username):
+    def validate_username(username):
+        """
+        Функция проверки одинаковых имен пользователей при обновлении аккаунта.
+
+        :param username: объект FlaskForm.
+        :return: если пользователь уже существует, то ошибка, иначе - ничего.
+        """
         if username.data != current_user.username:
             user = User.query.filter_by(username=username.data).first()
             if user:
                 raise ValidationError("Пользователь с таким именем уже существует.")
 
     @staticmethod
-    def validate_email(self, email):
+    def validate_email(email):
+        """
+        Функция проверки одинаковых email пользователей при обновлении аккаунта.
+
+        :param email: объект FlaskForm.
+        :return: если email уже существует, то ошибка, иначе - ничего.
+        """
         if email.data != current_user.email:
             user = User.query.filter_by(email=email.data).first()
             if user:

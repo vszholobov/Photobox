@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>filters module &#8212; документация ew </title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-filters">
+<span id="filters-module"></span><h1>filters module<a class="headerlink" href="#module-filters" title="Ссылка на этот заголовок">¶</a></h1>
+<dl class="py function">
+<dt id="filters.bright">
+<code class="sig-prename descclassname">filters.</code><code class="sig-name descname">bright</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source_name</span></em>, <em class="sig-param"><span class="n">brightness</span></em><span class="sig-paren">)</span><a class="headerlink" href="#filters.bright" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, изменяющая яркость изображения.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_name</strong> – объект фотографии.</p></li>
+<li><p><strong>brightness</strong> – уровень яркости.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обработанная фотография.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="filters.contrast">
+<code class="sig-prename descclassname">filters.</code><code class="sig-name descname">contrast</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source_name</span></em>, <em class="sig-param"><span class="n">coefficient</span></em><span class="sig-paren">)</span><a class="headerlink" href="#filters.contrast" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, изменяющая контрастность изображения.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_name</strong> – объект фотографии.</p></li>
+<li><p><strong>coefficient</strong> – уровень контрастности.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обработанная фотография.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="filters.gray_scale">
+<code class="sig-prename descclassname">filters.</code><code class="sig-name descname">gray_scale</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#filters.gray_scale" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, применяющая фильтр «Оттенки серого».</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>source_name</strong> – объект фотографии.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обработанная фотография.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="filters.negative">
+<code class="sig-prename descclassname">filters.</code><code class="sig-name descname">negative</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#filters.negative" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, применяющая фильтр «Негатив» к изображению.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>source_name</strong> – объект фотографии.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обработанная фотография.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="filters.photo_filter">
+<code class="sig-prename descclassname">filters.</code><code class="sig-name descname">photo_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name_of_image</span></em>, <em class="sig-param"><span class="n">filter_name</span><span class="o">=</span><span class="default_value">'contour'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#filters.photo_filter" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция выбора фильтра.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_of_image</strong> – объект фотографии.</p></li>
+<li><p><strong>filter_name</strong> – название накладываемого фильтра.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обработанная фотография.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="filters.sepia">
+<code class="sig-prename descclassname">filters.</code><code class="sig-name descname">sepia</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#filters.sepia" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, применяющая фильтр «Сепия».</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>source_name</strong> – объект фотографии.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обработанная фотография.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="filters.white_black">
+<code class="sig-prename descclassname">filters.</code><code class="sig-name descname">white_black</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source_name</span></em>, <em class="sig-param"><span class="n">brightness</span><span class="o">=</span><span class="default_value">1.2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#filters.white_black" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, применяющая чёрно-белый фильтр к изображению.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_name</strong> – объект фотографии.</p></li>
+<li><p><strong>brightness</strong> – уровень яркости.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обработанная фотография.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">ew</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, wes.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/filters.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

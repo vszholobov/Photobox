@@ -75,7 +75,7 @@ def tag_search(message, chat_id):
 
     :param message: сообщение пользователя.
     :param chat_id: индентификатор пользователя.
-    :return: список директорий к фотографиям, если есть хотя бы одна фотография
+    :return: список директорий к фотографиям, если есть хотя бы одна фотография, иначе 0.
     """
     response = requests.post("http://127.0.0.1:5000/bot", json={"action": "tags", "tags": message})
     json_response = response.json()
@@ -111,7 +111,7 @@ def message_handler(bot: Bot, update: Update):
     """
     Функция обработки сообщений, приходящих от пользователя.
 
-    :param bot: объект бота.
+    :param bot: объект bot.
     :param update: объект update.
     """
 

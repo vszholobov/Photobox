@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>bot_functions module &#8212; документация ew </title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bot_functions">
+<span id="bot-functions-module"></span><h1>bot_functions module<a class="headerlink" href="#module-bot_functions" title="Ссылка на этот заголовок">¶</a></h1>
+<dl class="py class">
+<dt id="bot_functions.Commands">
+<em class="property">class </em><code class="sig-prename descclassname">bot_functions.</code><code class="sig-name descname">Commands</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">activators</span></em>, <em class="sig-param"><span class="n">answers</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bot_functions.Commands" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</div></blockquote>
+<dl class="py method">
+<dt id="bot_functions.Commands.check_command">
+<code class="sig-name descname">check_command</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">command</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bot_functions.Commands.check_command" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция проверяет команду на наличие.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>command</strong> – команда для проверки.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>результат проверки наличия command в атрибуте activators.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="bot_functions.Commands.return_random_answer">
+<code class="sig-name descname">return_random_answer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bot_functions.Commands.return_random_answer" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция возвращает случайный ключ словаря answers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>случайный ключ словаря.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot_functions.add_person">
+<code class="sig-prename descclassname">bot_functions.</code><code class="sig-name descname">add_person</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">string</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bot_functions.add_person" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, составляющая ответ для пользователя.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>string</strong> – отправляемое ботом сообщение.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>сообщение, которое увидит пользователь в диалоге с ботом.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot_functions.analyze_command">
+<code class="sig-prename descclassname">bot_functions.</code><code class="sig-name descname">analyze_command</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">coincidence</span></em>, <em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">odds</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bot_functions.analyze_command" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция провряет сообщение, полученное из text на наличие команды, полученной из coincidence,
+c точностью odds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coincidence</strong> – команда для сравнения с text.</p></li>
+<li><p><strong>text</strong> – строка, которую отправил пользователь боту.</p></li>
+<li><p><strong>odds</strong> – параметр, влияющий на точность выбора подходящей команды (чем меньше, тем точнее).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>«Nope», если функция не распознала команду в text по длине, иначе подходящая команда.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot_functions.analyze_text">
+<code class="sig-prename descclassname">bot_functions.</code><code class="sig-name descname">analyze_text</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">commands</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bot_functions.analyze_text" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция получает на вход две переменные, по которым определяются дальнейшие действия бота.
+Обработка текста полученного из переменной text происходит с помощью вычисления редакционного расстояния
+(расстояния Левенштейна), после выполнения которого выбирается наиболее подходящая команда из переменной commands.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – строка, которую отправил пользователь боту.</p></li>
+<li><p><strong>commands</strong> – команды, которые бот может распознать в text.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>«Nope», если функция не распознала команду в text, иначе подходящая команда.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot_functions.create_photo_matrix">
+<code class="sig-prename descclassname">bot_functions.</code><code class="sig-name descname">create_photo_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">photos</span></em>, <em class="sig-param"><span class="n">user_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bot_functions.create_photo_matrix" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция создает матрицу из фотографий, находящихся в директориях, полученных из photos, и сохраняет её в директории
+ботов c именем, полученным из user_id.
+Как работает: каждой ячейке матрицы функция присваивает номер, который потом нужен для
+выбора фотографии пользователем, этот выбор зависит от высоты фотографии. Затем составляются четыре колонки и в
+колонку, с наименьшей высотой добавляется фотография в матрицу.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>photos</strong> – список директорий фотографий.</p></li>
+<li><p><strong>user_id</strong> – Индентификатор пользователя.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot_functions.find_command">
+<code class="sig-prename descclassname">bot_functions.</code><code class="sig-name descname">find_command</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text_of_command</span></em>, <em class="sig-param"><span class="n">list_of_commands</span></em><span class="sig-paren">)</span><a class="headerlink" href="#bot_functions.find_command" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция находит нужную команду, и возвращает случайный ответ.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text_of_command</strong> – потенциальная команда.</p></li>
+<li><p><strong>list_of_commands</strong> – список команд, распозноваемых ботом.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>случайный ответ из списка в словаре по ключу command.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot_functions.random_last_message">
+<code class="sig-prename descclassname">bot_functions.</code><code class="sig-name descname">random_last_message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bot_functions.random_last_message" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция отправляет пользователю случайный элемент списка message, если предыдущее и нынешнее сообщения пользователя
+совпадают.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>случайный элемент списка message.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot_functions.random_nope_message">
+<code class="sig-prename descclassname">bot_functions.</code><code class="sig-name descname">random_nope_message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bot_functions.random_nope_message" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция отправляет пользователю случайный элемент списка message, если на данное сообщение не предусмотрен ответ.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>случайный элемент списка message.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">ew</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, wes.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/bot_functions.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

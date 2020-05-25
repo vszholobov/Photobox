@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>server_functions module &#8212; документация ew </title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-server_functions">
+<span id="server-functions-module"></span><h1>server_functions module<a class="headerlink" href="#module-server_functions" title="Ссылка на этот заголовок">¶</a></h1>
+<dl class="py function">
+<dt id="server_functions.code_picture">
+<code class="sig-prename descclassname">server_functions.</code><code class="sig-name descname">code_picture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">form_picture</span></em><span class="sig-paren">)</span><a class="headerlink" href="#server_functions.code_picture" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция задает имя фотографии в закодираванном виде.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>form_picture</strong> – объект фотографии.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>закодираванное имя фотографии.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server_functions.creating_routes">
+<code class="sig-prename descclassname">server_functions.</code><code class="sig-name descname">creating_routes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">list_of_images</span></em><span class="sig-paren">)</span><a class="headerlink" href="#server_functions.creating_routes" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция заполняет у объекта фотографий атрибут route.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>list_of_images</strong> – список объектов фотографий.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server_functions.creation_date">
+<code class="sig-prename descclassname">server_functions.</code><code class="sig-name descname">creation_date</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span><span class="o">=</span><span class="default_value">datetime.datetime(2020, 5, 25, 21, 39, 25, 103002)</span></em><span class="sig-paren">)</span><a class="headerlink" href="#server_functions.creation_date" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция возвращает дату для фотографии при сохранении.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>date</strong> – текущая дата</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>дата в виде «25 Мая 2020».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server_functions.join_templates">
+<code class="sig-prename descclassname">server_functions.</code><code class="sig-name descname">join_templates</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tags</span></em>, <em class="sig-param"><span class="n">description</span></em><span class="sig-paren">)</span><a class="headerlink" href="#server_functions.join_templates" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция соединяет тэги и описание в один список.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tags</strong> – список тэгов.</p></li>
+<li><p><strong>description</strong> – описание фотографии.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>список из тэгов и описания.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server_functions.save_picture">
+<code class="sig-prename descclassname">server_functions.</code><code class="sig-name descname">save_picture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">form_picture</span></em>, <em class="sig-param"><span class="n">picture_fn</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">'static/profile_pictures'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#server_functions.save_picture" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Сохраняет фотографии под случайным 16-значным именем в static/profile_pictures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>form_picture</strong> – объект фотографии</p></li>
+<li><p><strong>picture_fn</strong> – имя фотографии</p></li>
+<li><p><strong>path</strong> – директория для сохранения фотографий.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>возвращает отношение высоты к ширине фотографии.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server_functions.size_analise">
+<code class="sig-prename descclassname">server_functions.</code><code class="sig-name descname">size_analise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="headerlink" href="#server_functions.size_analise" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция обрезает фотографию, делая из нее квадрат со стороной равной длине меньшей стороны изначальной фотографии,
+при этом центрируя новую фотографию относительно исходной.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>image</strong> – объект фотографии.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>измененный обьект переданной фотографии.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server_functions.size_t_analise">
+<code class="sig-prename descclassname">server_functions.</code><code class="sig-name descname">size_t_analise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="headerlink" href="#server_functions.size_t_analise" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция определяет размер фотографии, исходя из соотношения её сторон.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>image</strong> – объект фотографии.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>размер фотографии в виде кортежа.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server_functions.sort_pictures_by_tag">
+<code class="sig-prename descclassname">server_functions.</code><code class="sig-name descname">sort_pictures_by_tag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">list_of_pictures</span></em>, <em class="sig-param"><span class="n">list_of_tags</span></em><span class="sig-paren">)</span><a class="headerlink" href="#server_functions.sort_pictures_by_tag" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Сортирует фотографии по тегам, выбраным пользователем.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>list_of_pictures</strong> – список объектов фотографий.</p></li>
+<li><p><strong>list_of_tags</strong> – список тэгов.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>возвращает кортеж, состоящий из списка директорий и списка индентификаторов пользователей.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server_functions.sorting_tags_by_alphabet">
+<code class="sig-prename descclassname">server_functions.</code><code class="sig-name descname">sorting_tags_by_alphabet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tag_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#server_functions.sorting_tags_by_alphabet" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Сортирует теги по алфавиту.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>tag_list</strong> – cписок тэгов.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>Возвращает отсортированный по алфавиту список тегов.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server_functions.tags">
+<code class="sig-prename descclassname">server_functions.</code><code class="sig-name descname">tags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">string</span></em>, <em class="sig-param"><span class="n">tags</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#server_functions.tags" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция обнаруживает тэги в сообщении пользователя и добавляет их в tags.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string</strong> – строка, которую ввел пользователь.</p></li>
+<li><p><strong>tags</strong> – список тэгов фотографий.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обновленный список фотографий.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">ew</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, wes.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/server_functions.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

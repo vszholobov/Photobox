@@ -6,6 +6,12 @@ from hashlib import md5
 
 @login_manager.user_loader
 def load_user(user_id):
+    """
+    Функция, обеспечивающая запоминание уже вошедших в аккаунт пользователей.
+
+    :param user_id: идентификатор пользователя.
+    :return: идентификатор пользователя из базы данных.
+    """
     return User.query.get(int(user_id))
 
 
@@ -23,8 +29,10 @@ class User(db.Model, UserMixin):
 
     def set_user_photo(self):
         """
-        Возвращает фотографию, созданную сервисом gravatar, если пользователь не выбирал фотографию.
-        Иначе возвращает выбранную им фотографию.
+        Возвращает фотографию, созданную сервисом gravatar, если пользователь не выбирал фотографию,
+        иначе возвращает выбранную им фотографию.
+
+        :return: аватар пользователя.
         """
 
         if self.image_file == self.email:
@@ -33,6 +41,11 @@ class User(db.Model, UserMixin):
         return url_for("static", filename="profile_pictures/" + self.image_file)
 
     def as_dict(self):
+        """
+        Функция, использющаяся при передаче данных пользователю.
+
+        :return: словарь {*имя атрибута*: *атрибут*}.
+        """
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
@@ -50,4 +63,9 @@ class Post(db.Model):
         return f"Post: '{self.id}', User: '{self.user_id}'"
 
     def as_dict(self):
+        """
+        Функция, использющаяся при передаче данных пользователю.
+
+        :return: словарь {*имя атрибута*: *атрибут*}.
+        """
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}

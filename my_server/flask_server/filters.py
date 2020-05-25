@@ -1,8 +1,15 @@
 from os import getcwd
-from PIL import Image,ImageFilter
+from PIL import Image, ImageFilter
 
 
 def bright(source_name, brightness):
+    """
+    Функция, изменяющая яркость изображения.
+
+    :param source_name: объект фотографии.
+    :param brightness: уровень яркости.
+    :return: обработанная фотография.
+    """
     result = Image.new('RGB', source_name.size)
     for x in range(source_name.size[0]):
         for y in range(source_name.size[1]):
@@ -18,6 +25,12 @@ def bright(source_name, brightness):
 
 
 def negative(source_name):
+    """
+    Функция, применяющая фильтр "Негатив" к изображению.
+
+    :param source_name: объект фотографии.
+    :return: обработанная фотография.
+    """
     result = Image.new('RGB', source_name.size)
     for x in range(source_name.size[0]):
         for y in range(source_name.size[1]):
@@ -27,6 +40,13 @@ def negative(source_name):
 
 
 def white_black(source_name, brightness=1.2):
+    """
+    Функция, применяющая чёрно-белый фильтр к изображению.
+
+    :param source_name: объект фотографии.
+    :param brightness: уровень яркости.
+    :return: обработанная фотография.
+    """
     result = Image.new('RGB', source_name.size)
     separator = 255 / brightness / 2 * 3
     for x in range(source_name.size[0]):
@@ -41,6 +61,12 @@ def white_black(source_name, brightness=1.2):
 
 
 def gray_scale(source_name):
+    """
+    Функция, применяющая фильтр "Оттенки серого".
+
+    :param source_name: объект фотографии.
+    :return: обработанная фотография.
+    """
     result = Image.new('RGB', source_name.size)
     for x in range(source_name.size[0]):
         for y in range(source_name.size[1]):
@@ -51,6 +77,12 @@ def gray_scale(source_name):
 
 
 def sepia(source_name):
+    """
+    Функция, применяющая фильтр "Сепия".
+
+    :param source_name: объект фотографии.
+    :return: обработанная фотография.
+    """
     result = Image.new('RGB', source_name.size)
     for x in range(source_name.size[0]):
         for y in range(source_name.size[1]):
@@ -63,6 +95,13 @@ def sepia(source_name):
 
 
 def contrast(source_name, coefficient):
+    """
+    Функция, изменяющая контрастность изображения.
+
+    :param source_name: объект фотографии.
+    :param coefficient: уровень контрастности.
+    :return: обработанная фотография.
+    """
     result = Image.new('RGB', source_name.size)
     avg = 0
     for x in range(source_name.size[0]):
@@ -86,6 +125,13 @@ def contrast(source_name, coefficient):
 
 
 def photo_filter(name_of_image, filter_name="contour"):
+    """
+    Функция выбора фильтра.
+
+    :param name_of_image: объект фотографии.
+    :param filter_name: название накладываемого фильтра.
+    :return: обработанная фотография.
+    """
     name_of_image = getcwd() + "/" + name_of_image
     image = Image.open(name_of_image)
     if filter_name == "contour":

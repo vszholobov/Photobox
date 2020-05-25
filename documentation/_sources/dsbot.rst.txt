@@ -1,0 +1,7 @@
+dsbot module
+============
+
+.. automodule:: dsbot
+   :members:
+   :undoc-members:
+   :show-inheritance:

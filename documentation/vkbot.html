@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>vkbot module &#8212; документация ew </title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-vkbot">
+<span id="vkbot-module"></span><h1>vkbot module<a class="headerlink" href="#module-vkbot" title="Ссылка на этот заголовок">¶</a></h1>
+<dl class="py function">
+<dt id="vkbot.bot_typing">
+<code class="sig-prename descclassname">vkbot.</code><code class="sig-name descname">bot_typing</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em><span class="sig-paren">)</span><a class="headerlink" href="#vkbot.bot_typing" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, имитирующая печатание сообщение бота при общении с пользователем.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>user</strong> – кортеж из индентификатора и случайного числа.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="vkbot.random_search">
+<code class="sig-prename descclassname">vkbot.</code><code class="sig-name descname">random_search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="headerlink" href="#vkbot.random_search" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция делает запрос на сервер и затем отправляет случайную фотографию пользователю.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – кортеж из индентификатора и случайного числа в виде кортежа.</p></li>
+<li><p><strong>message</strong> – сообщение для пользователя.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="vkbot.send_photo">
+<code class="sig-prename descclassname">vkbot.</code><code class="sig-name descname">send_photo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">route</span></em>, <em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="headerlink" href="#vkbot.send_photo" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, обеспечивающая боту отправление фотографий пользователю.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – кортеж из индентификатора и случайного числа в виде кортежа.</p></li>
+<li><p><strong>message</strong> – сообщение для пользователя.</p></li>
+<li><p><strong>route</strong> – директория фотографии.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="vkbot.tag_search">
+<code class="sig-prename descclassname">vkbot.</code><code class="sig-name descname">tag_search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">message</span></em>, <em class="sig-param"><span class="n">emoji</span></em>, <em class="sig-param"><span class="n">keyboard</span></em><span class="sig-paren">)</span><a class="headerlink" href="#vkbot.tag_search" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция по тэгам ищет фотографии: делает запрос на сервер и возвражает директории фотографий.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – кортеж из индентификатора и случайного числа в виде кортежа.</p></li>
+<li><p><strong>message</strong> – сообщение для пользователя.</p></li>
+<li><p><strong>emoji</strong> – список эмодзи.</p></li>
+<li><p><strong>keyboard</strong> – клавиатура в виде словаря.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>список директорий фотографий.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="vkbot.write_msg">
+<code class="sig-prename descclassname">vkbot.</code><code class="sig-name descname">write_msg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">message</span></em>, <em class="sig-param"><span class="n">emoji</span></em>, <em class="sig-param"><span class="n">keyboard</span></em><span class="sig-paren">)</span><a class="headerlink" href="#vkbot.write_msg" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция отправляет сообщение пользователя через бота.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – кортеж из индентификатора и случайного числа.</p></li>
+<li><p><strong>message</strong> – сообщение для пользователя.</p></li>
+<li><p><strong>emoji</strong> – список эмодзи.</p></li>
+<li><p><strong>keyboard</strong> – клавиатура в виде словаря.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">ew</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, wes.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/vkbot.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,7 @@
+tlgbot module
+=============
+
+.. automodule:: tlgbot
+   :members:
+   :undoc-members:
+   :show-inheritance:

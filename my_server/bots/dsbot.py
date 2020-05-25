@@ -21,7 +21,7 @@ def random_search():
     """
     Функция делает запрос на сервер и отправляет случайную фотографию.
 
-    :return: директорию случайной фотографии.
+    :return: директоря случайной фотографии.
     """
     response = requests.post("http://127.0.0.1:5000/bot", json={"action": "random"})
     json_response = response.json()
@@ -33,7 +33,7 @@ def tag_search(message):
     Функция делает запрос на сервер и создает матрицу фотографий.
 
     :param message: сообщение от пользователя.
-    :return: Наличие фотографий.
+    :return: наличие фотографий.
     """
     response = requests.post("http://127.0.0.1:5000/bot", json={"action": "tags", "tags": message})
     json_response = response.json()

@@ -12,6 +12,11 @@ import shutil
 @login_required
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
+    """
+    Функция, проверяющая авторизацию администратора.
+
+    :return: аккаунт администратора при удачной авторизации, иначе обновление страницы.
+    """
     form = LoginForm()
     if request.method == "POST":
         if form.username.data == "1" and form.password.data == "2":
@@ -21,6 +26,11 @@ def admin():
 
 @app.route("/ajax", methods=['GET', 'POST'])
 def ajax():
+    """
+    Функция, обеспечивающая взаимодействие сервера с пользователями.
+
+    :return: ответ на запрос со стороны пользователей.
+    """
     result = None
     action = request.json["action"]
 
@@ -139,6 +149,11 @@ def ajax():
 
 @app.route("/bot", methods=['GET', 'POST'])
 def bot_api():
+    """
+    Функция, обеспечивающая взаимодействие сервера с ботами.
+
+    :return: ответ на запрос со стороны ботов.
+    """
     if request.method == "GET":
         return render_template("404.html")
 
@@ -166,11 +181,21 @@ def bot_api():
 
 @app.route("/")
 def home():
+    """
+    Функция, перенаправлющая на главную страницу.
+
+    :return: главная страница.
+    """
     return render_template("home.html", title="Homepage")
 
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
+    """
+    Функция, отвечающая за регистрацию пользователя.
+
+    :return: страница логина, если уже зарегистрирован, иначе страница регистрации.
+    """
     if current_user.is_authenticated:
         return redirect(url_for("home"))
     form = RegistrationForm()
@@ -193,6 +218,11 @@ def register():
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
+    """
+    Функция, отвечающая за авторизацию пользователя.
+
+    :return: главная страница, если успешная авторизация, иначе страница авторицзации.
+    """
     if current_user.is_authenticated:
         return redirect(url_for("home"))
     form = LoginForm()
@@ -213,6 +243,11 @@ def login():
 @app.route("/logout")
 @login_required
 def logout():
+    """
+    Функция, отвечающая за выход из аккаунта и перенаправление на домашнюю страницу.
+
+    :return: домашняя страница.
+    """
     logout_user()
     return redirect(url_for("home"))
 
@@ -220,6 +255,11 @@ def logout():
 @app.route("/account", methods=["POST", "GET"])
 @login_required
 def account():
+    """
+    Функция, отвечающая за взаимодействие между пользователем и его аккаунтом.
+
+    :return: обновленная страница аккаунта пользователя.
+    """
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.picture.data:
@@ -260,12 +300,22 @@ def account():
 @app.route("/search", methods=["POST", "GET"])
 @login_required
 def search():
+    """
+    Функция, отвечающая за переадресацию на страницу поиска.
+
+    :return: страница поиска.
+    """
     return render_template("search.html", title="Search")
 
 
 @app.route("/upload", methods=["POST", "GET"])
 @login_required
 def upload():
+    """
+    Функция, отвечающая за загрузку фотографий на сервер.
+
+    :return: страница загрузки фотографий.
+    """
     form = PostForm()
     if form.validate_on_submit():
         id = int(current_user.id)
@@ -293,4 +343,9 @@ def upload():
 
 @app.route("/my_images")
 def my_images():
+    """
+    Функция, перенаправляющая на страницу фотографий пользователя.
+
+    :return: страница фотографий пользователя.
+    """
     return render_template("my_images.html", title="My images")

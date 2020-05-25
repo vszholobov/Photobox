@@ -1,0 +1,847 @@
+
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>flask_server package &#8212; документация ew </title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="flask-server-package">
+<h1>flask_server package<a class="headerlink" href="#flask-server-package" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Ссылка на этот заголовок">¶</a></h2>
+</div>
+<div class="section" id="module-flask_server.errors">
+<span id="flask-server-errors-module"></span><h2>flask_server.errors module<a class="headerlink" href="#module-flask_server.errors" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py function">
+<dt id="flask_server.errors.internal_error">
+<code class="sig-prename descclassname">flask_server.errors.</code><code class="sig-name descname">internal_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">error</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.errors.internal_error" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, работающая с ошибками связанными с сервером.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>error</strong> – код ошибки.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>страница с кодом ошибки 500.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.errors.not_found_error">
+<code class="sig-prename descclassname">flask_server.errors.</code><code class="sig-name descname">not_found_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">error</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.errors.not_found_error" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, отвечающая за работу с несуществующими страницами.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>error</strong> – код ошибки.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>страница с кодом ошибки 404.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-flask_server.filters">
+<span id="flask-server-filters-module"></span><h2>flask_server.filters module<a class="headerlink" href="#module-flask_server.filters" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py function">
+<dt id="flask_server.filters.bright">
+<code class="sig-prename descclassname">flask_server.filters.</code><code class="sig-name descname">bright</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source_name</span></em>, <em class="sig-param"><span class="n">brightness</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.filters.bright" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, изменяющая яркость изображения.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_name</strong> – объект фотографии.</p></li>
+<li><p><strong>brightness</strong> – уровень яркости.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обработанная фотография.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.filters.contrast">
+<code class="sig-prename descclassname">flask_server.filters.</code><code class="sig-name descname">contrast</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source_name</span></em>, <em class="sig-param"><span class="n">coefficient</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.filters.contrast" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, изменяющая контрастность изображения.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_name</strong> – объект фотографии.</p></li>
+<li><p><strong>coefficient</strong> – уровень контрастности.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обработанная фотография.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.filters.gray_scale">
+<code class="sig-prename descclassname">flask_server.filters.</code><code class="sig-name descname">gray_scale</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.filters.gray_scale" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, применяющая фильтр «Оттенки серого».</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>source_name</strong> – объект фотографии.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обработанная фотография.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.filters.negative">
+<code class="sig-prename descclassname">flask_server.filters.</code><code class="sig-name descname">negative</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.filters.negative" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, применяющая фильтр «Негатив» к изображению.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>source_name</strong> – объект фотографии.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обработанная фотография.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.filters.photo_filter">
+<code class="sig-prename descclassname">flask_server.filters.</code><code class="sig-name descname">photo_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name_of_image</span></em>, <em class="sig-param"><span class="n">filter_name</span><span class="o">=</span><span class="default_value">'contour'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.filters.photo_filter" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция выбора фильтра.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_of_image</strong> – объект фотографии.</p></li>
+<li><p><strong>filter_name</strong> – название накладываемого фильтра.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обработанная фотография.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.filters.sepia">
+<code class="sig-prename descclassname">flask_server.filters.</code><code class="sig-name descname">sepia</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.filters.sepia" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, применяющая фильтр «Сепия».</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>source_name</strong> – объект фотографии.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обработанная фотография.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.filters.white_black">
+<code class="sig-prename descclassname">flask_server.filters.</code><code class="sig-name descname">white_black</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source_name</span></em>, <em class="sig-param"><span class="n">brightness</span><span class="o">=</span><span class="default_value">1.2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.filters.white_black" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, применяющая чёрно-белый фильтр к изображению.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_name</strong> – объект фотографии.</p></li>
+<li><p><strong>brightness</strong> – уровень яркости.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обработанная фотография.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-flask_server.forms">
+<span id="flask-server-forms-module"></span><h2>flask_server.forms module<a class="headerlink" href="#module-flask_server.forms" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py class">
+<dt id="flask_server.forms.LoginForm">
+<em class="property">class </em><code class="sig-prename descclassname">flask_server.forms.</code><code class="sig-name descname">LoginForm</code><span class="sig-paren">(</span><em class="sig-param">formdata=&lt;object object&gt;</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.forms.LoginForm" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+</div></blockquote>
+<dl class="py attribute">
+<dt id="flask_server.forms.LoginForm.password">
+<code class="sig-name descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, ('Пароль',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#flask_server.forms.LoginForm.password" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.forms.LoginForm.submit">
+<code class="sig-name descname">submit</code><em class="property"> = &lt;UnboundField(SubmitField, ('Войти',), {})&gt;</em><a class="headerlink" href="#flask_server.forms.LoginForm.submit" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.forms.LoginForm.username">
+<code class="sig-name descname">username</code><em class="property"> = &lt;UnboundField(StringField, ('Логин',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.Length object&gt;]})&gt;</em><a class="headerlink" href="#flask_server.forms.LoginForm.username" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="flask_server.forms.PostForm">
+<em class="property">class </em><code class="sig-prename descclassname">flask_server.forms.</code><code class="sig-name descname">PostForm</code><span class="sig-paren">(</span><em class="sig-param">formdata=&lt;object object&gt;</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.forms.PostForm" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+</div></blockquote>
+<dl class="py attribute">
+<dt id="flask_server.forms.PostForm.description">
+<code class="sig-name descname">description</code><em class="property"> = &lt;UnboundField(TextAreaField, ('Description',), {})&gt;</em><a class="headerlink" href="#flask_server.forms.PostForm.description" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.forms.PostForm.picture_file">
+<code class="sig-name descname">picture_file</code><em class="property"> = &lt;UnboundField(MultipleFileField, ('Picture',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;flask_wtf.file.FileAllowed object&gt;]})&gt;</em><a class="headerlink" href="#flask_server.forms.PostForm.picture_file" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.forms.PostForm.submit">
+<code class="sig-name descname">submit</code><em class="property"> = &lt;UnboundField(SubmitField, ('Отправить',), {})&gt;</em><a class="headerlink" href="#flask_server.forms.PostForm.submit" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="flask_server.forms.RegistrationForm">
+<em class="property">class </em><code class="sig-prename descclassname">flask_server.forms.</code><code class="sig-name descname">RegistrationForm</code><span class="sig-paren">(</span><em class="sig-param">formdata=&lt;object object&gt;</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.forms.RegistrationForm" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+</div></blockquote>
+<dl class="py attribute">
+<dt id="flask_server.forms.RegistrationForm.confirm_password">
+<code class="sig-name descname">confirm_password</code><em class="property"> = &lt;UnboundField(PasswordField, ('Повтор пароля',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.EqualTo object&gt;]})&gt;</em><a class="headerlink" href="#flask_server.forms.RegistrationForm.confirm_password" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.forms.RegistrationForm.email">
+<code class="sig-name descname">email</code><em class="property"> = &lt;UnboundField(StringField, ('Электронная почта',), {'validators': [&lt;wtforms.validators.Email object&gt;, &lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#flask_server.forms.RegistrationForm.email" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.forms.RegistrationForm.password">
+<code class="sig-name descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, ('Пароль',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#flask_server.forms.RegistrationForm.password" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.forms.RegistrationForm.submit">
+<code class="sig-name descname">submit</code><em class="property"> = &lt;UnboundField(SubmitField, ('Отправить',), {})&gt;</em><a class="headerlink" href="#flask_server.forms.RegistrationForm.submit" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.forms.RegistrationForm.username">
+<code class="sig-name descname">username</code><em class="property"> = &lt;UnboundField(StringField, ('Логин',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.Length object&gt;]})&gt;</em><a class="headerlink" href="#flask_server.forms.RegistrationForm.username" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="flask_server.forms.RegistrationForm.validate_email">
+<em class="property">static </em><code class="sig-name descname">validate_email</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">email</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.forms.RegistrationForm.validate_email" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция проверки одинаковых email пользователей при регистрации аккаунта.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>email</strong> – email пользователя.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>если email уже существует, то ошибка, иначе - ничего.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="flask_server.forms.RegistrationForm.validate_username">
+<em class="property">static </em><code class="sig-name descname">validate_username</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.forms.RegistrationForm.validate_username" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция проверки одинаковых имен пользователей при регистрации аккаунта.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>username</strong> – имя пользователя.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>если пользователь уже существует, то ошибка, иначе - ничего.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="flask_server.forms.UpdateAccountForm">
+<em class="property">class </em><code class="sig-prename descclassname">flask_server.forms.</code><code class="sig-name descname">UpdateAccountForm</code><span class="sig-paren">(</span><em class="sig-param">formdata=&lt;object object&gt;</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.forms.UpdateAccountForm" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+</div></blockquote>
+<dl class="py attribute">
+<dt id="flask_server.forms.UpdateAccountForm.confirm_password">
+<code class="sig-name descname">confirm_password</code><em class="property"> = &lt;UnboundField(PasswordField, ('Повтор пароля',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.EqualTo object&gt;]})&gt;</em><a class="headerlink" href="#flask_server.forms.UpdateAccountForm.confirm_password" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.forms.UpdateAccountForm.email">
+<code class="sig-name descname">email</code><em class="property"> = &lt;UnboundField(StringField, ('Электронная почта',), {'validators': [&lt;wtforms.validators.Email object&gt;, &lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#flask_server.forms.UpdateAccountForm.email" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.forms.UpdateAccountForm.password">
+<code class="sig-name descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, ('Пароль',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;]})&gt;</em><a class="headerlink" href="#flask_server.forms.UpdateAccountForm.password" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.forms.UpdateAccountForm.picture">
+<code class="sig-name descname">picture</code><em class="property"> = &lt;UnboundField(FileField, ('Изменить аватар',), {'validators': [&lt;flask_wtf.file.FileAllowed object&gt;]})&gt;</em><a class="headerlink" href="#flask_server.forms.UpdateAccountForm.picture" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.forms.UpdateAccountForm.submit">
+<code class="sig-name descname">submit</code><em class="property"> = &lt;UnboundField(SubmitField, ('Обновить',), {})&gt;</em><a class="headerlink" href="#flask_server.forms.UpdateAccountForm.submit" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.forms.UpdateAccountForm.username">
+<code class="sig-name descname">username</code><em class="property"> = &lt;UnboundField(StringField, ('Логин',), {'validators': [&lt;wtforms.validators.DataRequired object&gt;, &lt;wtforms.validators.Length object&gt;]})&gt;</em><a class="headerlink" href="#flask_server.forms.UpdateAccountForm.username" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="flask_server.forms.UpdateAccountForm.validate_email">
+<em class="property">static </em><code class="sig-name descname">validate_email</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">email</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.forms.UpdateAccountForm.validate_email" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция проверки одинаковых email пользователей при обновлении аккаунта.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>email</strong> – объект FlaskForm.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>если email уже существует, то ошибка, иначе - ничего.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="flask_server.forms.UpdateAccountForm.validate_username">
+<em class="property">static </em><code class="sig-name descname">validate_username</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.forms.UpdateAccountForm.validate_username" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция проверки одинаковых имен пользователей при обновлении аккаунта.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>username</strong> – объект FlaskForm.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>если пользователь уже существует, то ошибка, иначе - ничего.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-flask_server.models">
+<span id="flask-server-models-module"></span><h2>flask_server.models module<a class="headerlink" href="#module-flask_server.models" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py class">
+<dt id="flask_server.models.Post">
+<em class="property">class </em><code class="sig-prename descclassname">flask_server.models.</code><code class="sig-name descname">Post</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.models.Post" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code></p>
+</div></blockquote>
+<dl class="py method">
+<dt id="flask_server.models.Post.as_dict">
+<code class="sig-name descname">as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.models.Post.as_dict" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, использющаяся при передаче данных пользователю.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>словарь {<em>имя атрибута</em>: <em>атрибут</em>}.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.Post.creation_date">
+<code class="sig-name descname">creation_date</code><a class="headerlink" href="#flask_server.models.Post.creation_date" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.Post.description">
+<code class="sig-name descname">description</code><a class="headerlink" href="#flask_server.models.Post.description" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.Post.hidden">
+<code class="sig-name descname">hidden</code><a class="headerlink" href="#flask_server.models.Post.hidden" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.Post.htwRatio">
+<code class="sig-name descname">htwRatio</code><a class="headerlink" href="#flask_server.models.Post.htwRatio" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.Post.id">
+<code class="sig-name descname">id</code><a class="headerlink" href="#flask_server.models.Post.id" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.Post.image_file">
+<code class="sig-name descname">image_file</code><a class="headerlink" href="#flask_server.models.Post.image_file" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.Post.tag_list">
+<code class="sig-name descname">tag_list</code><a class="headerlink" href="#flask_server.models.Post.tag_list" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.Post.user_id">
+<code class="sig-name descname">user_id</code><a class="headerlink" href="#flask_server.models.Post.user_id" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="flask_server.models.User">
+<em class="property">class </em><code class="sig-prename descclassname">flask_server.models.</code><code class="sig-name descname">User</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.models.User" title="Ссылка на это определение">¶</a></dt>
+<dd><blockquote>
+<div><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.api.Model</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_login.mixins.UserMixin</span></code></p>
+</div></blockquote>
+<dl class="py method">
+<dt id="flask_server.models.User.as_dict">
+<code class="sig-name descname">as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.models.User.as_dict" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, использющаяся при передаче данных пользователю.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>словарь {<em>имя атрибута</em>: <em>атрибут</em>}.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.User.email">
+<code class="sig-name descname">email</code><a class="headerlink" href="#flask_server.models.User.email" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.User.id">
+<code class="sig-name descname">id</code><a class="headerlink" href="#flask_server.models.User.id" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.User.image_file">
+<code class="sig-name descname">image_file</code><a class="headerlink" href="#flask_server.models.User.image_file" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.User.password">
+<code class="sig-name descname">password</code><a class="headerlink" href="#flask_server.models.User.password" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.User.posts">
+<code class="sig-name descname">posts</code><a class="headerlink" href="#flask_server.models.User.posts" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="flask_server.models.User.set_user_photo">
+<code class="sig-name descname">set_user_photo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.models.User.set_user_photo" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает фотографию, созданную сервисом gravatar, если пользователь не выбирал фотографию,
+иначе возвращает выбранную им фотографию.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>аватар пользователя.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.User.user_tag_list">
+<code class="sig-name descname">user_tag_list</code><a class="headerlink" href="#flask_server.models.User.user_tag_list" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="flask_server.models.User.username">
+<code class="sig-name descname">username</code><a class="headerlink" href="#flask_server.models.User.username" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.models.load_user">
+<code class="sig-prename descclassname">flask_server.models.</code><code class="sig-name descname">load_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.models.load_user" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, обеспечивающая запоминание уже вошедших в аккаунт пользователей.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>user_id</strong> – идентификатор пользователя.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>идентификатор пользователя из базы данных.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-flask_server.routes">
+<span id="flask-server-routes-module"></span><h2>flask_server.routes module<a class="headerlink" href="#module-flask_server.routes" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py function">
+<dt id="flask_server.routes.account">
+<code class="sig-prename descclassname">flask_server.routes.</code><code class="sig-name descname">account</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.routes.account" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, отвечающая за взаимодействие между пользователем и его аккаунтом.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>обновленная страница аккаунта пользователя.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.routes.admin">
+<code class="sig-prename descclassname">flask_server.routes.</code><code class="sig-name descname">admin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.routes.admin" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, проверяющая авторизацию администратора.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>аккаунт администратора при удачной авторизации, иначе обновление страницы.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.routes.ajax">
+<code class="sig-prename descclassname">flask_server.routes.</code><code class="sig-name descname">ajax</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.routes.ajax" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, обеспечивающая взаимодействие сервера с пользователями.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>ответ на запрос со стороны пользователей.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.routes.bot_api">
+<code class="sig-prename descclassname">flask_server.routes.</code><code class="sig-name descname">bot_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.routes.bot_api" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, обеспечивающая взаимодействие сервера с ботами.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>ответ на запрос со стороны ботов.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.routes.home">
+<code class="sig-prename descclassname">flask_server.routes.</code><code class="sig-name descname">home</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.routes.home" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, перенаправлющая на главную страницу.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>главная страница.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.routes.login">
+<code class="sig-prename descclassname">flask_server.routes.</code><code class="sig-name descname">login</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.routes.login" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, отвечающая за авторизацию пользователя.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>главная страница, если успешная авторизация, иначе страница авторицзации.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.routes.logout">
+<code class="sig-prename descclassname">flask_server.routes.</code><code class="sig-name descname">logout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.routes.logout" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, отвечающая за выход из аккаунта и перенаправление на домашнюю страницу.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>домашняя страница.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.routes.my_images">
+<code class="sig-prename descclassname">flask_server.routes.</code><code class="sig-name descname">my_images</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.routes.my_images" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, перенаправляющая на страницу фотографий пользователя.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>страница фотографий пользователя.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.routes.register">
+<code class="sig-prename descclassname">flask_server.routes.</code><code class="sig-name descname">register</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.routes.register" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, отвечающая за регистрацию пользователя.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>страница логина, если уже зарегистрирован, иначе страница регистрации.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.routes.search">
+<code class="sig-prename descclassname">flask_server.routes.</code><code class="sig-name descname">search</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.routes.search" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, отвечающая за переадресацию на страницу поиска.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>страница поиска.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.routes.upload">
+<code class="sig-prename descclassname">flask_server.routes.</code><code class="sig-name descname">upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.routes.upload" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция, отвечающая за загрузку фотографий на сервер.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат</dt>
+<dd class="field-odd"><p>страница загрузки фотографий.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-flask_server.server_functions">
+<span id="flask-server-server-functions-module"></span><h2>flask_server.server_functions module<a class="headerlink" href="#module-flask_server.server_functions" title="Ссылка на этот заголовок">¶</a></h2>
+<dl class="py function">
+<dt id="flask_server.server_functions.code_picture">
+<code class="sig-prename descclassname">flask_server.server_functions.</code><code class="sig-name descname">code_picture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">form_picture</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.server_functions.code_picture" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция задает имя фотографии в закодираванном виде.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>form_picture</strong> – объект фотографии.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>закодираванное имя фотографии.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.server_functions.creating_routes">
+<code class="sig-prename descclassname">flask_server.server_functions.</code><code class="sig-name descname">creating_routes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">list_of_images</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.server_functions.creating_routes" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция заполняет у объекта фотографий атрибут route.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>list_of_images</strong> – список объектов фотографий.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.server_functions.creation_date">
+<code class="sig-prename descclassname">flask_server.server_functions.</code><code class="sig-name descname">creation_date</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">date</span><span class="o">=</span><span class="default_value">datetime.datetime(2020, 5, 25, 21, 42, 10, 890686)</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.server_functions.creation_date" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция возвращает дату для фотографии при сохранении.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>date</strong> – текущая дата</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>дата в виде «25 Мая 2020».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.server_functions.join_templates">
+<code class="sig-prename descclassname">flask_server.server_functions.</code><code class="sig-name descname">join_templates</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tags</span></em>, <em class="sig-param"><span class="n">description</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.server_functions.join_templates" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция соединяет тэги и описание в один список.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tags</strong> – список тэгов.</p></li>
+<li><p><strong>description</strong> – описание фотографии.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>список из тэгов и описания.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.server_functions.save_picture">
+<code class="sig-prename descclassname">flask_server.server_functions.</code><code class="sig-name descname">save_picture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">form_picture</span></em>, <em class="sig-param"><span class="n">picture_fn</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">'static/profile_pictures'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.server_functions.save_picture" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Сохраняет фотографии под случайным 16-значным именем в static/profile_pictures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>form_picture</strong> – объект фотографии</p></li>
+<li><p><strong>picture_fn</strong> – имя фотографии</p></li>
+<li><p><strong>path</strong> – директория для сохранения фотографий.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>возвращает отношение высоты к ширине фотографии.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.server_functions.size_analise">
+<code class="sig-prename descclassname">flask_server.server_functions.</code><code class="sig-name descname">size_analise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.server_functions.size_analise" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция обрезает фотографию, делая из нее квадрат со стороной равной длине меньшей стороны изначальной фотографии,
+при этом центрируя новую фотографию относительно исходной.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>image</strong> – объект фотографии.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>измененный обьект переданной фотографии.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.server_functions.size_t_analise">
+<code class="sig-prename descclassname">flask_server.server_functions.</code><code class="sig-name descname">size_t_analise</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.server_functions.size_t_analise" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция определяет размер фотографии, исходя из соотношения её сторон.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>image</strong> – объект фотографии.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>размер фотографии в виде кортежа.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.server_functions.sort_pictures_by_tag">
+<code class="sig-prename descclassname">flask_server.server_functions.</code><code class="sig-name descname">sort_pictures_by_tag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">list_of_pictures</span></em>, <em class="sig-param"><span class="n">list_of_tags</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.server_functions.sort_pictures_by_tag" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Сортирует фотографии по тегам, выбраным пользователем.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>list_of_pictures</strong> – список объектов фотографий.</p></li>
+<li><p><strong>list_of_tags</strong> – список тэгов.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>возвращает кортеж, состоящий из списка директорий и списка индентификаторов пользователей.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.server_functions.sorting_tags_by_alphabet">
+<code class="sig-prename descclassname">flask_server.server_functions.</code><code class="sig-name descname">sorting_tags_by_alphabet</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tag_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.server_functions.sorting_tags_by_alphabet" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Сортирует теги по алфавиту.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><p><strong>tag_list</strong> – cписок тэгов.</p>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>Возвращает отсортированный по алфавиту список тегов.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="flask_server.server_functions.tags">
+<code class="sig-prename descclassname">flask_server.server_functions.</code><code class="sig-name descname">tags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">string</span></em>, <em class="sig-param"><span class="n">tags</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#flask_server.server_functions.tags" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Функция обнаруживает тэги в сообщении пользователя и добавляет их в tags.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string</strong> – строка, которую ввел пользователь.</p></li>
+<li><p><strong>tags</strong> – список тэгов фотографий.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат</dt>
+<dd class="field-even"><p>обновленный список фотографий.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-flask_server">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-flask_server" title="Ссылка на этот заголовок">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">ew</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, wes.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/flask_server.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

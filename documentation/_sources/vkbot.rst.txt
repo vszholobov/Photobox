@@ -1,0 +1,7 @@
+vkbot module
+============
+
+.. automodule:: vkbot
+   :members:
+   :undoc-members:
+   :show-inheritance:
