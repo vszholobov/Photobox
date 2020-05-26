@@ -1,0 +1,23 @@
+.main {
+    max-height: none;
+}
+.content {
+    text-align: center;
+    color: #3d9480;
+
+    display: flex;
+    flex-direction: column;
+}
+.content div {
+    margin-bottom: 30px;
+}
+.link {
+    text-decoration: none;
+    font-size: 40px;
+
+}
+.img {
+    display: block;
+    width: 100%;
+    margin: 0px auto;
+}

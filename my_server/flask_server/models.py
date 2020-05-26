@@ -21,7 +21,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(), nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    user_tag_list = db.Column(db.PickleType, default=["#Семья", "#Природа", "#Красота", "#Клоун", "#Путешествие"])
+    user_tag_list = db.Column(db.PickleType, default=["#Семья", "#Природа", "#Красота", "#Путешествие"])
     posts = db.relationship("Post", backref="author", lazy=True)
 
     def __repr__(self):

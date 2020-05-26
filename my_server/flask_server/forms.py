@@ -15,7 +15,7 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField("Отправить")
 
     @staticmethod
-    def validate_username(username):
+    def validate_username(_, username):
         """
         Функция проверки одинаковых имен пользователей при регистрации аккаунта.
 
@@ -27,7 +27,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError("Пользователь с таким именем уже существует.")
 
     @staticmethod
-    def validate_email(email):
+    def validate_email(_, email):
         """
         Функция проверки одинаковых email пользователей при регистрации аккаунта.
 
@@ -55,7 +55,7 @@ class UpdateAccountForm(FlaskForm):
     submit = SubmitField("Обновить")
 
     @staticmethod
-    def validate_username(username):
+    def validate_username(_, username):
         """
         Функция проверки одинаковых имен пользователей при обновлении аккаунта.
 
@@ -68,7 +68,7 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError("Пользователь с таким именем уже существует.")
 
     @staticmethod
-    def validate_email(email):
+    def validate_email(_, email):
         """
         Функция проверки одинаковых email пользователей при обновлении аккаунта.
 
